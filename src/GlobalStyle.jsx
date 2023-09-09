@@ -55,6 +55,10 @@ const GlobalStyle = createGlobalStyle`
     --text-l: 1.6rem;
     --text-s: 1.4rem;
     --text-s: 1.2rem;
+
+    --font-bold: 700;
+    --font-medium: 500;
+    font-weight: var(--font-medium);
   }
 
   a {
