@@ -6,7 +6,7 @@ const StyledNav = styled.nav`
   gap: 10px;
   bottom: 0;
   width: min(100%, 430px);
-  padding: 0 20px 28px;
+  padding: 0 20px;
   background: var(--white);
   border-top: 1px solid var(--gray-100);
 
