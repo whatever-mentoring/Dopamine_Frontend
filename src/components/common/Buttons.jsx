@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
 const LButton = styled.button`
-  padding: 16px 135px;
+  display: block;
+  width: 100%;
+  padding: 16px;
   font-size: var(--text-l);
   font-weight: 700;
   border-radius: 100px;
@@ -14,7 +16,7 @@ const LButton = styled.button`
 `;
 
 const MButton = styled(LButton)`
-  padding: 12px 125px;
+  padding: 12px;
 `;
 
 const SButton = styled(LButton)`
