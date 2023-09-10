@@ -1,12 +1,24 @@
 import StyledNav from './StyledNav';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import navList from './navList';
 
 const TabBar = () => {
+  const { pathname } = useLocation();
+
   return (
     <StyledNav>
-      <Link to="/">홈</Link>
-      <Link to="/">챌린지피드</Link>
-      <Link to="/">My</Link>
+      {navList.map((v, i) => {
+        return (
+          <Link
+            to={v.path}
+            key={i}
+            className={pathname === v.path ? 'current' : ''}
+          >
+            {v.img}
+            {v.name}
+          </Link>
+        );
+      })}
     </StyledNav>
   );
 };

@@ -15,6 +15,19 @@ const StyledNav = styled.nav`
     text-align: center;
     width: 100%;
     font-size: var(--text-s);
+
+    svg {
+      display: block;
+      margin: 0 auto 4px;
+    }
+    path {
+      stroke: var(--gray-200);
+    }
+  }
+  a.current {
+    path {
+      stroke: var(--primary-500);
+    }
   }
 `;
 
