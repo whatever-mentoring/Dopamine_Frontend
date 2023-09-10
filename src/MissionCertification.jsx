@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+// import './index.css';
 import './MissionCertification.css';
 // import { FaArrowLeft, FaTimes } from 'react-icons/fa'; // 아이콘 라이브러리에서 아이콘을 가져오기.
 
