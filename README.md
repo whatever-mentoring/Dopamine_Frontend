@@ -14,4 +14,10 @@
 
 <br>
 
-**브랜치 전략**
+**브랜치 전략 | Git-flow**
+
+- main : 배포될 브랜치
+- develop : feature 브랜치들이 합쳐지는 브랜치
+- feature : 브랜치 네이밍 ex) feature/login
+- release : 다음 버전 출시를 준비하는 브랜치
+- hotfix : main 브랜치에서 발생한 버그를 수정하는 브랜치

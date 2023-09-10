@@ -11,6 +11,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     color: inherit;
     font-family: 'SUITE', sans-serif;
+    line-height: 1.5;
   }
 
   :root {
@@ -53,12 +54,29 @@ const GlobalStyle = createGlobalStyle`
     --title-m: 2.4rem;
     --title-s: 2rem;
     --text-l: 1.6rem;
-    --text-s: 1.4rem;
+    --text-m: 1.4rem;
     --text-s: 1.2rem;
 
     --font-bold: 700;
     --font-medium: 500;
     font-weight: var(--font-medium);
+  }
+
+  .ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .a11y-hidden {
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: inset(50%);
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
   }
 
   a {
