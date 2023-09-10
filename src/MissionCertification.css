@@ -1,25 +1,72 @@
 /* MissionCertification.css */
 
 .mission-header {
-    background-color: #007bff; /* 바의 배경색을 원하는 색상으로 설정합니다. */
-    color: #fff; /* 텍스트 색상을 흰색 또는 원하는 색상으로 설정합니다. */
+    background-color: #fff; /* 바 배경색 설정 */
+    color: #000; /* 텍스트 색상 */
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
+    border-bottom: 1px solid #ccc; /* 상단바 그레이 구분선 */
   }
   
   .mission-header-content {
-    font-size: 24px; /* 헤더 텍스트의 글자 크기를 조절합니다. */
-    font-weight: bold; /* 텍스트를 볼드체로 설정합니다. */
+    font-size: 24px; /* 헤더 텍스트의 글자 크기 */
   }
   
   .icon-button {
     background: none;
     border: none;
-    color: #fff; /* 아이콘 색상을 흰색 또는 원하는 색상으로 설정합니다. */
-    font-size: 24px; /* 아이콘 크기를 조절합니다. */
+    color: #000; /* 아이콘 색상*/
+    font-size: 24px; /* 아이콘 크기 */
     cursor: pointer;
-    margin-right: 10px; /* 아이콘 간의 간격을 조절합니다. */
+    margin-right: 10px; /* 아이콘 간의 간격을 조절 */
   }
+
+/* 미션인증 글씨 스타일 */
+.ms-txt{
+    font-size: 24px; 
+    font-weight: bold;
+}
+  
+
+
+
+/* 하단바 스타일 */
+.bottom-bar {
+    position: fixed; /* 화면 하단에 고정 */
+    bottom: 0; /* 하단에 위치 */
+    width: 28%; /* 화면 가로폭에 맞게 너비 설정 */
+    border-top: 1px solid #ccc; /* 상단과 구분하는 그레이 선 추가 */
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center; /* 가로 가운데 정렬 */
+    align-items: center; /* 세로 가운데 정렬 */
+  }
+  
+  
+  
+  /* 업로드 버튼 스타일 */
+  .upload-button {
+    width: 100%;
+    background-color: #02B550; /* 녹색 배경색을 원하는 색상으로 설정 */
+    color: #fff; /* 버튼 텍스트 색상 */
+    border: none;
+    border-radius: 50px; /* 버튼을 타원형으로 만들기 위한 값 */
+    padding: 20px 20px; /* 버튼 내부 여백 설정 */
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  /* 업로드 버튼에 호버 효과 추가 (선택 사항) */
+  .upload-button:hover {
+    background-color: #45a049; /* 마우스 호버 시 배경색 변경 */
+  }
+  
+ 
+  
+  
+  
+  
   
