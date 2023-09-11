@@ -1,6 +1,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import TabBar from '../../components/common/TabBar/TabBar';
 import { MButton } from '../../components/common/Buttons';
+import JoinStatus from '../../components/JoinStatus';
 import {
   StyledMain,
   ChallengeSection,
@@ -75,6 +76,7 @@ const Home = () => {
       <StyledMain>
         <h1 className="a11y-hidden">challenG9</h1>
         <h2 className="a11y-hidden">홈</h2>
+        <JoinStatus success={true}></JoinStatus>
         <ChallengeSection>
           <h3 className="a11y-hidden">오늘의 챌린지</h3>
           <div className="level-name">새싹지킴이</div>
