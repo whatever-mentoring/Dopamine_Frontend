@@ -23,22 +23,24 @@ const Text = styled.p`
   font-weight: ${(props) => (props.bold ? 'bold' : 'normal')};
 `;
 
+// InputBox 스타일드 컴포넌트에 border-radius 추가
 const InputBox = styled.input`
   font-size: 1.2em;
   height: 50px;
   border: none;
   background-color: #eff0f0;
-  border-radius: 10px;
+  border-radius: 30px; /* 둥근 모서리 적용 */
   padding: 5px;
   width: 100%;
   max-width: 400px;
 `;
 
+// NextButton 스타일드 컴포넌트에 border-radius 추가
 const NextButton = styled.button`
   background-color: #02b550;
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 30px; /* 둥근 모서리 적용 */
   padding: 10px;
   font-size: 1.2em;
   cursor: pointer;
@@ -72,3 +74,5 @@ function Join() {
 }
 
 ReactDOM.render(<Join />, document.getElementById('root'));
+
+export default Join;
