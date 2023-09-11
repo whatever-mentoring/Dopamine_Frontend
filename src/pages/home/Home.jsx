@@ -2,6 +2,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import TabBar from '../../components/common/TabBar/TabBar';
 import { MButton } from '../../components/common/Buttons';
 import JoinStatus from '../../components/JoinStatus';
+import ProofModal from './ProofModal';
 import {
   StyledMain,
   ChallengeSection,
@@ -14,6 +15,7 @@ import { Link } from 'react-router-dom';
 const Home = () => {
   const [challengeList, setChallengeList] = useState([]);
   const [feedList, setFeedList] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     // 임시
@@ -92,13 +94,20 @@ const Home = () => {
                     <img src={challenge.img} alt="" />
                     <p>{challenge.text}</p>
                     <strong>{challenge.tit}</strong>
-                    <MButton disabled={!challenge.active}>
+                    <MButton
+                      disabled={!challenge.active}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsModalOpen(true);
+                      }}
+                    >
                       {challenge.status}
                     </MButton>
                   </SwiperSlide>
                 );
               })}
           </Swiper>
+          {isModalOpen && <ProofModal setIsModalOpen={setIsModalOpen} />}
         </ChallengeSection>
 
         <ReportSection>
