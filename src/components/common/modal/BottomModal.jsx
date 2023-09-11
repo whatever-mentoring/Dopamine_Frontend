@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import Overlay from './Overlay';
 import StyledBottomModal from './StyledBottomModal';
 
@@ -7,21 +7,31 @@ const BottomModal = ({ setIsModalOpen, children }) => {
 
   useEffect(() => {
     // 모달 외 클릭 시 모달 close
-    const handleClick = (e) => {
+    const closeModal = (e) => {
       if (e.target.tagName === 'HTML') {
         setIsModalOpen(false);
       }
     };
-    window.addEventListener('click', handleClick);
+    window.addEventListener('click', closeModal);
+    window.addEventListener('touchstart', closeModal);
   }, []);
 
-  useEffect(() => {
-    modal.current.showModal();
+  const setModal = useCallback((node) => {
+    modal.current = node;
+    node.showModal();
   }, []);
 
   return (
     <Overlay>
-      <StyledBottomModal ref={modal}>{children}</StyledBottomModal>
+      <StyledBottomModal
+        ref={(node) => {
+          if (node) {
+            setModal(node);
+          }
+        }}
+      >
+        {children}
+      </StyledBottomModal>
     </Overlay>
   );
 };
