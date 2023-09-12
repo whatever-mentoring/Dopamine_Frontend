@@ -93,14 +93,33 @@ function MissionPage() {
 
 function MissionCertification() {
   const navigate = useNavigate();
+  const [showPopup, setShowPopup] = useState(false);
 
   const handleGoBack = () => {
-    navigate(-1);
+    if (showPopup) {
+      setShowPopup(false);
+    } else {
+      navigate(-1);
+    }
   };
-
+  
   const handleClose = () => {
-    // 화면을 닫는 로직 부분(지금은 Link사용해서 필요없음.)
+    setShowPopup(true); // x 버튼 클릭 시 팝업을 엽니다.
   };
+  
+  const handlePopupClose = () => {
+    setShowPopup(false);
+  };
+  
+  const handlePopupContinue = () => {
+    setShowPopup(false); // "계속 작성하기" 버튼 클릭 시 팝업을 닫습니다.
+  };
+  
+  const handlePopupConfirm = () => {
+    // 중단하기 버튼 클릭 시의 로직
+    navigate(-1); // 홈 화면으로 이동
+  };
+  
 
   return (
     <div>
@@ -111,18 +130,72 @@ function MissionCertification() {
           </button>
         </div>
         <div className="ms-txt">미션인증</div>
-        <Link to="/">
-          <button className="icon-button" onClick={handleClose}>
-            <FaTimes />
-          </button>
-        </Link>
+        <button className="icon-button" onClick={handleClose}>
+          <FaTimes />
+        </button>
       </header>
       <MissionPage />
       <footer className="bottom-bar">
         <button className="upload-button">챌린지피드에 업로드하기</button>
       </footer>
+
+      {/* 팝업 창 */}
+      {showPopup && (
+  <div className="popup-overlay">
+    <div className="popup-content">
+    <button className="popup-close-button" onClick={handlePopupClose}>
+  {/* <FaTimes /> */}<XIcon />
+</button>
+      <p className="bold-text">인증을 중단할까요?</p>
+      <p className="small-gray-text">작성하고 계시던 내용이 모두 삭제되고 이전 화면으로 돌아가요.</p>
+      <div className="popup-buttons">
+        <button className="cancel-button" onClick={handlePopupConfirm}>중단하기</button>
+        <button className="continue-button" onClick={handlePopupContinue}>계속 작성하기</button>
+     
+
+      </div>
+    </div>
+  </div>
+)}
     </div>
   );
 }
+
+function XIcon(props) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      {...props}
+    >
+      <line
+        x1="18"
+        y1="6"
+        x2="6"
+        y2="18"
+        stroke="black" /* 색 */
+        strokeWidth="1" /* 선의 두께*/
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <line
+        x1="6"
+        y1="6"
+        x2="18"d=''
+        y2="18"
+        stroke="black" /* 색변경 */
+        strokeWidth="1" /* 선의 두께 */
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+
+
 
 export default MissionCertification;
