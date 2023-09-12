@@ -3,8 +3,8 @@ import GlobalStyle from './GlobalStyle';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/home/Home';
 import Feed from './pages/feed/Feed';
-import My from './pages/my/My'
-import MissionCertification from './MissionCertification';
+import My from './pages/my/My';
+import MissionCertification from './pages/mission/MissionCertification';
 
 function App() {
   return (

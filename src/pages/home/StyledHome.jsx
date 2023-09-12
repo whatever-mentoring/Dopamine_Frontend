@@ -15,7 +15,7 @@ const StyledMain = styled.main`
     content: '';
     display: block;
     margin-top: 20px;
-    height: 100px;
+    height: 90px;
     background: var(--gray-100);
   }
 
