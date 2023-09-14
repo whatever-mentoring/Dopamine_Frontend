@@ -104,7 +104,7 @@ function MissionCertification() {
   };
   
   const handleClose = () => {
-    setShowPopup(true); // x 버튼 클릭 시 팝업을 엽니다.
+    setShowPopup(true); // x 버튼 클릭 시 팝업을 열기(true)
   };
   
   const handlePopupClose = () => {
@@ -112,7 +112,7 @@ function MissionCertification() {
   };
   
   const handlePopupContinue = () => {
-    setShowPopup(false); // "계속 작성하기" 버튼 클릭 시 팝업을 닫습니다.
+    setShowPopup(false); // "계속 작성하기" 버튼 클릭 시 팝업을 닫기(false)
   };
   
   const handlePopupConfirm = () => {
@@ -134,6 +134,20 @@ function MissionCertification() {
           <FaTimes />
         </button>
       </header>
+
+
+      {/* 챌린지 제목 입력 상자 */}
+      <div className="challenge-title-input">
+      <div className="mission-feedback-title">챌린지</div>
+        <input
+          type="text"
+          placeholder="챌린지 제목을 입력하세요."
+          // 아래의 value에 챌린지 제목을 바인딩할 수 있습니다.
+          // 예: value={challengeTitle}
+          // onChange 핸들러로 challengeTitle 상태를 업데이트하세요.
+        />
+      </div>
+
       <MissionPage />
       <footer className="bottom-bar">
         <button className="upload-button">챌린지피드에 업로드하기</button>

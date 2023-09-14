@@ -5,6 +5,7 @@ import Home from './pages/home/Home';
 import Feed from './pages/feed/Feed';
 import My from './pages/my/My';
 import MissionCertification from './pages/mission/MissionCertification';
+import MissionComplete from './pages/mission/MissionComplete';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/feed" element={<Feed />}></Route>
           <Route path="/my" element={<My />}></Route>
           <Route path="/mission" element={<MissionCertification />}></Route>
+          <Route path="/mission2" element={<MissionComplete />}></Route>
         </Routes>
       </BrowserRouter>
     </>
