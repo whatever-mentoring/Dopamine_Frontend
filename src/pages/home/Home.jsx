@@ -2,7 +2,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import TabBar from '../../components/common/TabBar/TabBar';
 import { MButton } from '../../components/common/Buttons';
 import JoinStatus from '../../components/JoinStatus';
-import ProofModal from './ProofModal';
+import ProofModal from '../../components/common/modal/ProofModal';
 import {
   StyledMain,
   ChallengeSection,

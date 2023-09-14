@@ -89,6 +89,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     border: none;
     font-size: inherit;
+    line-height: inherit;
     font-weight: inherit;
     color: inherit;
     background-color: inherit;
