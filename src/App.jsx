@@ -1,6 +1,7 @@
 import './App.css';
-import GlobalStyle from './GlobalStyle';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import GlobalStyle from './GlobalStyle';
+import ChallengeProvider from './context/ChallengeContext';
 import Home from './pages/home/Home';
 import Feed from './pages/feed/Feed';
 import My from './pages/my/My';
@@ -12,16 +13,18 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/feed" element={<Feed />}></Route>
-          <Route path="/my" element={<My />}></Route>
-          <Route path="/mission" element={<MissionCertification />}></Route>
-          <Route path="/splash" element={<Splash />}></Route>
-          <Route path="/kakao/callback" element={<Redirection />}></Route>
-        </Routes>
-      </BrowserRouter>
+      <ChallengeProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/feed" element={<Feed />}></Route>
+            <Route path="/my" element={<My />}></Route>
+            <Route path="/mission" element={<MissionCertification />}></Route>
+            <Route path="/splash" element={<Splash />}></Route>
+            <Route path="/kakao/callback" element={<Redirection />}></Route>
+          </Routes>
+        </BrowserRouter>
+      </ChallengeProvider>
     </>
   );
 }
