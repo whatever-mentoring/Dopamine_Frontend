@@ -1,21 +1,32 @@
 import './App.css';
-import GlobalStyle from './GlobalStyle';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import GlobalStyle from './GlobalStyle';
+import ChallengeProvider from './context/ChallengeContext';
 import Home from './pages/home/Home';
-import MissionCertification from './MissionCertification';
-import Join from './join'; // 공백을 제거하여 올바른 파일 경로로 임포트합니다.
+import Join from './pages/join/Join';
+import Feed from './pages/feed/Feed';
+import My from './pages/my/My';
+import MissionCertification from './pages/mission/MissionCertification';
+import Redirection from './pages/Redirection';
+import Splash from './pages/splash/Splash';
 
 function App() {
   return (
     <>
       <GlobalStyle />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/mission" element={<MissionCertification />}></Route>
+      <ChallengeProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/feed" element={<Feed />}></Route>
+            <Route path="/my" element={<My />}></Route>
+            <Route path="/mission" element={<MissionCertification />}></Route>
+            <Route path="/splash" element={<Splash />}></Route>
+            <Route path="/kakao/callback" element={<Redirection />}></Route>
           <Route path="/join" element={<Join />}></Route>
-        </Routes>
-      </BrowserRouter>
+          </Routes>
+        </BrowserRouter>
+      </ChallengeProvider>
     </>
   );
 }

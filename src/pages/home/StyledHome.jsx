@@ -7,7 +7,7 @@ const StyledMain = styled.main`
     position: absolute;
     z-index: -1;
     width: 100%;
-    height: 200px;
+    height: 148px;
     background: var(--gray-100);
   }
 
@@ -15,13 +15,9 @@ const StyledMain = styled.main`
     content: '';
     display: block;
     margin-top: 20px;
-    height: 128px;
+    height: 90px;
     background: var(--gray-100);
   }
-
-  /* section + section {
-    margin-top: 44px;
-  } */
 
   section > span,
   h3 {
@@ -33,7 +29,7 @@ const StyledMain = styled.main`
 
 const ChallengeSection = styled.section`
   overflow-x: hidden;
-  padding: 94px 0 44px;
+  padding: 42px 0 44px;
 
   .level-name {
     margin-left: 20px;
@@ -87,6 +83,7 @@ const ReportSection = styled.section`
   margin-bottom: 44px;
 
   article {
+    margin-top: 11px;
     padding: 13px 10px 16px;
     box-shadow: 0 4px 10px #00000010;
     border-radius: 10px;
@@ -174,7 +171,6 @@ const FeedSection = styled.section`
     p {
       margin-top: 10px;
       font-size: var(--text-m);
-      color: var(--gray-500);
     }
   }
 `;

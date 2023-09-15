@@ -81,16 +81,12 @@ function Join() {
   const handleSubmit = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.post(
-        apiEndpoint,
-        requestBody,
-        {
-          headers: {
-            Authorization: token,
-            'Content-Type': 'application/json', // 요청 본문의 형식을 JSON으로 지정
-          },
-        }
-      );
+      const response = await axios.post(apiEndpoint, requestBody, {
+        headers: {
+          Authorization: token,
+          'Content-Type': 'application/json', // 요청 본문의 형식을 JSON으로 지정
+        },
+      });
 
       setData(response.data);
       setIsLoading(false);
@@ -134,7 +130,9 @@ function Join() {
           onBlur={handleNicknameBlur} // 입력란을 벗어났을 때 중복 여부 확인
         />
         <Message error={!isNicknameAvailable} hidden={!nickname}>
-          {isNicknameAvailable ? '사용 가능한 이름이에요' : '이름이 중복되었어요'}
+          {isNicknameAvailable
+            ? '사용 가능한 이름이에요'
+            : '이름이 중복되었어요'}
         </Message>
         <SpaceBetween />
         <NextButton onClick={handleSubmit} disabled={!isNicknameAvailable}>
