@@ -26,12 +26,12 @@ const Text = styled.p`
 
 const InputBox = styled.input`
   font-size: 1.2em;
-  height: 40px;
+  height: 51px;
   border: none;
   background-color: #eff0f0;
   border-radius: 10px;
   padding: 5px;
-  width: 100%;
+  width:328px;
   max-width: 400px;
 `;
 
@@ -39,12 +39,12 @@ const NextButton = styled.button`
   background-color: #02b550;
   color: white;
   border: none;
-  border-radius: 30px;
+  border-radius: 100px;
   padding: 10px;
   font-size: 1.2em;
   cursor: pointer;
-  width: 100%;
-  height: 50px;
+  width: 328px;
+  height: 56px;
   max-width: 400px;
 `;
 
@@ -81,12 +81,16 @@ function Join() {
   const handleSubmit = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.post(apiEndpoint, requestBody, {
-        headers: {
-          Authorization: token,
-          'Content-Type': 'application/json', // 요청 본문의 형식을 JSON으로 지정
-        },
-      });
+      const response = await axios.post(
+        apiEndpoint,
+        requestBody,
+        {
+          headers: {
+            Authorization: token,
+            'Content-Type': 'application/json', // 요청 본문의 형식을 JSON으로 지정
+          },
+        }
+      );
 
       setData(response.data);
       setIsLoading(false);
@@ -130,9 +134,7 @@ function Join() {
           onBlur={handleNicknameBlur} // 입력란을 벗어났을 때 중복 여부 확인
         />
         <Message error={!isNicknameAvailable} hidden={!nickname}>
-          {isNicknameAvailable
-            ? '사용 가능한 이름이에요'
-            : '이름이 중복되었어요'}
+          {isNicknameAvailable ? '사용 가능한 이름이에요' : '이름이 중복되었어요'}
         </Message>
         <SpaceBetween />
         <NextButton onClick={handleSubmit} disabled={!isNicknameAvailable}>
