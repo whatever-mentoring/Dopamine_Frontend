@@ -26,10 +26,10 @@ const Text = styled.p`
 
 const InputBox = styled.input`
   font-size: 1.2em;
-  height: 50px;
+  height: 40px;
   border: none;
   background-color: #eff0f0;
-  border-radius: 30px;
+  border-radius: 10px;
   padding: 5px;
   width: 100%;
   max-width: 400px;
@@ -44,6 +44,7 @@ const NextButton = styled.button`
   font-size: 1.2em;
   cursor: pointer;
   width: 100%;
+  height: 50px;
   max-width: 400px;
 `;
 
