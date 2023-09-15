@@ -1,0 +1,257 @@
+/* MissionCertification.css */
+
+.mission-header {
+    background-color: #fff; /* 바 배경색 설정 */
+    color: #000; /* 텍스트 색상 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc; /* 상단바 그레이 구분선 */
+  }
+  
+  .mission-header-content {
+    font-size: 24px; /* 헤더 텍스트의 글자 크기 */
+  }
+  
+  .icon-button {
+    background: none;
+    border: none;
+    color: #000; /* 아이콘 색상*/
+    font-size: 24px; /* 아이콘 크기 */
+    cursor: pointer;
+    margin-right: 10px; /* 아이콘 간의 간격을 조절 */
+  }
+
+/* 미션인증 글씨 스타일 */
+.ms-txt{
+    font-size: 24px; 
+    font-weight: bold;
+}
+  
+
+
+
+/* 하단바 스타일 */
+.bottom-bar {
+    position: fixed; /* 화면 하단에 고정 */
+    bottom: 0; /* 하단에 위치 */
+    width: 28%;
+    border-top: 1px solid #ccc; /* 상단과 구분하는 그레이 선 추가 */
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center; /* 가로 가운데 정렬 */
+    align-items: center; /* 세로 가운데 정렬 */
+  }
+
+  
+  
+  /* 업로드 버튼 스타일 */
+  .upload-button {
+    width: 100%;
+    background-color: #02B550; /* 녹색 배경색을 원하는 색상으로 설정 */
+    color: #fff; /* 버튼 텍스트 색상 */
+    border: none;
+    border-radius: 50px; /* 버튼을 타원형으로 만들기 위한 값 */
+    padding: 20px 20px; /* 버튼 내부 여백 설정 */
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  /* 업로드 버튼에 호버 효과 추가 (선택 사항) */
+  .upload-button:hover {
+    background-color: #45a049; /* 마우스 호버 시 배경색 변경 */
+  }
+  
+
+
+
+
+
+  /* 새로 추가된 스타일 시작 */
+
+/* 미션 페이지 이미지 업로드 스타일 */
+input[type="file"] {
+    display: none; /* 파일 업로드 인풋 숨김 */
+  }
+  
+  textarea {
+    width: 100%; /* 가로 폭을 100%로 설정하여 부모 요소에 맞춤 */
+    height: 100px; /* 텍스트 영역의 높이 설정 */
+    margin-top: 16px; /* 상단 여백 추가 */
+    padding: 8px; /* 텍스트 영역 내부 여백 설정 */
+    border: 1px solid #ccc; /* 테두리 스타일 및 색상 설정 */
+    border-radius: 4px; /* 테두리의 모서리를 둥글게 설정 */
+    resize: none; /* 사용자의 크기 조절 비활성화 */
+  }
+  
+  .error-message {
+    color: red; /* 에러 메시지 텍스트 색상 설정 */
+  }
+  
+  /* MissionPage의 하단 바 스타일 */
+  /* 하단 바 배경색 및 여백 설정 */
+  .note1 {
+    font-size: 14px; /* 글자 크기 설정 */
+    color: #777; /* 글자 색상 설정 */
+    margin-top: 16px; /* 상단 여백 추가 */
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  .note2 {
+    font-size: 10px; /* 글자 크기 설정 */
+    color: #777; /* 글자 색상 설정 */
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+  
+
+  /* 이번 미션 제목 스타일 */
+.mission-feedback-title {
+  font-weight: bold;
+  font-size: 15px;
+  margin-bottom: 5px; /* 제목과 textarea 간격 조절 */
+}
+
+.mission-feedback-title2 {
+    font-weight: bold;
+    font-size: 15px;
+    
+  }
+
+/* "(선택)" 부분 스타일 */
+.optional-text {
+  color: #888; /* 연한 회색 색상 */
+  font-weight: normal; /* 폰트 굵기 일반으로 설정 */
+  margin-left: 5px; /* "(선택)"과 제목 간격 조절 */
+}
+
+.optional-text2 {
+    color: #888; /* 연한 회색 색상 */
+    font-weight: normal; /* 폰트 굵기 일반으로 설정 */
+    
+    margin-left: auto; /* 오른쪽으로 이동 */
+}
+      
+  
+
+/* 미션페이지 첫 번째 박스 */
+.ms-box1{
+    padding: 5%;
+}
+.ms-box2{
+    background-color: #f2f2f2c2;
+}
+.ms-txtarea{
+    background-color: #f2f2f2c2;
+    padding: 3%;
+    border-radius: 10px;
+
+}
+
+/* 글자수 제한 색깔표시 */
+.character-count {
+    color: gray; /* 100의 숫자를 그레이로 유지 */
+    text-align: right; /* 텍스트를 오른쪽으로 정렬 */
+    margin-top: 5px; /* 상단 여백 추가 (선택사항) */
+  }
+  
+ .image-preview{
+    width: 150px;
+    height: 150px;
+ }
+
+
+  /* 새로 추가된 스타일 끝 */
+ 
+  
+
+/* 팝업 스타일 */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 배경에 투명도 적용 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999; /* 다른 요소 위에 나타나도록 설정 */
+  }
+  
+  .popup-content {
+    background-color: #fff; /* 흰 배경색 */
+    border-radius: 10px; /* 라운드 네모박스 형태로 */
+    padding: 20px;
+    text-align: center;
+    max-width: 420px; /* 최대 너비 지정 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* 그림자 효과 */
+  }
+  
+  .popup-content p.bold-text {
+    font-weight: bold; /* 볼드체 텍스트 */
+    font-size: 20px;
+  }
+  
+  .popup-content p.small-gray-text {
+    font-size: 12px; /* 더 작은 글씨 크기 */
+    color: gray; /* 회색 텍스트 색상 */
+  }
+  
+  
+
+  .popup-content button.continue-button {
+    background-color: green; /* 초록색 배경색 */
+    color: #fff; /* 흰색 텍스트 색상 */
+    border: 1px solid green; /* 초록색 테두리 */
+    padding: 15px 15px;
+    margin: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s; /* 호버 효과 설정 */
+    font-size: 15px;
+    border-radius: 25px;
+  }
+  
+  .popup-content button.continue-button:hover {
+    background-color: limegreen; /* 호버 시 배경색 변경 */
+    color: #fff; /* 호버 시 텍스트 색상 변경 */
+  }
+  
+ 
+  .popup-content button.cancel-button {
+    background-color: #fff; /* 흰 배경색 */
+    color: green; /* 초록색 텍스트 색상 */
+    border: 1px solid green; /* 초록색 테두리 */
+    padding: 15px 28px;
+    margin: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s; /* 호버 효과 설정 */
+    font-size: 15px;
+    border-radius: 25px;
+  }
+  
+  .popup-content button.cancel-button:hover {
+    background-color: red; /* 호버 시 배경색 변경 */
+    color: #fff; /* 호버 시 텍스트 색상 변경 */
+    border: 1px solid red; /* 호버 시 테두리 색상 변경 */
+  }
+  
+  
+  .popup-content button.popup-close-button {
+    position: absolute; /* 절대 위치 설정 */
+    top: 40%; /* 위로 5px 올림 */
+    right: 40%; /* 오른쪽에서 떨어진 위치 */
+    font-size: 24px; /* 아이콘 크기 설정 */
+    border: none; /* 테두리 없음 */
+    background: none; /* 배경 없음 */
+    cursor: pointer;
+   
+  }
+  
+  
+  
+  
+  
