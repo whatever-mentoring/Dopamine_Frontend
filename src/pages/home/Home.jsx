@@ -1,6 +1,6 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import TabBar from '../../components/common/TabBar/TabBar';
-import { MButton, SButton } from '../../components/common/Buttons';
+import { SButton } from '../../components/common/Buttons';
 import JoinStatus from '../../components/JoinStatus';
 import ProofModal from '../../components/common/modal/ProofModal';
 import {

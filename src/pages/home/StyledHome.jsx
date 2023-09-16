@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 const StyledMain = styled.main`
   position: relative;
-  padding-bottom: 44px;
-  
+  padding-bottom: 56px;
+
   &::before {
     content: '';
     position: absolute;
