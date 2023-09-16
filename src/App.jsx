@@ -10,7 +10,6 @@ import MissionCertification from './pages/mission/MissionCertification';
 import MissionComplete from './pages/mission/MissionComplete';
 import Redirection from './pages/Redirection';
 import Splash from './pages/splash/Splash';
-import Redirection from './pages/Redirection';
 
 function App() {
   return (
