@@ -17,11 +17,11 @@ function App() {
       <ChallengeProvider>
         <BrowserRouter>
           <Routes>
+            <Route path="/" element={<Splash />}></Route>
             <Route path="/home" element={<Home />}></Route>
             <Route path="/feed" element={<Feed />}></Route>
             <Route path="/my" element={<My />}></Route>
             <Route path="/mission" element={<MissionCertification />}></Route>
-            <Route path="/splash" element={<Splash />}></Route>
             <Route path="/kakao/callback" element={<Redirection />}></Route>
             <Route path="/join" element={<Join />}></Route>
           </Routes>
