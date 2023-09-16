@@ -57,7 +57,12 @@ const BoldText = styled.p`
 const SpaceBetween = styled.div`
   margin-top: 250px;
 `;
-
+const Icon = styled.img`
+  position: absolute;
+  right: 12px; /* 오른쪽 여백 조절 (예제에서는 12px로 설정) */
+  width: 16px; /* 아이콘 크기 조절 (예제에서는 16px로 설정) */
+  height: 16px;
+`;
 const Message = styled.div`
   color: ${(props) => (props.error ? 'red' : 'green')};
   display: ${(props) => (props.hidden ? 'none' : 'block')};
@@ -101,22 +106,23 @@ function Join() {
   };
 
   const handleNicknameBlur = async () => {
-    // 입력란을 벗어났을 때 중복 여부 확인
-    try {
-      const response = await axios.post(
-        `${apiEndpoint}/check-nickname`,
-        requestBody,
-        {
-          headers: {
-            Authorization: token,
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-
-      setIsNicknameAvailable(response.data.isAvailable);
-    } catch (error) {
-      setError(error);
+    if (nickname.length >= 2) { // 예를 들어, 2글자 이상일 때만 서버 요청 보냄
+      try {
+        const response = await axios.post(
+          `${apiEndpoint}/check-nickname`,
+          requestBody,
+          {
+            headers: {
+              Authorization: token,
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+  
+        setIsNicknameAvailable(response.data.isAvailable);
+      } catch (error) {
+        setError(error);
+      }
     }
   };
 
