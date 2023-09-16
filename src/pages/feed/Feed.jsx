@@ -23,6 +23,7 @@ const Feed = () => {
   const [skipNum, setSkipNum] = useState(0);
   const [isChallengeSelectModalOpen, setIsChallengeSelectModalOpen] =
     useState(false);
+  console.log(document.cookie);
 
   const { challengeToProve } = useContext(ChallengeContext);
 

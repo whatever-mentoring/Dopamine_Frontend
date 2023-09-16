@@ -6,9 +6,16 @@ const Redirection = () => {
 
   useEffect(() => {
     fetch(
-      `http://54.180.66.83:9000/api/auth/login?code=${code}&redirect-url=http://localhost:5173/kakao/callback`
-    ).then((res) => {
-      console.log(res);
+      `http://54.180.66.83:9000/api/auth/login?code=${code}&redirect_url=http://100.114.50.111:5173/kakao/callback`
+    ).then(async (res) => {
+        const json = await res.json();
+        localStorage.setItem('accessToken', json.token.accessToken);
+        localStorage.setItem('refreshToken', json.token.refreshToken);
+        if (json.member.nickname === null) {
+          navigate('/join');
+        } else {
+          navigate('/home');
+        }
     });
   }, []);
 
