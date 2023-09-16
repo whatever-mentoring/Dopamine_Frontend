@@ -34,19 +34,18 @@
 
 /* 하단바 스타일 */
 .bottom-bar {
-    position: fixed; /* 화면 하단에 고정 */
-    bottom: 0; /* 하단에 위치 */
-    width: 28%;
-    border-top: 1px solid #ccc; /* 상단과 구분하는 그레이 선 추가 */
-    padding: 20px;
-    text-align: center;
-    display: flex;
-    justify-content: center; /* 가로 가운데 정렬 */
-    align-items: center; /* 세로 가운데 정렬 */
-  }
+  width: min(100%, 430px);
+  max-width: 100%;
+  border: none;
+  margin: auto auto 0;
+  padding: 20px;
 
-  
-  
+  z-index: 1; /* 다른 요소보다 위에 표시 */
+ background-color: #fff;
+} 
+
+
+
   /* 업로드 버튼 스타일 */
   .upload-button {
     width: 100%;
@@ -54,7 +53,7 @@
     color: #fff; /* 버튼 텍스트 색상 */
     border: none;
     border-radius: 50px; /* 버튼을 타원형으로 만들기 위한 값 */
-    padding: 20px 20px; /* 버튼 내부 여백 설정 */
+    padding: 15px 20px; /* 버튼 내부 여백 설정 */
     font-size: 16px;
     cursor: pointer;
   }
@@ -66,10 +65,6 @@
   
 
 
-
-
-
-  /* 새로 추가된 스타일 시작 */
 
 /* 미션 페이지 이미지 업로드 스타일 */
 input[type="file"] {
@@ -93,9 +88,9 @@ input[type="file"] {
   /* MissionPage의 하단 바 스타일 */
   /* 하단 바 배경색 및 여백 설정 */
   .note1 {
-    font-size: 14px; /* 글자 크기 설정 */
-    color: #777; /* 글자 색상 설정 */
-    margin-top: 16px; /* 상단 여백 추가 */
+    font-size: 14px; 
+    color: #777; 
+    margin-top: 16px; 
     padding-left: 5%;
     padding-right: 5%;
   }
@@ -129,10 +124,10 @@ input[type="file"] {
 }
 
 .optional-text2 {
-    color: #888; /* 연한 회색 색상 */
-    font-weight: normal; /* 폰트 굵기 일반으로 설정 */
+    color: #888; 
+    font-weight: normal; 
     
-    margin-left: auto; /* 오른쪽으로 이동 */
+    margin-left: 72%; 
 }
       
   
@@ -144,11 +139,15 @@ input[type="file"] {
 .ms-box2{
     background-color: #f2f2f2c2;
 }
-.ms-txtarea{
-    background-color: #f2f2f2c2;
-    padding: 3%;
-    border-radius: 10px;
+.ms-txtarea {
+  background-color: #f2f2f2c2;
+  padding: 3%;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
 
+.ms-txtarea:focus {
+  border-color: #02B550 !important;
 }
 
 /* 글자수 제한 색깔표시 */
@@ -164,7 +163,7 @@ input[type="file"] {
  }
 
 
-  /* 새로 추가된 스타일 끝 */
+
  
   
 
@@ -241,16 +240,28 @@ input[type="file"] {
   
   
   .popup-content button.popup-close-button {
-    position: absolute; /* 절대 위치 설정 */
-    top: 40%; /* 위로 5px 올림 */
-    right: 40%; /* 오른쪽에서 떨어진 위치 */
-    font-size: 24px; /* 아이콘 크기 설정 */
-    border: none; /* 테두리 없음 */
-    background: none; /* 배경 없음 */
+   
+    font-size: 24px; /
+    border: none; 
+    background: none; 
     cursor: pointer;
    
   }
   
+  /* 챌린지 제목 입력 상자 스타일 */
+.challenge-title-input {
+  margin: 20px 20px; /* 적절한 여백 설정 */
+}
+
+.challenge-title-input input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+}
+
   
   
   
