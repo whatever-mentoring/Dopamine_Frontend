@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import BottomModal from '../../components/common/modal/BottomModal';
+import BottomModal from './BottomModal';
 import { useNavigate } from 'react-router-dom';
 
 const ProofModal = ({ setIsModalOpen }) => {
@@ -27,15 +27,15 @@ const ProofModal = ({ setIsModalOpen }) => {
     });
   };
 
-  useEffect(() => {
-    localStorage.setItem('test', 'test1');
-    alert(localStorage.getItem('test'));
-  }, []);
+  const handleBtn = (e) => {
+    e.currentTarget.children[0].click();
+    // setIsModalOpen(false);
+  };
 
   return (
     <BottomModal setIsModalOpen={setIsModalOpen}>
       <p>어떤 방법으로 인증해볼까요?</p>
-      <button onClick={(e) => e.target.children[0].click()}>
+      <button onClick={handleBtn}>
         촬영하기
         <input
           type="file"
@@ -44,7 +44,7 @@ const ProofModal = ({ setIsModalOpen }) => {
           className="a11y-hidden"
         />
       </button>
-      <button onClick={(e) => e.target.children[0].click()}>
+      <button onClick={handleBtn}>
         갤러리에서 선택하기
         <input
           type="file"
@@ -53,7 +53,7 @@ const ProofModal = ({ setIsModalOpen }) => {
           multiple
           className="a11y-hidden"
           onChange={(e) => {
-            navigate('/misson');
+            navigate('/feed');
             setImg(e);
           }}
         />

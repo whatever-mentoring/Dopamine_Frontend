@@ -41,52 +41,65 @@ function MissionPage() {
     // 선택된 이미지 배열에서 해당 인덱스의 이미지 삭제.
     const updatedImages = [...selectedImages];
     updatedImages.splice(indexToDelete, 1);
-  
+
     // 이미지 배열을 업데이트.
     setSelectedImages(updatedImages);
   };
-  
 
   return (
     <div>
-      <div className='ms-box1'>
-      <div className="mission-feedback-title2">
-    인증사진
-    <span className="optional-text2">다시 선택</span>
+      <div className="ms-box1">
+        <div className="mission-feedback-title2">
+          인증사진
+          <span className="optional-text2">다시 선택</span>
+        </div>
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={handleImageUpload}
+        />
+        <div className="image-preview">
+          {selectedImages.map((image, index) => (
+            <div key={index} className="image-container">
+              <img
+                src={URL.createObjectURL(image)}
+                alt={`Image ${index + 1}`}
+              />
+              <button
+                className="delete-button"
+                onClick={() => handleDeleteImage(index)}
+              >
+                X
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
-      <input type="file" accept="image/*" multiple onChange={handleImageUpload} />
-      <div className="image-preview">
-  {selectedImages.map((image, index) => (
-    <div key={index} className="image-container">
-      <img src={URL.createObjectURL(image)} alt={`Image ${index + 1}`} />
-      <button className="delete-button" onClick={() => handleDeleteImage(index)}>X</button>
-    </div>
-  ))}
-</div></div>
 
-      <div className='ms-box1'>
-      <div className="mission-feedback-title">
-    이번 미션은 어땠나요?
-    <span className="optional-text">(선택)</span>
+      <div className="ms-box1">
+        <div className="mission-feedback-title">
+          이번 미션은 어땠나요?
+          <span className="optional-text">(선택)</span>
+        </div>
+        <textarea
+          className="ms-txtarea"
+          placeholder="오늘의 미션을 수행한 후 느낀 소감을 간단히 공유해주세요:)"
+          value={impression}
+          onChange={handleImpressionChange}
+        ></textarea>
+        <div className="character-count">
+          <span style={{ color: 'green' }}>{impression.length}</span> / 100
+        </div>
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
       </div>
-      <textarea
-  className="ms-txtarea"
-  placeholder="오늘의 미션을 수행한 후 느낀 소감을 간단히 공유해주세요:)"
-  value={impression}
-  onChange={handleImpressionChange}
-></textarea>
-<div className="character-count">
-  <span style={{ color: 'green' }}>{impression.length}</span> / 100
-</div>
-{errorMessage && <div className="error-message">{errorMessage}</div>}
-</div>
 
-      <div className='ms-box2'>
-      <div className="note1">
-        참고해주세요!
+      <div className="ms-box2">
+        <div className="note1">참고해주세요!</div>
+        <div className="note2">
+          인증사진이 미션과 무관할 시 운영진에 의해 인증이 반려될 수 있어요.
+        </div>
       </div>
-      <div className="note2">인증사진이 미션과 무관할 시 운영진에 의해 인증이 반려될 수 있어요.</div>
-    </div>
     </div>
   );
 }
@@ -102,24 +115,23 @@ function MissionCertification() {
       navigate(-1);
     }
   };
-  
+
   const handleClose = () => {
     setShowPopup(true); // x 버튼 클릭 시 팝업을 열기(true)
   };
-  
+
   const handlePopupClose = () => {
     setShowPopup(false);
   };
-  
+
   const handlePopupContinue = () => {
     setShowPopup(false); // "계속 작성하기" 버튼 클릭 시 팝업을 닫기(false)
   };
-  
+
   const handlePopupConfirm = () => {
     // 중단하기 버튼 클릭 시의 로직
     navigate(-1); // 홈 화면으로 이동
   };
-  
 
   return (
     <div>
@@ -155,22 +167,27 @@ function MissionCertification() {
 
       {/* 팝업 창 */}
       {showPopup && (
-  <div className="popup-overlay">
-    <div className="popup-content">
-    <button className="popup-close-button" onClick={handlePopupClose}>
-  {/* <FaTimes /> */}<XIcon />
-</button>
-      <p className="bold-text">인증을 중단할까요?</p>
-      <p className="small-gray-text">작성하고 계시던 내용이 모두 삭제되고 이전 화면으로 돌아가요.</p>
-      <div className="popup-buttons">
-        <button className="cancel-button" onClick={handlePopupConfirm}>중단하기</button>
-        <button className="continue-button" onClick={handlePopupContinue}>계속 작성하기</button>
-     
-
-      </div>
-    </div>
-  </div>
-)}
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <button className="popup-close-button" onClick={handlePopupClose}>
+              {/* <FaTimes /> */}
+              <XIcon />
+            </button>
+            <p className="bold-text">인증을 중단할까요?</p>
+            <p className="small-gray-text">
+              작성하고 계시던 내용이 모두 삭제되고 이전 화면으로 돌아가요.
+            </p>
+            <div className="popup-buttons">
+              <button className="cancel-button" onClick={handlePopupConfirm}>
+                중단하기
+              </button>
+              <button className="continue-button" onClick={handlePopupContinue}>
+                계속 작성하기
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -198,7 +215,8 @@ function XIcon(props) {
       <line
         x1="6"
         y1="6"
-        x2="18"d=''
+        x2="18"
+        d=""
         y2="18"
         stroke="black" /* 색변경 */
         strokeWidth="1" /* 선의 두께 */
@@ -208,8 +226,5 @@ function XIcon(props) {
     </svg>
   );
 }
-
-
-
 
 export default MissionCertification;
