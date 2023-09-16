@@ -7,6 +7,7 @@ import Feed from './pages/feed/Feed';
 import My from './pages/my/My';
 import MissionCertification from './pages/mission/MissionCertification';
 import Splash from './pages/splash/Splash';
+import Redirection from './pages/Redirection';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/my" element={<My />}></Route>
             <Route path="/mission" element={<MissionCertification />}></Route>
             <Route path="/" element={<Splash />}></Route>
+            <Route path="/kakao/callback" element={<Redirection />}></Route>      
           </Routes>
         </BrowserRouter>
       </ChallengeProvider>
