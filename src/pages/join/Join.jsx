@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import styled, { createGlobalStyle } from 'styled-components';
+import React, { useState } from 'react';
 import axios from 'axios';
+import styled, { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -31,7 +30,7 @@ const InputBox = styled.input`
   background-color: #eff0f0;
   border-radius: 10px;
   padding: 5px;
-  width:328px;
+  width: 328px;
   max-width: 400px;
 `;
 
@@ -57,12 +56,7 @@ const BoldText = styled.p`
 const SpaceBetween = styled.div`
   margin-top: 250px;
 `;
-const Icon = styled.img`
-  position: absolute;
-  right: 12px; /* 오른쪽 여백 조절 (예제에서는 12px로 설정) */
-  width: 16px; /* 아이콘 크기 조절 (예제에서는 16px로 설정) */
-  height: 16px;
-`;
+
 const Message = styled.div`
   color: ${(props) => (props.error ? 'red' : 'green')};
   display: ${(props) => (props.hidden ? 'none' : 'block')};
@@ -73,58 +67,77 @@ function Join() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [nickname, setNickname] = useState('');
-  const [isNicknameAvailable, setIsNicknameAvailable] = useState(false); // 초기에는 메시지를 숨기기 위해 false로 초기화
+  const [isNicknameAvailable, setIsNicknameAvailable] = useState(false);
 
-  const token =
-    'Bearer eyJ0eXBlIjoiYWNjZXNzIiwiYWxnIjoiSFMyNTYifQ.eyJ1c2VySWQiOjIsImlhdCI6MTY5NDQzMzY1MiwiZXhwIjoxNjk1NjQzMjUyfQ.qn1T4G6q7w5IOYm046Xj4guWOMNjHjDzov2k2DpuZWA';
-  const apiEndpoint = 'http://13.125.188.63:9000/api/members'; // API 엔드포인트 URL
+  const apiEndpoint = 'http://54.180.66.83:9000/api/members'; // API 엔드포인트 URL
+  const token = 'Bearer eyJ0eXBlIjoiYWNjZXNzIiwiYWxnIjoiSFMyNTYifQ.eyJ1c2VySWQiOjUwNCwiaWF0IjoxNjk0ODM5NzYxLCJleHAiOjE2OTYwNDkzNjF9.jXou47N2t0E5M31YXNCR1D32q3WGWSMG3rbtZv3xrbw'; // 토큰을 적절하게 설정
 
-  const requestBody = {
-    nickname: nickname,
-  };
+  // 이름 중복 검사 함수
+const checkNameAvailability = async (name) => {
+  try {
+    // if (name.length < 2) {
+    //   console.log('Name is too short'); // 입력값이 2글자 미만인 경우 로그를 출력
+    // }
+    const response = await fetch(`${apiEndpoint}/check-nickname`, {
+      method: 'PUT',
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/json',
+      },
+      body: 
+        JSON.stringify({"exp": 0,
+          "kakaoId": "string",
+          "nickname": "string",
+          "refreshToken": "string"
+        })
+    });
+    // const response = await axios.post(
+    //   `${apiEndpoint}/check-nickname`,
+    //   { nickname: name },
+    //   {
+    //     headers: {
+    //       Authorization: token,
+    //     },
+    //   }
+    // );
+    console.log(response);
+    return response.data.isAvailable;
+    
+  } catch (error) {
+    console.error('Error checking name availability:', error.message);
+    throw error;
+  }
+};
 
-  const handleSubmit = async () => {
-    setIsLoading(true);
-    try {
+const handleSubmit = async () => {
+  setIsLoading(true);
+  try {
+    // 이름 중복 검사 함수를 호출하여 중복 여부 확인
+    const isAvailable = await checkNameAvailability(nickname);
+
+    if (isAvailable) {
+      // 중복이 아닌 경우에만 서버 요청 보냄
+      const requestBody = {
+        nickname: nickname,
+      };
       const response = await axios.post(
         apiEndpoint,
         requestBody,
         {
           headers: {
-            Authorization: token,
-            'Content-Type': 'application/json', // 요청 본문의 형식을 JSON으로 지정
+            Authorization: token, // 'Authorization' 헤더에 토큰 추가
+            'Content-Type': 'application/json',
           },
         }
       );
-
       setData(response.data);
-      setIsLoading(false);
-    } catch (error) {
-      setError(error);
-      setIsLoading(false);
     }
-  };
-
-  const handleNicknameBlur = async () => {
-    if (nickname.length >= 2) { // 예를 들어, 2글자 이상일 때만 서버 요청 보냄
-      try {
-        const response = await axios.post(
-          `${apiEndpoint}/check-nickname`,
-          requestBody,
-          {
-            headers: {
-              Authorization: token,
-              'Content-Type': 'application/json',
-            },
-          }
-        );
-  
-        setIsNicknameAvailable(response.data.isAvailable);
-      } catch (error) {
-        setError(error);
-      }
-    }
-  };
+  } catch (error) {
+    setError(error);
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return (
     <CenteredContainer>
@@ -136,14 +149,13 @@ function Join() {
           type="text"
           placeholder="이름을 입력하세요"
           value={nickname}
-          onChange={(e) => setNickname(e.target.value)}
-          onBlur={handleNicknameBlur} // 입력란을 벗어났을 때 중복 여부 확인
+          onChange={(e) => {setNickname(e.target.value); checkNameAvailability(e.target.value)}}
         />
         <Message error={!isNicknameAvailable} hidden={!nickname}>
           {isNicknameAvailable ? '사용 가능한 이름이에요' : '이름이 중복되었어요'}
         </Message>
         <SpaceBetween />
-        <NextButton onClick={handleSubmit} disabled={!isNicknameAvailable}>
+        <NextButton onClick={handleSubmit}>
           다음으로
         </NextButton>
         {error && <div>Error: {error.message}</div>}
@@ -151,7 +163,5 @@ function Join() {
     </CenteredContainer>
   );
 }
-
-ReactDOM.render(<Join />, document.getElementById('root'));
 
 export default Join;
