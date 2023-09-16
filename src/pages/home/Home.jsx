@@ -1,6 +1,6 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import TabBar from '../../components/common/TabBar/TabBar';
-import { MButton } from '../../components/common/Buttons';
+import { MButton, SButton } from '../../components/common/Buttons';
 import JoinStatus from '../../components/JoinStatus';
 import ProofModal from '../../components/common/modal/ProofModal';
 import {
@@ -11,6 +11,7 @@ import {
 } from './StyledHome';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import logoIcon from '../../assets/images/logo-icon-line.png'
 
 const Home = () => {
   const [challengeList, setChallengeList] = useState([]);
@@ -91,33 +92,35 @@ const Home = () => {
         <h2 className="a11y-hidden">홈</h2>
         <JoinStatus success={true}></JoinStatus>
         <ChallengeSection>
+          <img src={logoIcon} alt="지구 아이콘" />
           <h3 className="a11y-hidden">오늘의 챌린지</h3>
-          <div className="level-name">새싹지킴이</div>
-          <span>
-            도파민님, <h3>오늘의 챌린지</h3>에요:)
+          <div className="level-name">새싹지킴이 도파민님</div>
+          <span className='tit'>
+            <h3>오늘의 챌린지</h3>에요:)
           </span>
 
-          <Swiper className="swiper-frame" spaceBetween={8}>
+          <ul>
             {!!challengeList.length &&
               challengeList.map((challenge, i) => {
                 return (
-                  <SwiperSlide key={i} className="swiper-item">
-                    <img src={challenge.img} alt="" />
-                    <p>{challenge.text}</p>
-                    <strong>{challenge.tit}</strong>
-                    <MButton
+                  <li key={i}>
+                    <div>
+                      <p>난이도 하</p>
+                      <strong>{challenge.tit}</strong>
+                    </div>
+                    <SButton
                       disabled={!challenge.active}
                       onClick={(e) => {
                         e.preventDefault();
                         setIsModalOpen(true);
                       }}
                     >
-                      {challenge.status}
-                    </MButton>
-                  </SwiperSlide>
+                      인증하기
+                    </SButton>
+                  </li>
                 );
               })}
-          </Swiper>
+          </ul>
           {isModalOpen && <ProofModal setIsModalOpen={setIsModalOpen} />}
         </ChallengeSection>
 
@@ -126,11 +129,14 @@ const Home = () => {
           <article>
             <div>
               <img src="" alt="" />
-              <span className="lavel">
+              <span className="level">
                 Level. <strong>1</strong>
               </span>
-              <span>
-                총 미션완료 <strong>6</strong>
+              <span className="cnt">
+                완료 횟수 <strong>6</strong>
+              </span>
+              <span className="exp">
+                내 경험치 <strong>6</strong>
               </span>
             </div>
             <div aria-label="레벨업 스테이터스 80%" className="status-bar">
@@ -141,7 +147,7 @@ const Home = () => {
 
         <FeedSection>
           <h3 className="a11y-hidden">챌린지 피드</h3>
-          <span>우리는 모여서&#127793;</span>
+          <span>함께하는 챌린이들</span>
           <Link to="/">더보기</Link>
           <Swiper
             className="swiper-frame"
