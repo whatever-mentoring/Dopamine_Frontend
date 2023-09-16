@@ -16,12 +16,18 @@ const CenteredContainer = styled.div`
   align-items: center;
   min-height: 100vh;
 `;
-
 const Text = styled.p`
-  font-size: 1.2em;
-  color: ${(props) => (props.gray ? '#A3A3A3' : 'black')};
-  font-weight: ${(props) => (props.bold ? 'bold' : 'normal')};
+  font-family: SUITE; 
+  font-size: 14px;
+  font-weight: 500; 
+  line-height: 21px; 
+  letter-spacing: -0.02em;
+  text-align: left
 `;
+
+// 사용 예시
+<Text>This is a medium text</Text>
+
 
 const InputBox = styled.input`
   font-size: 1.2em;
@@ -40,7 +46,7 @@ const NextButton = styled.button`
   border: none;
   border-radius: 100px;
   padding: 10px;
-  font-size: 1.2em;
+  font-size: 2.0em;
   cursor: pointer;
   width: 328px;
   height: 56px;
@@ -48,9 +54,13 @@ const NextButton = styled.button`
 `;
 
 const BoldText = styled.p`
-  font-weight: bold;
-  font-size: 1.8em;
-  color: black;
+  font-family: SUITE; 
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 36px;
+  letter-spacing: -0.02em;
+  text-align: left; 
+  color: black; 
 `;
 
 const SpaceBetween = styled.div`
@@ -143,15 +153,22 @@ const handleSubmit = async () => {
     <CenteredContainer>
       <GlobalStyle />
       <div>
-        <Text gray>이것만 입력하면 끝이에요.</Text>
+        <Text>이것만 입력하면 끝이에요.</Text>
         <BoldText>이름을 어떻게 설정할까요?</BoldText>
         <InputBox
-          type="text"
-          placeholder="이름을 입력하세요"
-          value={nickname}
-          onChange={(e) => {setNickname(e.target.value); checkNameAvailability(e.target.value)}}
-        />
-        <Message error={!isNicknameAvailable} hidden={!nickname}>
+  type="text"
+  placeholder="이름을 입력하세요"
+  value={nickname}
+  onChange={async (e) => {
+    const name = e.target.value;
+    setNickname(name);
+     // 이름 중복 검사를 수행하고 결과를 업데이트
+     const isAvailable = await checkNameAvailability(name);
+     setIsNicknameAvailable(isAvailable);
+   }}
+ />
+ 
+           <Message error={!isNicknameAvailable} hidden={!nickname}>
           {isNicknameAvailable ? '사용 가능한 이름이에요' : '이름이 중복되었어요'}
         </Message>
         <SpaceBetween />
