@@ -1,20 +1,24 @@
-import React, { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext';
+
 import TabBar from '../../components/common/TabBar/TabBar';
 import settingIcon from '../../assets/icons/setting.svg';
 import { ProfileSection, ProofSection, StyledMy } from './StyledMy';
 import StyledSelectBtn from '../../components/common/select/StyledSelectBtn';
 import openIcon from '../../assets/icons/open.svg';
 
+import FilterModal from './FilterModal';
+import { getFeedsByMember } from '../../api/feed';
+
 // UI를 위한 임시
 import testImg1 from '../../assets/images/my-test1.png';
 import testImg2 from '../../assets/images/my-test2.png';
 import testImg3 from '../../assets/images/my-test3.png';
-import FilterModal from './FilterModal';
-import { Link } from 'react-router-dom';
 
 const My = () => {
-  const level = 2;
-  const completionCount = 6;
+  const { nickname, level } = useContext(UserContext);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filterOpt, setFilterOpt] = useState('전체보기');
   const [feedList, setFeedList] = useState([
@@ -28,16 +32,20 @@ const My = () => {
     { src: testImg2 },
     { src: testImg3 },
   ]);
-
-  function calculateExperience(level, completionCount) {
-    return level * 100 + completionCount * 10;
-  }
+  useEffect(() => {
+    const setData = async () => {
+      // const feedRes = await getFeedsByMember();
+      // const feedData = await feedRes.json();
+      // setFeedList(feedData);
+    };
+    setData();
+  }, []);
 
   return (
     <>
       <StyledMy>
         <h1 className="a11y-hidden">challenG9 | 마이페이지</h1>
-        <ProfileSection fillPercentage={70}>
+        <ProfileSection $fillPercent={100 - level.expPercent}>
           <div className="top-wrap">
             <h2>내 정보</h2>
             <Link to="/my/setting">
@@ -45,29 +53,31 @@ const My = () => {
             </Link>
           </div>
           <div className="profile">
-            <img src="" alt="프로필 사진" />
+            <img src={level.badge} alt={`${nickname} 뱃지`} />
             <p>
-              <span>새싹지킴이 도파민님</span>
+              <span>
+                {level.name} {nickname}님
+              </span>
               <span>잘하고 계시는 군요!</span>
             </p>
           </div>
-          <div className="gauge-bar"></div>
+          <div className="exp-bar"></div>
           <div className="txt-wrap">
             <span>
-              Level. <span>2</span>
+              Level. <span>{level.num}</span>
             </span>
             <span className="cnt">
-              완료 횟수 <span>6</span>
+              완료 횟수 <span>{level.successCnt}</span>
             </span>
             <span>
-              내 경험치 <span>6</span>
+              내 경험치 <span>{level.exp}</span>
             </span>
           </div>
         </ProfileSection>
         <ProofSection>
           <div className="top-wrap">
             <h2>나의 인증기록</h2>
-            <span>31</span>
+            <span>{level.successCnt}</span>
             <StyledSelectBtn
               className={isModalOpen ? 'select-btn on' : 'select-btn'}
               onClick={() => setIsModalOpen(true)}
@@ -83,14 +93,15 @@ const My = () => {
           </div>
 
           <ul>
-            {feedList.length &&
-              feedList.map((v, i) => {
-                return (
-                  <li key={i}>
-                    <img src={v.src} alt="" />
-                  </li>
-                );
-              })}
+            {feedList.length
+              ? feedList.map((v, i) => {
+                  return (
+                    <li key={i}>
+                      <img src={v.src} alt="" />
+                    </li>
+                  );
+                })
+              : null}
           </ul>
         </ProofSection>
       </StyledMy>

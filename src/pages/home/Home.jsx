@@ -1,4 +1,12 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { useEffect, useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext';
+
+import { getTodayChallenge } from '../../api/challenge';
+import { getMember } from '../../api/member';
+import { getFeedsByLikeCount } from '../../api/feed';
+
 import TabBar from '../../components/common/TabBar/TabBar';
 import { SButton } from '../../components/common/Buttons';
 import JoinStatus from '../../components/JoinStatus';
@@ -9,27 +17,25 @@ import {
   FeedSection,
   StyledHome,
 } from './StyledHome';
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import logoIcon from '../../assets/images/logo-icon-line.png';
 
 const Home = () => {
+  const { nickname, level } = useContext(UserContext);
   const [challengeList, setChallengeList] = useState([]);
   const [feedList, setFeedList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  function setCookie(cookie_name, value, days) {
-    var exdate = new Date();
-    exdate.setDate(exdate.getDate() + days);
-    // 설정 일수만큼 현재시간에 만료값으로 지정
-
-    var cookie_value =
-      escape(value) + (days == null ? '' : '; expires=' + exdate.toUTCString());
-    document.cookie = cookie_name + '=' + cookie_value;
-  }
-  setCookie('myHobby', 'game', '3');
-
   useEffect(() => {
+    const setData = async () => {
+      // const challengeRes = await getTodayChallenge();
+      // const challengeData = challengeRes.json();
+      // console.log(challengeRes);
+      // const feedRes = await getFeedsByLikeCount();
+      // const feedData = await feedRes.json();
+      // console.log(feedRes);
+    };
+
+    setData();
     // 임시
     const mission1 = new URL(
       '../../assets/images/mission1.png',
@@ -39,6 +45,7 @@ const Home = () => {
       '../../assets/images/mission2.png',
       import.meta.url
     ).href;
+
     setChallengeList([
       {
         tit: '텀블러 갖고 다니기',
@@ -93,7 +100,11 @@ const Home = () => {
         <ChallengeSection>
           <img src={logoIcon} alt="지구 아이콘" />
           <h2 className="a11y-hidden">오늘의 챌린지</h2>
-          <div className="level-name">새싹지킴이 도파민님</div>
+          {level && (
+            <div className="level-name">
+              {level.name} {nickname}님
+            </div>
+          )}
           <span className="tit">
             <h2>오늘의 챌린지</h2>에요:)
           </span>
@@ -123,26 +134,31 @@ const Home = () => {
           {isModalOpen && <ProofModal setIsModalOpen={setIsModalOpen} />}
         </ChallengeSection>
 
-        <ReportSection>
-          <h2>나의 기록</h2>
-          <article>
-            <div>
-              <img src="" alt="" />
-              <span className="level">
-                Level. <strong>1</strong>
-              </span>
-              <span className="cnt">
-                완료 횟수 <strong>6</strong>
-              </span>
-              <span className="exp">
-                내 경험치 <strong>6</strong>
-              </span>
-            </div>
-            <div aria-label="레벨업 스테이터스 80%" className="status-bar">
-              <span></span>
-            </div>
-          </article>
-        </ReportSection>
+        {level && (
+          <ReportSection $fillPercent={100 - level.expPercent}>
+            <h2>나의 기록</h2>
+            <article>
+              <div>
+                <img src={level.badge} alt={`${level.name} 뱃지`} />
+                <span className="level">
+                  Level. <strong>{level.num}</strong>
+                </span>
+                <span className="cnt">
+                  완료 횟수 <strong>{level.successCnt}</strong>
+                </span>
+                <span className="exp">
+                  내 경험치 <strong>{level.exp}</strong>
+                </span>
+              </div>
+              <div
+                aria-label={`레벨업까지 남은 경험치 ${level.expPercent}%`}
+                className="exp-bar"
+              >
+                <span></span>
+              </div>
+            </article>
+          </ReportSection>
+        )}
 
         <FeedSection>
           <h2 className="a11y-hidden">챌린지 피드</h2>
