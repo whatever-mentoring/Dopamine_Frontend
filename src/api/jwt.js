@@ -5,7 +5,6 @@ const token = localStorage.getItem('accessToken');
 
 const login = (code) => {
   const redirectUrl = 'http://localhost:5173/kakao/callback';
-  console.log(code);
   const reqPath = path + `/login?code=${code}&redirect_url=${redirectUrl}`;
   return get(reqPath);
 };

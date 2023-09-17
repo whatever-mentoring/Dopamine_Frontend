@@ -91,8 +91,8 @@ function Nickname() {
         navigate('/home');
       }
     } catch (error) {
-      console.error(error.message);
-      throw error;
+      alert('닉네임 설정에 실패했어요.');
+      console.error(error);
     }
   };
 

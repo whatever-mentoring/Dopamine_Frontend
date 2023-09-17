@@ -32,6 +32,7 @@ const My = () => {
     { src: testImg2 },
     { src: testImg3 },
   ]);
+
   useEffect(() => {
     const setData = async () => {
       // const feedRes = await getFeedsByMember();

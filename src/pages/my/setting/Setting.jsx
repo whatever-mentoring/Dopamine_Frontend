@@ -8,22 +8,32 @@ const Setting = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    const res = await logout();
+    try {
+      const res = await logout();
 
-    if (res.status === 200) {
-      navigate('/');
-    } else {
-      alert('로그아웃에 실패했어요.');
+      if (res.status === 200) {
+        navigate('/');
+      } else {
+        alert('로그인에 실패했어요.');
+      }
+    } catch (error) {
+      alert('로그인에 실패했어요.');
+      console.error(error);
     }
   };
 
   const handleDeleteMember = async () => {
-    const res = await deleteMember();
+    try {
+      const res = await deleteMember();
 
-    if (res.status === 200) {
-      navigate('/');
-    } else {
-      alert('회원탈퇴에 실패했어요.');
+      if (res.status === 200) {
+        navigate('/');
+      } else {
+        alert('회원 탈퇴에 실패했어요.');
+      }
+    } catch (error) {
+      alert('회원 탈퇴에 실패했어요.');
+      console.error(error);
     }
   };
 
