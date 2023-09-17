@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import styled, { createGlobalStyle } from 'styled-components';
+import { editMember } from '../../api/member';
+import { useNavigate } from 'react-router-dom';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -17,17 +18,16 @@ const CenteredContainer = styled.div`
   min-height: 100vh;
 `;
 const Text = styled.p`
-  font-family: SUITE; 
+  font-family: SUITE;
   font-size: 14px;
-  font-weight: 500; 
-  line-height: 21px; 
+  font-weight: 500;
+  line-height: 21px;
   letter-spacing: -0.02em;
-  text-align: left
+  text-align: left;
 `;
 
 // 사용 예시
-<Text>This is a medium text</Text>
-
+/* <Text>This is a medium text</Text> */
 
 const InputBox = styled.input`
   font-size: 1.2em;
@@ -46,7 +46,7 @@ const NextButton = styled.button`
   border: none;
   border-radius: 100px;
   padding: 10px;
-  font-size: 2.0em;
+  font-size: 2em;
   cursor: pointer;
   width: 328px;
   height: 56px;
@@ -54,13 +54,13 @@ const NextButton = styled.button`
 `;
 
 const BoldText = styled.p`
-  font-family: SUITE; 
+  font-family: SUITE;
   font-size: 24px;
   font-weight: 700;
   line-height: 36px;
   letter-spacing: -0.02em;
-  text-align: left; 
-  color: black; 
+  text-align: left;
+  color: black;
 `;
 
 const SpaceBetween = styled.div`
@@ -68,86 +68,44 @@ const SpaceBetween = styled.div`
 `;
 
 const Message = styled.div`
-  color: ${(props) => (props.error ? 'red' : 'green')};
-  display: ${(props) => (props.hidden ? 'none' : 'block')};
+  color: ${(props) => (props.$error ? 'red' : 'green')};
 `;
 
 function Join() {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [status, setStatus] = useState(null);
   const [nickname, setNickname] = useState('');
   const [isNicknameAvailable, setIsNicknameAvailable] = useState(false);
-
-  const apiEndpoint = 'http://54.180.66.83:9000/api/members'; // API 엔드포인트 URL
-  const token = 'Bearer eyJ0eXBlIjoiYWNjZXNzIiwiYWxnIjoiSFMyNTYifQ.eyJ1c2VySWQiOjUwNCwiaWF0IjoxNjk0ODM5NzYxLCJleHAiOjE2OTYwNDkzNjF9.jXou47N2t0E5M31YXNCR1D32q3WGWSMG3rbtZv3xrbw'; // 토큰을 적절하게 설정
+  const navigate = useNavigate();
 
   // 이름 중복 검사 함수
-const checkNameAvailability = async (name) => {
-  try {
-    // if (name.length < 2) {
-    //   console.log('Name is too short'); // 입력값이 2글자 미만인 경우 로그를 출력
-    // }
-    const response = await fetch(`${apiEndpoint}/check-nickname`, {
-      method: 'PUT',
-      headers: {
-        Authorization: token,
-        'Content-Type': 'application/json',
-      },
-      body: 
-        JSON.stringify({"exp": 0,
-          "kakaoId": "string",
-          "nickname": "string",
-          "refreshToken": "string"
-        })
-    });
-    // const response = await axios.post(
-    //   `${apiEndpoint}/check-nickname`,
-    //   { nickname: name },
-    //   {
-    //     headers: {
-    //       Authorization: token,
-    //     },
-    //   }
-    // );
-    console.log(response);
-    return response.data.isAvailable;
-    
-  } catch (error) {
-    console.error('Error checking name availability:', error.message);
-    throw error;
-  }
-};
+  const checkNameAvailability = async (name) => {
+    try {
+      if (name.length < 2) {
+        setStatus('2~10자 이내로 입력해주세요.'); // 입력값이 2글자 미만인 경우 로그를 출력
+        return false;
+      }
+      const res = await editMember(name, 0);
+      const json = await res.json();
 
-const handleSubmit = async () => {
-  setIsLoading(true);
-  try {
-    // 이름 중복 검사 함수를 호출하여 중복 여부 확인
-    const isAvailable = await checkNameAvailability(nickname);
-
-    if (isAvailable) {
-      // 중복이 아닌 경우에만 서버 요청 보냄
-      const requestBody = {
-        nickname: nickname,
-      };
-      const response = await axios.post(
-        apiEndpoint,
-        requestBody,
-        {
-          headers: {
-            Authorization: token, // 'Authorization' 헤더에 토큰 추가
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      setData(response.data);
+      if (json.memberId) {
+        setStatus('사용 가능한 이름이에요.');
+        return true;
+      } else if (json.message) {
+        setStatus(json.message);
+        return false;
+      }
+    } catch (error) {
+      console.error(error.message);
+      throw error;
     }
-  } catch (error) {
-    setError(error);
-  } finally {
-    setIsLoading(false);
-  }
-};
+  };
+
+  const handleSubmit = () => {
+    localStorage.setItem('nickname', nickname);
+    navigate('/home');
+  };
 
   return (
     <CenteredContainer>
@@ -156,26 +114,20 @@ const handleSubmit = async () => {
         <Text>이것만 입력하면 끝이에요.</Text>
         <BoldText>이름을 어떻게 설정할까요?</BoldText>
         <InputBox
-  type="text"
-  placeholder="이름을 입력하세요"
-  value={nickname}
-  onChange={async (e) => {
-    const name = e.target.value;
-    setNickname(name);
-     // 이름 중복 검사를 수행하고 결과를 업데이트
-     const isAvailable = await checkNameAvailability(name);
-     setIsNicknameAvailable(isAvailable);
-   }}
- />
- 
-           <Message error={!isNicknameAvailable} hidden={!nickname}>
-          {isNicknameAvailable ? '사용 가능한 이름이에요' : '이름이 중복되었어요'}
-        </Message>
+          type="text"
+          placeholder="이름을 입력하세요"
+          value={nickname}
+          onChange={async (e) => {
+            const name = e.target.value;
+            setNickname(name);
+            // 이름 중복 검사를 수행하고 결과를 업데이트
+            const isAvailable = await checkNameAvailability(name);
+            setIsNicknameAvailable(isAvailable);
+          }}
+        />
+        {status && <Message $error={!isNicknameAvailable}>{status}</Message>}
         <SpaceBetween />
-        <NextButton onClick={handleSubmit}>
-          다음으로
-        </NextButton>
-        {error && <div>Error: {error.message}</div>}
+        <NextButton onClick={handleSubmit}>다음으로</NextButton>
       </div>
     </CenteredContainer>
   );
