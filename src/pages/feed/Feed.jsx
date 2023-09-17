@@ -23,7 +23,6 @@ const Feed = () => {
   const [skipNum, setSkipNum] = useState(0);
   const [isChallengeSelectModalOpen, setIsChallengeSelectModalOpen] =
     useState(false);
-  console.log(document.cookie);
 
   const { challengeToProve } = useContext(ChallengeContext);
 
@@ -92,7 +91,7 @@ const Feed = () => {
           />
         )}
 
-<StyledSelect
+        <StyledSelect
           className={isSortSelectOn ? 'select-btn on' : 'select-btn'}
           // onClick : 탭, 스페이스 포함
           onClick={() => setIsSortSelectOn(true)}

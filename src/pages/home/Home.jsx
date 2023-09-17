@@ -11,7 +11,7 @@ import {
 } from './StyledHome';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import logoIcon from '../../assets/images/logo-icon-line.png'
+import logoIcon from '../../assets/images/logo-icon-line.png';
 
 const Home = () => {
   const [challengeList, setChallengeList] = useState([]);
@@ -88,15 +88,14 @@ const Home = () => {
   return (
     <>
       <StyledHome>
-        <h1 className="a11y-hidden">challenG9</h1>
-        <h2 className="a11y-hidden">홈</h2>
+        <h1 className="a11y-hidden">challenG9 | 홈</h1>
         <JoinStatus success={true}></JoinStatus>
         <ChallengeSection>
           <img src={logoIcon} alt="지구 아이콘" />
-          <h3 className="a11y-hidden">오늘의 챌린지</h3>
+          <h2 className="a11y-hidden">오늘의 챌린지</h2>
           <div className="level-name">새싹지킴이 도파민님</div>
-          <span className='tit'>
-            <h3>오늘의 챌린지</h3>에요:)
+          <span className="tit">
+            <h2>오늘의 챌린지</h2>에요:)
           </span>
 
           <ul>
@@ -125,7 +124,7 @@ const Home = () => {
         </ChallengeSection>
 
         <ReportSection>
-          <h3>나의 기록</h3>
+          <h2>나의 기록</h2>
           <article>
             <div>
               <img src="" alt="" />
@@ -146,7 +145,7 @@ const Home = () => {
         </ReportSection>
 
         <FeedSection>
-          <h3 className="a11y-hidden">챌린지 피드</h3>
+          <h2 className="a11y-hidden">챌린지 피드</h2>
           <span>함께하는 챌린이들</span>
           <Link to="/">더보기</Link>
           <Swiper
