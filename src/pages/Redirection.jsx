@@ -7,7 +7,7 @@ const Redirection = () => {
 
   useEffect(() => {
     fetch(
-      `http://54.180.66.83:9000/api/auth/login?code=${code}&redirect_url=http://localhost:5173/kakao/callback`
+      `http://54.180.66.83:9000/api/auth/login?code=${code}&redirect_url=https://dopamine-frontend.vercel.app/kakao/callback`
     ).then(async (res) => {
       const json = await res.json();
 
