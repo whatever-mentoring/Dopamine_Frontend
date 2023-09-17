@@ -2,7 +2,7 @@ import React from 'react';
 import TabBar from '../../components/common/TabBar/TabBar';
 import styled from 'styled-components';
 import uploadIcon from '../../assets/icons/gear.svg';
-
+// import { StyledMy } from './StyledMy';
 
 const Name = styled.h2`
   font-family: SUITE;
@@ -187,8 +187,9 @@ function MyProfile() {
 const My = () => {
   return (
     <>
-      <TabBar />
       <MyProfile />
+    {/* <StyledMy></StyledMy> */}
+      <TabBar></TabBar>
     </>
   );
 };

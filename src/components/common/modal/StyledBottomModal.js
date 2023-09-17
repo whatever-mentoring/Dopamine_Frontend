@@ -5,7 +5,7 @@ const StyledBottomModal = styled.dialog`
   max-width: 100%;
   border: none;
   margin: auto auto 0;
-  padding: 30px 20px 21px;
+  padding: 30px 16px 21px;
   border-radius: 12px 12px 0 0;
 
   /* 밑에서 위로 모달 등장 */
@@ -28,7 +28,14 @@ const StyledBottomModal = styled.dialog`
     width: 100%;
     font-size: var(--text-m);
     border: 1px solid var(--gray-300);
+    color: var(--gray-300);
     border-radius: 12px;
+  }
+
+  button:focus {
+    outline: none;
+    border-color: var(--primary-500);
+    color: var(--primary-500);  
   }
 
   button + button {

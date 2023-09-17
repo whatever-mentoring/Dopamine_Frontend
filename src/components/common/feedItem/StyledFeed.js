@@ -30,6 +30,7 @@ const StyledFeed = styled.article`
 
   .swiper-frame {
     overflow: hidden;
+    border-radius: 10px;
 
     & > div {
       display: flex;
