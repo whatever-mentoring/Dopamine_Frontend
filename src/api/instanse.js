@@ -1,4 +1,4 @@
-const url = 'https://api.mandarin.weniv.co.kr';
+const url = 'http://54.180.66.83:9000';
 
 // get
 const get = async (reqPath, token) => {
@@ -12,7 +12,7 @@ const get = async (reqPath, token) => {
   };
 
   if (token) {
-    options.headers.Authorization = `Bearer ${token}`;
+    options.headers.Authorization = token;
   }
 
   return await fetch(reqUrl, options);
@@ -28,6 +28,7 @@ const post = (reqPath, data) => {
       'Content-type': 'application/json',
     },
   };
+
   if (data) {
     options.body = JSON.stringify(data);
   }
@@ -44,32 +45,48 @@ const postForm = async (reqPath, formData) => {
   });
 };
 
-// put
-const put = async (reqPath, data) => {
-  const token = localStorage.getItem('token');
+// put json
+const put = async (reqPath, data, token) => {
+  const reqUrl = url + reqPath;
+
+  const options = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  };
+
+  if (token) {
+    options.headers.Authorization = token;
+  }
+
+  return await fetch(reqUrl, options);
+};
+
+// put form
+const putForm = async (reqPath, formData) => {
   const reqUrl = url + reqPath;
 
   return await fetch(reqUrl, {
     method: 'PUT',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
+    body: formData,
   });
 };
 
 // delete
-const deleteData = async (reqPath) => {
-  const token = localStorage.getItem('token');
+const deleteData = async (reqPath, token) => {
   const reqUrl = url + reqPath;
-  return await fetch(reqUrl, {
+
+  const options = {
     method: 'DELETE',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-  });
+  };
+
+  if (token) {
+    options.headers.Authorization = token;
+  }
+
+  return await fetch(reqUrl, options);
 };
 
-export { get, post, postForm, put, deleteData };
+export { get, post, postForm, put, putForm, deleteData };
