@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { editMember } from '../../api/member';
 import { useNavigate } from 'react-router-dom';
@@ -71,7 +71,7 @@ const Message = styled.div`
   color: ${(props) => (props.$error ? 'red' : 'green')};
 `;
 
-function Join() {
+function Nickname() {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState(null);
@@ -79,32 +79,21 @@ function Join() {
   const [isNicknameAvailable, setIsNicknameAvailable] = useState(false);
   const navigate = useNavigate();
 
-  // 이름 중복 검사 함수
-  const checkNameAvailability = async (name) => {
+  const handleSubmit = async () => {
     try {
-      if (name.length < 2) {
-        setStatus('2~10자 이내로 입력해주세요.'); // 입력값이 2글자 미만인 경우 로그를 출력
-        return false;
-      }
-      const res = await editMember(name, 0);
+      const res = await editMember(nickname, 0);
       const json = await res.json();
 
-      if (json.memberId) {
-        setStatus('사용 가능한 이름이에요.');
-        return true;
-      } else if (json.message) {
+      if (json.message) {
         setStatus(json.message);
-        return false;
+      } else {
+        localStorage.setItem('nickname', nickname);
+        navigate('/home');
       }
     } catch (error) {
-      console.error(error.message);
-      throw error;
+      alert('닉네임 설정에 실패했어요.');
+      console.error(error);
     }
-  };
-
-  const handleSubmit = () => {
-    localStorage.setItem('nickname', nickname);
-    navigate('/home');
   };
 
   return (
@@ -120,9 +109,15 @@ function Join() {
           onChange={async (e) => {
             const name = e.target.value;
             setNickname(name);
-            // 이름 중복 검사를 수행하고 결과를 업데이트
-            const isAvailable = await checkNameAvailability(name);
-            setIsNicknameAvailable(isAvailable);
+
+            // 이름 유효성 검사
+            if (name.length < 2) {
+              setStatus('2~10자 이내로 입력해주세요.'); // 입력값이 2글자 미만인 경우 로그를 출력
+              setIsNicknameAvailable(false);
+            } else {
+              setStatus('사용 가능한 이름이에요.');
+              setIsNicknameAvailable(true);
+            }
           }}
         />
         {status && <Message $error={!isNicknameAvailable}>{status}</Message>}
@@ -133,4 +128,4 @@ function Join() {
   );
 }
 
-export default Join;
+export default Nickname;

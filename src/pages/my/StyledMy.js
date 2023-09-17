@@ -48,7 +48,7 @@ const ProfileSection = styled.section`
       }
     }
   }
-  .gauge-bar {
+  .exp-bar {
     height: 10px;
     border-radius: 30px;
     background-color: #d9d9d9;
@@ -57,7 +57,7 @@ const ProfileSection = styled.section`
     &::before {
       content: '';
       position: absolute;
-      width: ${(props) => props.fillPercentage}%;
+      width: ${({ $fillPercent }) => $fillPercent}%;
       height: 100%;
       background-color: #02b550;
       border-radius: 30px;

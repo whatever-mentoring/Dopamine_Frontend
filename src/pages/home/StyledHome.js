@@ -128,16 +128,17 @@ const ReportSection = styled.section`
     }
   }
 
-  .status-bar {
+  .exp-bar {
     position: relative;
     background: rgba(2, 181, 80, 0.1);
     height: 10px;
     border-radius: 30px;
 
-    span {
+    &::before {
+      content: '';
       position: absolute;
       background: var(--primary-500);
-      width: 80%;
+      width: ${({ $fillPercent }) => $fillPercent}%;
       height: 10px;
       border-radius: 30px;
     }

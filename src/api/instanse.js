@@ -83,7 +83,7 @@ const deleteData = async (reqPath, token) => {
   };
 
   if (token) {
-    options.headers.Authorization = token;
+    options.headers = { Authorization: token };
   }
 
   return await fetch(reqUrl, options);
