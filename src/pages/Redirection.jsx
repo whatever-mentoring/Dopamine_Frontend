@@ -7,18 +7,15 @@ const Redirection = () => {
 
   useEffect(() => {
     fetch(
-      `http://54.180.66.83:9000/api/auth/login?code=${code}&redirect_url=http://localhost:5173/kakao/callback`
+      `http://54.180.66.83:9000/api/auth/login?code=${code}&redirect_url=https://dopamine-frontend.vercel.app/kakao/callback`
     ).then(async (res) => {
       const json = await res.json();
 
       localStorage.setItem('kakaoId', json.member.kakaoId);
       localStorage.setItem('nickname', json.member.nickname);
+      localStorage.setItem('memberId', json.member.memberId);
       localStorage.setItem('accessToken', json.token.accessToken);
       localStorage.setItem('refreshToken', json.token.refreshToken);
-
-      localStorage.getItem('kakaoId');
-      localStorage.getItem('nickname');
-      localStorage.getItem('refreshToken');
 
       if (json.member.nickname === null) {
         navigate('/join');
