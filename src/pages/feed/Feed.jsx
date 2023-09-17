@@ -92,7 +92,7 @@ const Feed = () => {
           />
         )}
 
-        <StyledSelect
+<StyledSelect
           className={isSortSelectOn ? 'select-btn on' : 'select-btn'}
           // onClick : 탭, 스페이스 포함
           onClick={() => setIsSortSelectOn(true)}
