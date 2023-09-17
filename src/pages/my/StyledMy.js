@@ -10,7 +10,7 @@ const ProfileSection = styled.section`
   .top-wrap {
     display: flex;
 
-    button {
+    a {
       margin-left: auto;
       width: 24px;
       aspect-ratio: 1/1;
@@ -102,13 +102,14 @@ const ProofSection = styled.section`
     }
   }
 
-  ul {
+  & > ul {
     margin-top: 20px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-  }
-  li {
-    aspect-ratio: 1/1;
+
+    li {
+      aspect-ratio: 1/1;
+    }
   }
 `;
 

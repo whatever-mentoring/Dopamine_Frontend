@@ -10,6 +10,7 @@ import MissionCertification from './pages/mission/MissionCertification';
 import MissionComplete from './pages/mission/MissionComplete';
 import Redirection from './pages/Redirection';
 import Splash from './pages/splash/Splash';
+import Setting from './pages/my/setting/Setting';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/home" element={<Home />}></Route>
             <Route path="/feed" element={<Feed />}></Route>
             <Route path="/my" element={<My />}></Route>
+            <Route path="/my/setting" element={<Setting />}></Route>
             <Route path="/mission" element={<MissionCertification />}></Route>
             <Route path="/mission2" element={<MissionComplete />}></Route>
             <Route path="/kakao/callback" element={<Redirection />}></Route>

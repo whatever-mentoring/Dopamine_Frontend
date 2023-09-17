@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const StyledSelect = styled.button`
+const StyledSelectBtn = styled.button`
   font-size: var(--text-s);
   color: var(--gray-900);
   display: flex;
@@ -21,4 +21,4 @@ const StyledSelect = styled.button`
   }
 `;
 
-export default StyledSelect;
+export default StyledSelectBtn;

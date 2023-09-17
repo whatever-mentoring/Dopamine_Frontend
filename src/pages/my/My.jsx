@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import TabBar from '../../components/common/TabBar/TabBar';
-import styled from 'styled-components';
 import settingIcon from '../../assets/icons/setting.svg';
 import { ProfileSection, ProofSection, StyledMy } from './StyledMy';
-import StyledSelect from '../../components/common/StyledSelectBtn';
+import StyledSelectBtn from '../../components/common/select/StyledSelectBtn';
 import openIcon from '../../assets/icons/open.svg';
 
 // UI를 위한 임시
 import testImg1 from '../../assets/images/my-test1.png';
 import testImg2 from '../../assets/images/my-test2.png';
 import testImg3 from '../../assets/images/my-test3.png';
+import FilterModal from './FilterModal';
+import { Link } from 'react-router-dom';
 
 const My = () => {
   const level = 2;
   const completionCount = 6;
-  const [isSelectOn, setIsSelectOn] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filterOpt, setFilterOpt] = useState('전체보기');
   const [feedList, setFeedList] = useState([
@@ -40,9 +40,9 @@ const My = () => {
         <ProfileSection fillPercentage={70}>
           <div className="top-wrap">
             <h2>내 정보</h2>
-            <button>
+            <Link to="/my/setting">
               <img src={settingIcon} alt="설정" />
-            </button>
+            </Link>
           </div>
           <div className="profile">
             <img src="" alt="프로필 사진" />
@@ -68,17 +68,18 @@ const My = () => {
           <div className="top-wrap">
             <h2>나의 인증기록</h2>
             <span>31</span>
-            <StyledSelect
-              className={isSelectOn ? 'select-btn on' : 'select-btn'}
+            <StyledSelectBtn
+              className={isModalOpen ? 'select-btn on' : 'select-btn'}
               onClick={() => setIsModalOpen(true)}
             >
               {filterOpt}
               <img
                 src={openIcon}
                 alt=""
-                className={isSelectOn ? 'open' : null}
+                className={isModalOpen ? 'open' : null}
               />
-            </StyledSelect>
+            </StyledSelectBtn>
+            {isModalOpen && <FilterModal setIsModalOpen={setIsModalOpen} />}
           </div>
 
           <ul>

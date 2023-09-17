@@ -4,7 +4,7 @@ import FeedItem from '../../components/common/feedItem/FeedItem';
 import { StyledMain } from './StyledMain';
 import { StyledHeader } from './StyledHeader';
 import uploadIcon from '../../assets/icons/upload.svg';
-import StyledSelect from '../../components/common/StyledSelectBtn';
+import StyledSelectBtn from '../../components/common/select/StyledSelectBtn';
 import openIcon from '../../assets/icons/open.svg';
 
 import SortModal from './SortModal';
@@ -91,7 +91,7 @@ const Feed = () => {
           />
         )}
 
-        <StyledSelect
+        <StyledSelectBtn
           className={isSortSelectOn ? 'select-btn on' : 'select-btn'}
           // onClick : 탭, 스페이스 포함
           onClick={() => setIsSortSelectOn(true)}
@@ -102,7 +102,7 @@ const Feed = () => {
             alt=""
             className={isSortSelectOn ? 'open' : null}
           />
-        </StyledSelect>
+        </StyledSelectBtn>
         {isSortSelectOn && (
           <SortModal
             setIsModalOpen={setIsSortSelectOn}
