@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const StyledMain = styled.main`
   padding-bottom: 56px;
 
-  h3 {
+  h2 {
     font-size: var(--title-s);
     font-weight: var(--font-bold);
   }
@@ -13,4 +13,4 @@ const StyledMain = styled.main`
   }
 `;
 
-export default StyledMain ;
+export default StyledMain;

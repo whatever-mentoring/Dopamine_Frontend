@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const BasicBottomModal = styled.dialog`
+const StyledBottomModal = styled.dialog`
   width: min(100%, 430px);
   max-width: 100%;
   border: none;
@@ -23,28 +23,9 @@ const BasicBottomModal = styled.dialog`
     font-weight: var(--font-bold);
   }
 
-  button {
-    padding: 16px 0;
-    width: 100%;
-    font-size: var(--text-m);
-    border: 1px solid var(--gray-300);
-    color: var(--gray-300);
-    border-radius: 12px;
-  }
-
-  button:focus {
-    outline: none;
-    border-color: var(--primary-500);
-    color: var(--primary-500);
-  }
-
-  button + button {
-    margin-top: 12px;
-  }
-
   &::backdrop {
     display: none;
   }
 `;
 
-export default BasicBottomModal;
+export default StyledBottomModal;

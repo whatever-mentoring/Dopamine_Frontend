@@ -14,7 +14,7 @@ const StyledHome = styled(StyledMain)`
   }
 
   section > span,
-  h3 {
+  h2 {
     display: inline-block;
     text-align: center;
     font-size: var(--title-s);
@@ -31,7 +31,7 @@ const ChallengeSection = styled.section`
     width: 71px;
     aspect-ratio: 71/67;
   }
-  
+
   .level-name {
     margin-top: 6px;
     text-align: center;
@@ -46,7 +46,7 @@ const ChallengeSection = styled.section`
     color: var(--white);
   }
 
-  h3 {
+  h2 {
     font-size: var(--title-m);
     color: var(--white);
   }
@@ -57,7 +57,7 @@ const ChallengeSection = styled.section`
     box-shadow: 0 4px 10px #00000010;
   }
 
-  li+li {
+  li + li {
     border-top: 1px solid var(--gray-100);
   }
 
@@ -100,7 +100,7 @@ const ReportSection = styled.section`
     }
 
     img {
-      margin-right: 6px ;
+      margin-right: 6px;
       width: 32px;
       aspect-ratio: 1/1;
       border-radius: 100%;
@@ -130,7 +130,7 @@ const ReportSection = styled.section`
 
   .status-bar {
     position: relative;
-    background: rgba(2, 181, 80, 0.10);
+    background: rgba(2, 181, 80, 0.1);
     height: 10px;
     border-radius: 30px;
 
