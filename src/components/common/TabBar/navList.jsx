@@ -1,7 +1,7 @@
 const navList = [
   {
     name: '홈',
-    path: '/',
+    path: '/home',
     img: (
       <svg
         width="32"

@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 const StyledHeader = styled.header`
-  padding: 24px 20px 8px; // bottom 임의
+  padding: 24px 16px 8px; // bottom 임의
   position: fixed;
-  z-index: 100;
+  z-index: 200;
   display: flex;
   width: min(100%, 430px);
   background: var(--white);

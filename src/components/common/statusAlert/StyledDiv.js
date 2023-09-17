@@ -5,7 +5,7 @@ const StyledDiv = styled.div`
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 97px;
+  bottom: 68px;
   z-index: 1000;
 
   width: calc(min(100%, 430px) - 40px);
