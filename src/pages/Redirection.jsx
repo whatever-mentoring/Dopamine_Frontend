@@ -1,15 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { login } from '../api/jwt';
 
 const Redirection = () => {
   const navigate = useNavigate();
   const code = new URL(window.location.href).searchParams.get('code'); // 이상한코드가한가득
 
   useEffect(() => {
-    fetch(
-      `http://54.180.66.83:9000/api/auth/login?code=${code}&redirect_url=https://dopamine-frontend.vercel.app/kakao/callback`
-    ).then(async (res) => {
+    (async () => {
+      const res = await login(code);
       const json = await res.json();
+      console.log(json);
 
       localStorage.setItem('kakaoId', json.member.kakaoId);
       localStorage.setItem('nickname', json.member.nickname);
@@ -22,10 +23,10 @@ const Redirection = () => {
       } else {
         navigate('/home');
       }
-    });
+    })();
   }, []);
 
-  return <div></div>;
+  return <></>;
 };
 
 export default Redirection;
