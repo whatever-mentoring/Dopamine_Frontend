@@ -16,6 +16,10 @@ const Redirection = () => {
       localStorage.setItem('accessToken', json.token.accessToken);
       localStorage.setItem('refreshToken', json.token.refreshToken);
 
+      localStorage.getItem('kakaoId');
+      localStorage.getItem('nickname');
+      localStorage.getItem('refreshToken');
+
       if (json.member.nickname === null) {
         navigate('/join');
       } else {
