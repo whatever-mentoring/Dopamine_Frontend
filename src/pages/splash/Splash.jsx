@@ -7,7 +7,7 @@ import StyledMain from './StyledMain';
 
 const Splash = () => {
   const REST_API_KEY = 'b4a4174bcbedb68d9c7adb60c5ee2477';
-  const REDIRECT_URI = 'http://100.114.50.111:5173/kakao/callback';
+  const REDIRECT_URI = 'http://localhost:5173/kakao/callback';
   const link = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
   const loginHandler = () => {

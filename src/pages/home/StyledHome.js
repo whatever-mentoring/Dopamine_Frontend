@@ -1,8 +1,8 @@
 import styled from 'styled-components';
+import StyledMain from '../../components/StyledMain';
 
-const StyledMain = styled.main`
+const StyledHome = styled(StyledMain)`
   position: relative;
-  padding-bottom: 56px;
 
   &::before {
     content: '';
@@ -19,10 +19,6 @@ const StyledMain = styled.main`
     text-align: center;
     font-size: var(--title-s);
     font-weight: var(--font-bold);
-  }
-
-  section + section {
-    border-top: 10px solid var(--gray-100);
   }
 `;
 
@@ -191,4 +187,4 @@ const FeedSection = styled.section`
   }
 `;
 
-export { StyledMain, ChallengeSection, ReportSection, FeedSection };
+export { StyledHome, ChallengeSection, ReportSection, FeedSection };

@@ -4,10 +4,10 @@ import { SButton } from '../../components/common/Buttons';
 import JoinStatus from '../../components/JoinStatus';
 import ProofModal from '../../components/common/modal/ProofModal';
 import {
-  StyledMain,
   ChallengeSection,
   ReportSection,
   FeedSection,
+  StyledHome,
 } from './StyledHome';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -87,7 +87,7 @@ const Home = () => {
 
   return (
     <>
-      <StyledMain>
+      <StyledHome>
         <h1 className="a11y-hidden">challenG9</h1>
         <h2 className="a11y-hidden">홈</h2>
         <JoinStatus success={true}></JoinStatus>
@@ -167,7 +167,7 @@ const Home = () => {
               })}
           </Swiper>
         </FeedSection>
-      </StyledMain>
+      </StyledHome>
       <TabBar></TabBar>
     </>
   );
