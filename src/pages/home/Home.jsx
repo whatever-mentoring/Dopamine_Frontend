@@ -18,6 +18,7 @@ import {
   StyledHome,
 } from './StyledHome';
 import logoIcon from '../../assets/images/logo-icon-line.png';
+import tooltipIcon from '../../assets/icons/tooltip.svg';
 
 const Home = () => {
   const { nickname, level, renderJoinStatus, setRenderJoinStatus } =
@@ -106,7 +107,7 @@ const Home = () => {
           ></JoinStatus>
         ) : null}
         <ChallengeSection>
-          <img src={logoIcon} alt="지구 아이콘" />
+          <img className="earth" src={logoIcon} alt="지구 아이콘" />
           <h2 className="a11y-hidden">오늘의 챌린지</h2>
           {level && (
             <div className="level-name">
@@ -123,7 +124,7 @@ const Home = () => {
                 return (
                   <li key={i}>
                     <div>
-                      <p>난이도 하</p>
+                      <span>난이도 하</span>
                       <strong>{challenge.tit}</strong>
                     </div>
                     <SButton
@@ -139,6 +140,7 @@ const Home = () => {
                 );
               })}
           </ul>
+          <img className="tooltip" src={tooltipIcon} alt="툴팁" />
           {isModalOpen && <ProofModal setIsModalOpen={setIsModalOpen} />}
         </ChallengeSection>
 

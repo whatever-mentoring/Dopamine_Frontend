@@ -6,6 +6,7 @@ const StyledBasic = styled.header`
 
   h1 {
     font-size: var(--text-l);
+    font-weight: var(--font-bold);
     text-align: center;
   }
 
