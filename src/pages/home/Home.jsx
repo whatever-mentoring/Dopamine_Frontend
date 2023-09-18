@@ -28,12 +28,14 @@ const Home = () => {
 
   useEffect(() => {
     const setData = async () => {
-      // const challengeRes = await getTodayChallenge();
-      // const challengeData = challengeRes.json();
-      // console.log(challengeRes);
-      // const feedRes = await getFeedsByLikeCount();
-      // const feedData = await feedRes.json();
-      // console.log(feedRes);
+      const challengeRes = await getTodayChallenge();
+      console.log(challengeRes);
+      const challengeData = challengeRes.json();
+      console.log(challengeData);
+      const feedRes = await getFeedsByLikeCount();
+      console.log(feedRes);
+      const feedData = await feedRes.json();
+      console.log(feedData);
     };
 
     setData();
