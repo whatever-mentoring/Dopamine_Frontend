@@ -32,6 +32,8 @@ const Redirection = () => {
     (async () => {
       const res = await login(code);
       console.log(res);
+      if (res.status !== 201) return;
+
       const json = await res.json();
 
       localStorage.setItem('kakaoId', json.member.kakaoId);
@@ -45,7 +47,7 @@ const Redirection = () => {
       setLevelData(json.token.accessToken);
 
       if (json.member.nickname === null) {
-        navigate('/join');
+        navigate('/nickname');
       } else {
         navigate('/home');
       }
