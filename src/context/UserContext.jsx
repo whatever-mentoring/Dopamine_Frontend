@@ -5,25 +5,22 @@ export const UserContext = createContext({
   token: localStorage.getItem('token') || null,
   refreshToken: localStorage.getItem('refreshToken') || null,
   nickname: localStorage.getItem('nickname') || null,
-  kakaoId: localStorage.getItem('kakaoId') || null,
   level: [],
   setToken: () => {},
   setRefreshToken: () => {},
   setNickname: () => {},
-  setKakaoId: () => {},
   setLevel: () => {},
 });
 
 const UserProvider = ({ children }) => {
-  const [token, setToken] = useState(localStorage.getItem('token') || null);
+  const [token, setToken] = useState(
+    localStorage.getItem('accessToken') || null
+  );
   const [refreshToken, setRefreshToken] = useState(
     localStorage.getItem('refreshToken') || null
   );
   const [nickname, setNickname] = useState(
     localStorage.getItem('nickname') || null
-  );
-  const [kakaoId, setKakaoId] = useState(
-    localStorage.getItem('kakaoId') || null
   );
   const [level, setLevel] = useState([]);
 
@@ -57,8 +54,6 @@ const UserProvider = ({ children }) => {
         setRefreshToken,
         nickname,
         setNickname,
-        kakaoId,
-        setKakaoId,
         level,
         setLevel,
       }}

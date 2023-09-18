@@ -18,7 +18,6 @@ import testImg3 from '../../assets/images/my-test3.png';
 
 const My = () => {
   const { nickname, level } = useContext(UserContext);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filterOpt, setFilterOpt] = useState('전체보기');
   const [feedList, setFeedList] = useState([
