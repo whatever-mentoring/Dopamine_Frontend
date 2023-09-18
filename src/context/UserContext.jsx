@@ -37,7 +37,7 @@ const UserProvider = ({ children }) => {
         setLevel({
           exp: data.exp,
           successCnt: data.successCnt,
-          level: data.level.levelNum,
+          num: data.level.levelNum,
           name: data.level.name,
           badge: data.level.badge,
           expPercent: data.level.expPercent,
