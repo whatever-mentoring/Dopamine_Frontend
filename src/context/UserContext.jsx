@@ -28,6 +28,7 @@ const UserProvider = ({ children }) => {
   const [level, setLevel] = useState([]);
 
   useEffect(() => {
+    if (!token) return;
     (async () => {
       try {
         const res = await getMember();
