@@ -1,6 +1,13 @@
+import { useEffect } from 'react';
 import StatusAlert from './common/statusAlert/StatusAlert';
 
-const JoinStatus = ({ success }) => {
+const JoinStatus = ({ success, setRenderStatus }) => {
+  useEffect(() => {
+    setTimeout(() => {
+      setRenderStatus(false);
+    }, 6000);
+  }, []);
+
   return (
     <StatusAlert
       success={success}

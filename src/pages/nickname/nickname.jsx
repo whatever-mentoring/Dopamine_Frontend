@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { editMember } from '../../api/member';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -72,12 +73,21 @@ const Message = styled.div`
 `;
 
 function Nickname() {
+  const { setRenderJoinStatus } = useContext(UserContext);
+
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState(null);
   const [nickname, setNickname] = useState('');
   const [isNicknameAvailable, setIsNicknameAvailable] = useState(false);
   const navigate = useNavigate();
+  const path = useLocation().pathname;
+
+  useEffect(() => {
+    if (path === '/join') {
+      setRenderJoinStatus(true);
+    }
+  }, []);
 
   const handleSubmit = async () => {
     try {

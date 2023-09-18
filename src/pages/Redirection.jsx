@@ -47,7 +47,7 @@ const Redirection = () => {
       setLevelData(json.token.accessToken);
 
       if (json.member.nickname === null) {
-        navigate('/nickname');
+        navigate('/join');
       } else {
         navigate('/home');
       }

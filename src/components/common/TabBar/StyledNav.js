@@ -8,6 +8,7 @@ const StyledNav = styled.nav`
   padding: 8px 16px 4px;
   background: var(--white);
   border-top: 1px solid var(--gray-100);
+  z-index: 1000;
 
   a {
     text-align: center;

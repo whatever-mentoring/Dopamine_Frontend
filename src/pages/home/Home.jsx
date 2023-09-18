@@ -20,7 +20,8 @@ import {
 import logoIcon from '../../assets/images/logo-icon-line.png';
 
 const Home = () => {
-  const { nickname, level } = useContext(UserContext);
+  const { nickname, level, renderJoinStatus, setRenderJoinStatus } =
+    useContext(UserContext);
   const [challengeList, setChallengeList] = useState([]);
   const [feedList, setFeedList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -96,7 +97,12 @@ const Home = () => {
     <>
       <StyledHome>
         <h1 className="a11y-hidden">challenG9 | 홈</h1>
-        <JoinStatus success={true}></JoinStatus>
+        {renderJoinStatus ? (
+          <JoinStatus
+            success={true}
+            setRenderStatus={setRenderJoinStatus}
+          ></JoinStatus>
+        ) : null}
         <ChallengeSection>
           <img src={logoIcon} alt="지구 아이콘" />
           <h2 className="a11y-hidden">오늘의 챌린지</h2>
