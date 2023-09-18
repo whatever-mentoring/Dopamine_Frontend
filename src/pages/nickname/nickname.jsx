@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { editMember } from '../../api/member';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -72,22 +73,30 @@ const Message = styled.div`
 `;
 
 function Nickname() {
-  const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const { setRenderJoinStatus, setNickname } = useContext(UserContext);
+
   const [status, setStatus] = useState(null);
-  const [nickname, setNickname] = useState('');
+  const [nicknameVal, setNicknameVal] = useState('');
   const [isNicknameAvailable, setIsNicknameAvailable] = useState(false);
   const navigate = useNavigate();
+  const path = useLocation().pathname;
+
+  useEffect(() => {
+    if (path === '/join') {
+      setRenderJoinStatus(true);
+    }
+  }, []);
 
   const handleSubmit = async () => {
     try {
-      const res = await editMember(nickname, 0);
+      const res = await editMember(nicknameVal, 0);
       const json = await res.json();
 
       if (json.message) {
         setStatus(json.message);
       } else {
-        localStorage.setItem('nickname', nickname);
+        localStorage.setItem('nickname', nicknameVal);
+        setNickname(nicknameVal);
         navigate('/home');
       }
     } catch (error) {
@@ -105,10 +114,10 @@ function Nickname() {
         <InputBox
           type="text"
           placeholder="이름을 입력하세요"
-          value={nickname}
+          value={nicknameVal}
           onChange={async (e) => {
             const name = e.target.value;
-            setNickname(name);
+            setNicknameVal(name);
 
             // 이름 유효성 검사
             if (name.length < 2) {

@@ -10,9 +10,9 @@ const Redirection = () => {
   const { setToken, setRefreshToken, setNickname, setLevel } =
     useContext(UserContext);
 
-  const setLevelData = async (token) => {
+  const setLevelData = async () => {
     try {
-      const res = await getMember(token);
+      const res = await getMember();
       const data = await res.json();
 
       setLevel({
@@ -35,19 +35,19 @@ const Redirection = () => {
       if (res.status !== 201) return;
 
       const json = await res.json();
-
       localStorage.setItem('kakaoId', json.member.kakaoId);
       localStorage.setItem('nickname', json.member.nickname);
       localStorage.setItem('memberId', json.member.memberId);
       localStorage.setItem('accessToken', json.token.accessToken);
       localStorage.setItem('refreshToken', json.token.refreshToken);
+
       setToken(json.token.accessToken);
       setRefreshToken(json.token.refreshToken);
       setNickname(json.member.nickname);
-      setLevelData(json.token.accessToken);
+      setLevelData();
 
       if (json.member.nickname === null) {
-        navigate('/nickname');
+        navigate('/join');
       } else {
         navigate('/home');
       }

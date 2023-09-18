@@ -4,9 +4,8 @@ const StyledDiv = styled.div`
   /* 위치 공통인가? */
   position: fixed;
   left: 50%;
-  transform: translateX(-50%);
   bottom: 68px;
-  z-index: 1000;
+  z-index: 100;
 
   width: calc(min(100%, 430px) - 40px);
   padding: 12px 0;
@@ -24,6 +23,23 @@ const StyledDiv = styled.div`
     aspect-ratio: 1/1;
     vertical-align: text-top;
     background: ${({ img }) => `url(${img})`};
+  }
+
+  /* 밑에서 위로 토스트 등장 */
+  transform: translate(-50%, 100%);
+  animation:
+    popup 0.3s ease-in 0s 1 forwards running,
+    popdown 0.3s ease-in 5s 1 forwards running;
+  @keyframes popup {
+    100% {
+      transform: translate(-50%);
+    }
+  }
+
+  @keyframes popdown {
+    100% {
+      transform: translate(-50%, 100%);
+    }
   }
 `;
 

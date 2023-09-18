@@ -1,10 +1,11 @@
 import { get, post, put, deleteData } from './instanse';
 
 const path = `/feeds`;
-const memberId = localStorage.getItem('memberId');
 
 // 403
 const postFeed = (data) => {
+  const memberId = localStorage.getItem('memberId');
+
   // {
   //   "challengeId": 0,
   //   "content": "string",
@@ -39,6 +40,7 @@ const deleteFeed = (feedId) => {
 
 // 403
 const getFeedsByMember = (page = 1) => {
+  const memberId = localStorage.getItem('memberId');
   const reqPath = path + `/by-member/${memberId}/?page=${page}`;
   return get(reqPath);
 };

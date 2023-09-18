@@ -1,30 +1,35 @@
-import { useEffect } from 'react';
 import BottomModal from './BottomModal';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { ChallengeContext } from '../../../context/ChallengeContext';
 
 const ProofModal = ({ setIsModalOpen }) => {
   const navigate = useNavigate();
+
+  const { setImgList } = useContext(ChallengeContext);
+
   const setImg = (e) => {
-    const file = e.target.files[0];
-    if (!/^image\/(jpg|gif|png|jpeg|bmp|tif|heic)$/.test(file.type)) {
-      alert(
-        '이미지 파일 확장자는 jpg, gif, png, jpeg, bmp, tif, heic만 가능합니다.'
-      );
-      return;
+    const files = [...e.target.files];
+    for (const file of files) {
+      if (!/^image\/(jpg|gif|png|jpeg|bmp|tif|heic)$/.test(file.type)) {
+        alert(
+          '이미지 파일 확장자는 jpg, gif, png, jpeg, bmp, tif, heic만 가능합니다.'
+        );
+        return;
+      }
     }
 
-    const reader = new FileReader();
+    setImgList(files);
 
-    reader.readAsDataURL(file);
-    console.log(file);
+    // files.forEach((file) => {
+    //   const reader = new FileReader();
+    //   reader.readAsDataURL(file);
 
-    reader.addEventListener('load', ({ target }) => {
-      const image = new Image();
-      image.src = target.result;
-      image.addEventListener('load', (e) => {
-        console.log(target.result);
-      });
-    });
+    //   reader.addEventListener('load', ({ target }) => {
+    //     const image = new Image();
+    //     image.src = target.result;
+    //   });
+    // });
   };
 
   const handleBtn = (e) => {
@@ -53,7 +58,7 @@ const ProofModal = ({ setIsModalOpen }) => {
           multiple
           className="a11y-hidden"
           onChange={(e) => {
-            navigate('/feed');
+            navigate('/mission');
             setImg(e);
           }}
         />

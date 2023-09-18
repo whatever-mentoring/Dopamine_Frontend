@@ -30,6 +30,7 @@ function App() {
               <Route path="/mission" element={<MissionCertification />}></Route>
               <Route path="/mission2" element={<MissionComplete />}></Route>
               <Route path="/kakao/callback" element={<Redirection />}></Route>
+              <Route path="/join" element={<Nickname />}></Route>
               <Route path="/nickname" element={<Nickname />}></Route>
             </Routes>
           </BrowserRouter>
