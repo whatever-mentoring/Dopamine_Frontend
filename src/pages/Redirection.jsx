@@ -10,6 +10,7 @@ const Redirection = () => {
     (async () => {
       try {
         const res = await login(code);
+        console.log(res);
         const json = await res.json();
 
         localStorage.setItem('kakaoId', json.member.kakaoId);
