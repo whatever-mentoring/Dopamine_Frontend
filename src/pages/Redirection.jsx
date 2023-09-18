@@ -35,7 +35,6 @@ const Redirection = () => {
       if (res.status !== 201) return;
 
       const json = await res.json();
-      console.log(json.member.kakaoId, json.token.refreshToken);
       localStorage.setItem('kakaoId', json.member.kakaoId);
       localStorage.setItem('nickname', json.member.nickname);
       localStorage.setItem('memberId', json.member.memberId);

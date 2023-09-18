@@ -99,7 +99,7 @@ const Home = () => {
         <h1 className="a11y-hidden">challenG9 | 홈</h1>
         {renderJoinStatus ? (
           <JoinStatus
-            success={true}
+            success="true"
             setRenderStatus={setRenderJoinStatus}
           ></JoinStatus>
         ) : null}

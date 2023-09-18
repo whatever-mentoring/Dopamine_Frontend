@@ -5,8 +5,7 @@ import successFalse from '../../../assets/icons/success-false.svg';
 const StatusAlert = ({ success, message }) => {
   return (
     <StyledDiv
-      success={success}
-      img={success ? successTrue : successFalse}
+      img={success === 'true' ? successTrue : successFalse}
       role="alert"
     >
       {message}

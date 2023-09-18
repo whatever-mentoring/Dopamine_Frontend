@@ -11,7 +11,7 @@ const JoinStatus = ({ success, setRenderStatus }) => {
   return (
     <StatusAlert
       success={success}
-      message={success ? '회원가입이 완료되었어요.' : ''}
+      message={success === 'true' ? '회원가입이 완료되었어요.' : ''}
     ></StatusAlert>
   );
 };
