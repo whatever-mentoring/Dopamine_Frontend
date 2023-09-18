@@ -91,7 +91,6 @@ function Nickname() {
     try {
       const res = await editMember(nicknameVal, 0);
       const json = await res.json();
-      console.log(json);
 
       if (json.message) {
         setStatus(json.message);
