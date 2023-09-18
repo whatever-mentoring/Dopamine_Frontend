@@ -1,7 +1,6 @@
 import { get } from './instanse';
 
 const path = `/api/auth`;
-const token = localStorage.getItem('accessToken');
 
 const login = (code) => {
   const redirectUrl = 'https://dopamine-frontend.vercel.app/kakao/callback';
@@ -10,6 +9,7 @@ const login = (code) => {
 };
 
 const logout = () => {
+  const token = localStorage.getItem('accessToken');
   const reqPath = path + '/logout';
   return get(reqPath, token);
 };

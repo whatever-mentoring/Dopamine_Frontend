@@ -75,8 +75,6 @@ const Message = styled.div`
 function Nickname() {
   const { setRenderJoinStatus, setNickname } = useContext(UserContext);
 
-  const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState(null);
   const [nicknameVal, setNicknameVal] = useState('');
   const [isNicknameAvailable, setIsNicknameAvailable] = useState(false);
@@ -93,6 +91,7 @@ function Nickname() {
     try {
       const res = await editMember(nicknameVal, 0);
       const json = await res.json();
+      console.log(json);
 
       if (json.message) {
         setStatus(json.message);
