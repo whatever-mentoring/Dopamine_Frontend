@@ -8,8 +8,10 @@ export const ChallengeContext = createContext({
     { title: '텀블러 갖고 다니기', status: false },
   ],
   challengeToProve: null,
+  imgList: [],
   setChallengeList: () => {},
   setChallengeToProve: () => {},
+  setImgList: () => {},
 });
 
 const ChallengeProvider = ({ children }) => {
@@ -18,8 +20,9 @@ const ChallengeProvider = ({ children }) => {
     { title: '장바구니 사용하기', status: false },
     { title: '텀블러 갖고 다니기', status: false },
   ]);
-
   const [challengeToProve, setChallengeToProve] = useState(null);
+  const [imgList, setImgList] = useState([]);
+
   return (
     <ChallengeContext.Provider
       value={{
@@ -27,6 +30,8 @@ const ChallengeProvider = ({ children }) => {
         challengeToProve,
         setChallengeList,
         setChallengeToProve,
+        imgList,
+        setImgList,
       }}
     >
       {children}

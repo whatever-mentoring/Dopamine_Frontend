@@ -1,12 +1,29 @@
-import React, { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { FaArrowLeft, FaTimes } from 'react-icons/fa';
 import { useNavigate, Link } from 'react-router-dom';
+import { ChallengeContext } from '../../context/ChallengeContext';
 import './MissionCertification.css';
 
 function MissionPage() {
+  const { setImgList, imgList } = useContext(ChallengeContext);
   const [selectedImages, setSelectedImages] = useState([]);
   const [impression, setImpression] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    const srcList = [];
+    imgList.forEach((file) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.addEventListener('load', ({ target }) => {
+        const image = new Image();
+        image.src = target.result;
+        srcList.push(target.result);
+        setSelectedImages(srcList);
+      });
+    });
+  }, []);
 
   const handleImageUpload = (event) => {
     const files = event.target.files;
@@ -62,10 +79,7 @@ function MissionPage() {
         <div className="image-preview">
           {selectedImages.map((image, index) => (
             <div key={index} className="image-container">
-              <img
-                src={URL.createObjectURL(image)}
-                alt={`Image ${index + 1}`}
-              />
+              <img src={image} alt={`Image ${index + 1}`} />
               <button
                 className="delete-button"
                 onClick={() => handleDeleteImage(index)}
@@ -147,10 +161,9 @@ function MissionCertification() {
         </button>
       </header>
 
-
       {/* 챌린지 제목 입력 상자 */}
       <div className="challenge-title-input">
-      <div className="mission-feedback-title">챌린지</div>
+        <div className="mission-feedback-title">챌린지</div>
         <input
           type="text"
           placeholder="챌린지 제목을 입력하세요."
