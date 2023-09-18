@@ -19,8 +19,6 @@ function MissionComplete() {
         </p>
         <span>최고 최고~</span>
       </StyledMissionComplete>
-
-      {/* 홈으로 돌아가기 버튼 */}
       <StyledFooter>
         <LButton onClick={() => navigate('/')}>홈으로 돌아가기</LButton>
       </StyledFooter>
