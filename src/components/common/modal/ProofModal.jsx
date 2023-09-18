@@ -20,16 +20,6 @@ const ProofModal = ({ setIsModalOpen }) => {
     }
 
     setImgList(files);
-
-    // files.forEach((file) => {
-    //   const reader = new FileReader();
-    //   reader.readAsDataURL(file);
-
-    //   reader.addEventListener('load', ({ target }) => {
-    //     const image = new Image();
-    //     image.src = target.result;
-    //   });
-    // });
   };
 
   const handleBtn = (e) => {
