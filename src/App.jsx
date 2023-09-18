@@ -7,7 +7,7 @@ import UserProvider from './context/UserContext';
 import Home from './pages/home/Home';
 import Feed from './pages/feed/Feed';
 import My from './pages/my/My';
-import MissionCertification from './pages/mission/MissionCertification';
+import MissionCertification from './pages/mission/MissionCertification.jsx';
 import MissionComplete from './pages/mission/MissionComplete';
 import Redirection from './pages/Redirection';
 import Splash from './pages/splash/Splash';

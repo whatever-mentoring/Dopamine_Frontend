@@ -59,8 +59,10 @@ const getFeedsByDate = (page = 1) => {
 
 // 403
 const getFeedsByLikeCount = (page = 1) => {
+  const token = localStorage.getItem('accessToken');
+
   const reqPath = path + `/order-by-likecount?page=${page}`;
-  return get(reqPath);
+  return get(reqPath, token);
 };
 
 export { getFeedsByLikeCount, getFeedsByMember };

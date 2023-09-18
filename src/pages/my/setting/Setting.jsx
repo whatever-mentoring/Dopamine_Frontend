@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import StyledSetting from './StyledSetting';
-import BasicTopBar from '../../../components/common/TobBar/BasicTopBar';
+import BasicTopBar from '../../../components/common/TopBar/BasicTopBar';
 import { logout } from '../../../api/jwt';
 import { deleteMember } from '../../../api/member';
 
