@@ -17,8 +17,8 @@ const editMember = (nickname, exp) => {
   return put(reqPath, data, token);
 };
 
-const getMember = () => {
-  return get(reqPath, token);
+const getMember = (accessToken = token) => {
+  return get(reqPath, accessToken);
 };
 
 const deleteMember = () => {

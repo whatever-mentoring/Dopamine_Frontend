@@ -1,31 +1,55 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../api/jwt';
+import { UserContext } from '../context/UserContext';
+import { getMember } from '../api/member';
 
 const Redirection = () => {
   const navigate = useNavigate();
   const code = new URL(window.location.href).searchParams.get('code'); // 이상한코드가한가득
+  const { setToken, setRefreshToken, setNickname, setLevel } =
+    useContext(UserContext);
+
+  const setLevelData = async (token) => {
+    try {
+      const res = await getMember(token);
+      const data = await res.json();
+
+      setLevel({
+        exp: data.exp,
+        successCnt: data.successCnt,
+        level: data.level.levelNum,
+        name: data.level.name,
+        badge: data.level.badge,
+        expPercent: data.level.expPercent,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     (async () => {
-      try {
-        const res = await login(code);
-        const json = await res.json();
+      const res = await login(code);
+      console.log(res);
+      if (res.status !== 201) return;
 
-        localStorage.setItem('kakaoId', json.member.kakaoId);
-        localStorage.setItem('nickname', json.member.nickname);
-        localStorage.setItem('memberId', json.member.memberId);
-        localStorage.setItem('accessToken', json.token.accessToken);
-        localStorage.setItem('refreshToken', json.token.refreshToken);
+      const json = await res.json();
 
-        if (json.member.nickname === null) {
-          navigate('/join');
-        } else {
-          navigate('/home');
-        }
-      } catch (error) {
-        alert('로그인에 실패했어요.');
-        console.error(error);
+      localStorage.setItem('kakaoId', json.member.kakaoId);
+      localStorage.setItem('nickname', json.member.nickname);
+      localStorage.setItem('memberId', json.member.memberId);
+      localStorage.setItem('accessToken', json.token.accessToken);
+      localStorage.setItem('refreshToken', json.token.refreshToken);
+      setToken(json.token.accessToken);
+      setRefreshToken(json.token.refreshToken);
+      setNickname(json.member.nickname);
+      setLevelData(json.token.accessToken);
+
+      if (json.member.nickname === null) {
+        navigate('/nickname');
+      } else {
+        navigate('/home');
       }
     })();
   }, []);
