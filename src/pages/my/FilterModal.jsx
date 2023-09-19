@@ -4,12 +4,14 @@ import StyledModal from './StyledModal';
 
 import Select from '../../components/common/select/Select';
 
-const FilterModal = ({ setIsModalOpen }) => {
+const FilterModal = ({ setIsModalOpen, setFilterOpt, filterOpt }) => {
   const [selectedOpt, setSelectedOpt] = useState([]);
   const [isSelectOn, setIsSelectOn] = useState(false);
 
   const thisYear = new Date().getFullYear();
-  const [selectedYear, setSelectedYear] = useState(`${thisYear}년`);
+  const [selectedYear, setSelectedYear] = useState(
+    filterOpt === '전체보기' ? '전체보기' : filterOpt.split(' ')[0]
+  );
 
   /* 모달 기본 기능 */
   const modal = useRef(null);
@@ -46,16 +48,8 @@ const FilterModal = ({ setIsModalOpen }) => {
   ];
 
   const handleBtn = (v) => {
-    const index = selectedOpt.indexOf(`${selectedYear}${v}`);
-
-    if (index === -1) {
-      setSelectedOpt([...selectedOpt, `${selectedYear}${v}`]);
-    } else {
-      setSelectedOpt([
-        ...selectedOpt.slice(0, index),
-        ...selectedOpt.slice(index + 1),
-      ]);
-    }
+    setFilterOpt(`${selectedYear} ${v}월`);
+    setIsModalOpen(false);
   };
 
   return (
@@ -72,6 +66,7 @@ const FilterModal = ({ setIsModalOpen }) => {
           selectedOpt={selectedYear}
           setSelectedOpt={setSelectedYear}
           optionTextList={[
+            '전체보기',
             `${thisYear}년`,
             `${thisYear - 1}년`,
             `${thisYear - 2}년`,
@@ -84,11 +79,11 @@ const FilterModal = ({ setIsModalOpen }) => {
               <li key={i}>
                 <button
                   onClick={() => handleBtn(v)}
-                  className={
-                    selectedOpt.includes(`${selectedYear}${v}`)
-                      ? 'selected'
-                      : ''
-                  }
+                  // className={
+                  //   selectedOpt.includes(`${selectedYear}${v}`)
+                  //     ? 'selected'
+                  //     : ''
+                  // }
                 >
                   {v}월
                 </button>
