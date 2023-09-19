@@ -126,8 +126,8 @@ const StyledMission = styled.div`
   }
   .swiper-item {
     position: relative;
-    aspect-ratio: 1/1;
     img {
+      aspect-ratio: 1/1;
       object-fit: cover;
     }
 
