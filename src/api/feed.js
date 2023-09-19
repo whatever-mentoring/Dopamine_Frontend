@@ -19,19 +19,19 @@ const postFeed = (data) => {
   return post(path, body, token);
 };
 
-// challenge 403 해결 후 테스트
+// 테스트 전
 const getFeed = (feedId) => {
   const reqPath = path + `/${feedId}}`;
   return get(reqPath);
 };
 
-// challenge 403 해결 후 테스트
+// 테스트 전
 const editFeed = (feedId, data) => {
   const reqPath = path + `/${feedId}}`;
   return put(reqPath, data);
 };
 
-// challenge 403 해결 후 테스트
+// 테스트 전
 const deleteFeed = (feedId) => {
   // /hard path 사용 여부 확인
   const reqPath = path + `/${feedId}}`;
@@ -45,7 +45,7 @@ const getFeedsByMember = (page = 1) => {
   return get(reqPath, token);
 };
 
-// challenge 403 해결 후 테스트
+// 테스트 전
 const getFeedsByChallenge = (page = 1, challengeId) => {
   const reqPath = path + `/main-page/${challengeId}/?page=${page}`;
   return get(reqPath);
