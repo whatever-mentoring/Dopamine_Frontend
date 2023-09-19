@@ -67,7 +67,7 @@ const StyledMission = styled.div`
     font-weight: var(--font-medium); /* 폰트 굵기 일반으로 설정 */
   }
 
-  .optional-text2 {
+  .mission-feedback-title2 > button {
     color: var(--gray-400);
     font-weight: var(--font-medium); /* 폰트 굵기 일반으로 설정 */
     margin-left: auto;

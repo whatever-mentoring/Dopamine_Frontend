@@ -5,15 +5,18 @@ import StyledMission, { StyledFooter } from './MissionCertification';
 import MissionModal from './MissionModal';
 import { LButton } from '../../components/common/Buttons';
 import CloseTopBar from '../../components/common/TopBar/CloseTopBar';
+import ProofModal from '../../components/common/modal/ProofModal';
 import xCircleIcon from '../../assets/icons/x-circle.svg';
 
 function MissionPage() {
   const { setImgList, imgList } = useContext(ChallengeContext);
   const [selectedImages, setSelectedImages] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [impression, setImpression] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
+    if (isModalOpen) return;
     const srcList = [];
     imgList.forEach((file) => {
       const reader = new FileReader();
@@ -26,7 +29,7 @@ function MissionPage() {
         setSelectedImages(srcList);
       });
     });
-  }, []);
+  }, [isModalOpen]);
 
   const handleImageUpload = (event) => {
     const files = event.target.files;
@@ -73,14 +76,9 @@ function MissionPage() {
       <div className="img-wrap">
         <div className="mission-feedback-title2">
           인증사진
-          <span className="optional-text2">다시 선택</span>
+          <button onClick={() => setIsModalOpen(true)}>다시 선택</button>
         </div>
-        <input
-          type="file"
-          accept="image/*"
-          multiple
-          onChange={handleImageUpload}
-        />
+        {isModalOpen ? <ProofModal setIsModalOpen={setIsModalOpen} /> : null}
         <Swiper className="image-preview" spaceBetween={6} slidesPerView={2.63}>
           {!!selectedImages.length
             ? selectedImages.map((image, index) => {

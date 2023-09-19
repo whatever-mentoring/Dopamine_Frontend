@@ -60,6 +60,11 @@ const ProofModal = ({ setIsModalOpen }) => {
           accept="image/*"
           capture="camera"
           className="a11y-hidden"
+          onChange={(e) => {
+            setImg(e);
+            navigate('/mission');
+            setIsModalOpen(false);
+          }}
           onClick={(e) => e.stopPropagation()}
         />
       </button>
@@ -71,8 +76,9 @@ const ProofModal = ({ setIsModalOpen }) => {
           multiple
           className="a11y-hidden"
           onChange={(e) => {
-            navigate('/mission');
             setImg(e);
+            navigate('/mission');
+            setIsModalOpen(false);
           }}
           onClick={(e) => {
             e.stopPropagation();

@@ -17,7 +17,7 @@ const ChallengeSelectModal = ({ setIsModalOpen }) => {
     <>
       {!selectedChallenge ? (
         <BottomModal setIsModalOpen={setIsModalOpen}>
-          <p>'어떤 챌린지를 인증하시나요?'</p>
+          <p>어떤 챌린지를 인증하시나요?</p>
           {challengeList.map((v, i) => {
             return (
               <button key={i} onClick={handleSelectBtn}>
