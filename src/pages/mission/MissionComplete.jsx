@@ -20,7 +20,7 @@ function MissionComplete() {
         <span>최고 최고~</span>
       </StyledMissionComplete>
       <StyledFooter>
-        <LButton onClick={() => navigate('/')}>홈으로 돌아가기</LButton>
+        <LButton onClick={() => navigate('/home')}>홈으로 돌아가기</LButton>
       </StyledFooter>
     </>
   );

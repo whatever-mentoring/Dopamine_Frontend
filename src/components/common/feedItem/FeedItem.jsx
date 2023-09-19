@@ -1,5 +1,6 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { UserContext } from '../../../context/UserContext';
 import ReportModal from '../modal/ReportModal';
 import DeleteFeedModal from '../modal/DeleteFeedModal';
 import { StyledFeed } from './StyledFeed';
@@ -7,12 +8,13 @@ import moreIcon from '../../../assets/icons/more.svg';
 import likeIcon from '../../../assets/icons/like.svg';
 import unlikeIcon from '../../../assets/icons/unlike.svg';
 
+import { unLikeFeed, likeFeed } from '../../../api/feedLike';
+
 const FeedItem = ({ feed }) => {
+  const { nickname } = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [like, setLike] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
-
-  const nickname = '닉네임'; // context로 관리
 
   const handleLikeBtn = () => {
     if (like) {
@@ -37,7 +39,6 @@ const FeedItem = ({ feed }) => {
         <div className="top">
           <img src={feed.profileImg} alt="프로필 사진" />
           <span>{feed.nickname}</span>
-          {/* 더보기? */}
           <button
             aria-label="더보기"
             onClick={() => setIsModalOpen(true)}

@@ -14,6 +14,11 @@ const BottomModal = ({ setIsModalOpen, children }) => {
     };
     window.addEventListener('click', closeModal);
     window.addEventListener('touchstart', closeModal);
+
+    return () => {
+      window.removeEventListener('click', closeModal);
+      window.removeEventListener('touchstart', closeModal);
+    };
   }, []);
 
   const setModal = useCallback((node) => {

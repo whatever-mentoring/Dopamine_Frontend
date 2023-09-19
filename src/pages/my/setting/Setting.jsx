@@ -12,12 +12,13 @@ const Setting = () => {
       const res = await logout();
 
       if (res.status === 200) {
+        localStorage.clear();
         navigate('/');
       } else {
-        alert('로그인에 실패했어요.');
+        alert('로그아웃에 실패했어요.');
       }
     } catch (error) {
-      alert('로그인에 실패했어요.');
+      alert('로그아웃에 실패했어요.');
       console.error(error);
     }
   };

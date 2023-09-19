@@ -82,6 +82,13 @@ const ChallengeSection = styled.section`
       background: var(--primary-500);
     }
 
+    span.MID::after {
+      background: #fda521;
+    }
+    span.HIGH::after {
+      background: var(--error);
+    }
+
     strong {
       display: block;
       font-size: var(--text-l);

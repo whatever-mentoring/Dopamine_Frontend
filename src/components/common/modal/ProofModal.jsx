@@ -17,10 +17,8 @@ const ProofModal = ({ setIsModalOpen }) => {
     }
 
     for (const file of files) {
-      if (!/^image\/(jpg|gif|png|jpeg|bmp|tif|heic)$/.test(file.type)) {
-        alert(
-          '이미지 파일 확장자는 jpg, gif, png, jpeg, bmp, tif, heic만 가능합니다.'
-        );
+      if (!/^image\/(jpg|png|jpeg|heic)$/.test(file.type)) {
+        alert('이미지 파일 확장자는 jpg, png, jpeg, heic만 가능합니다.');
         return;
       }
     }
