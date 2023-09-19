@@ -9,7 +9,7 @@ import { getFeedsByLikeCount } from '../../api/feed';
 
 import TabBar from '../../components/common/TabBar/TabBar';
 import { SButton } from '../../components/common/Buttons';
-import JoinStatus from '../../components/JoinStatus';
+import StatusAlert from '../../components/common/statusAlert/StatusAlert';
 import ProofModal from '../../components/common/modal/ProofModal';
 import {
   ChallengeSection,
@@ -21,6 +21,7 @@ import logoIcon from '../../assets/images/logo-icon-line.png';
 import tooltipIcon from '../../assets/icons/tooltip.svg';
 
 const Home = () => {
+  // renderProofStatus 추가 '챌린지 인증에 실패했어요'
   const { nickname, level, renderJoinStatus, setRenderJoinStatus } =
     useContext(UserContext);
   const [challengeList, setChallengeList] = useState([]);
@@ -29,13 +30,14 @@ const Home = () => {
 
   useEffect(() => {
     const setData = async () => {
+      // 오늘의 챌린지
       const challengeRes = await getTodayChallenge();
       console.log(challengeRes);
-      const challengeData = challengeRes.json();
+      const challengeData = await challengeRes.text();
       console.log(challengeData);
+      // 피드(좋아요순)
       const feedRes = await getFeedsByLikeCount();
-      console.log(feedRes);
-      const feedData = await feedRes.json();
+      const feedData = await feedRes.text();
       console.log(feedData);
     };
 
@@ -101,10 +103,11 @@ const Home = () => {
       <StyledHome>
         <h1 className="a11y-hidden">challenG9 | 홈</h1>
         {renderJoinStatus ? (
-          <JoinStatus
+          <StatusAlert
             success="true"
+            message="회원가입이 완료되었어요."
             setRenderStatus={setRenderJoinStatus}
-          ></JoinStatus>
+          ></StatusAlert>
         ) : null}
         <ChallengeSection>
           <img className="earth" src={logoIcon} alt="지구 아이콘" />
