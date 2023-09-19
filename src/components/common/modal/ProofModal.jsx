@@ -10,6 +10,12 @@ const ProofModal = ({ setIsModalOpen }) => {
 
   const setImg = (e) => {
     const files = [...e.target.files];
+
+    if (files.length > 3) {
+      alert('이미지는 최대 3장까지 선택할 수 있습니다.');
+      return;
+    }
+
     for (const file of files) {
       if (!/^image\/(jpg|gif|png|jpeg|bmp|tif|heic)$/.test(file.type)) {
         alert(
@@ -20,6 +26,9 @@ const ProofModal = ({ setIsModalOpen }) => {
     }
 
     setImgList(files);
+
+    navigate('/mission');
+    setIsModalOpen(false);
   };
 
   const setPermission = () => {
@@ -60,11 +69,7 @@ const ProofModal = ({ setIsModalOpen }) => {
           accept="image/*"
           capture="camera"
           className="a11y-hidden"
-          onChange={(e) => {
-            setImg(e);
-            navigate('/mission');
-            setIsModalOpen(false);
-          }}
+          onChange={setImg}
           onClick={(e) => e.stopPropagation()}
         />
       </button>
@@ -75,11 +80,7 @@ const ProofModal = ({ setIsModalOpen }) => {
           accept="image/*"
           multiple
           className="a11y-hidden"
-          onChange={(e) => {
-            setImg(e);
-            navigate('/mission');
-            setIsModalOpen(false);
-          }}
+          onChange={setImg}
           onClick={(e) => {
             e.stopPropagation();
           }}
