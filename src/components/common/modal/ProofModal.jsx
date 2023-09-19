@@ -1,6 +1,6 @@
 import BottomModal from './BottomModal';
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { ChallengeContext } from '../../../context/ChallengeContext';
 
 const ProofModal = ({ setIsModalOpen }) => {
@@ -22,7 +22,30 @@ const ProofModal = ({ setIsModalOpen }) => {
     setImgList(files);
   };
 
+  const setPermission = () => {
+    if (!window.ReactNativeWebView) {
+      return;
+    }
+    window.ReactNativeWebView.postMessage('check permission');
+  };
+  useEffect(() => {
+    const handleMessage = (e) => {
+      if (e.data === 'false') {
+        alert('카메라/갤러리 권한을 허용해주세요.');
+      }
+    };
+    // ios
+    // window.addEventListener('message', handleMessage);
+    // android
+    document.addEventListener('message', handleMessage);
+    return () => {
+      // window.removeEventListener('message', handleMessage);
+      document.removeEventListener('message', handleMessage);
+    };
+  }, []);
+
   const handleBtn = (e) => {
+    setPermission();
     e.currentTarget.children[0].click();
     // setIsModalOpen(false);
   };
@@ -37,19 +60,22 @@ const ProofModal = ({ setIsModalOpen }) => {
           accept="image/*"
           capture="camera"
           className="a11y-hidden"
+          onClick={(e) => e.stopPropagation()}
         />
       </button>
       <button onClick={handleBtn}>
         갤러리에서 선택하기
         <input
           type="file"
-          name="avatar"
-          accept="image/png, image/jpeg"
+          accept="image/*"
           multiple
           className="a11y-hidden"
           onChange={(e) => {
             navigate('/mission');
             setImg(e);
+          }}
+          onClick={(e) => {
+            e.stopPropagation();
           }}
         />
       </button>
