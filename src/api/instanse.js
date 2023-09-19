@@ -19,7 +19,7 @@ const get = async (reqPath, token) => {
 };
 
 // json post
-const post = (reqPath, data) => {
+const post = (reqPath, data, token) => {
   const reqUrl = url + reqPath;
 
   const options = {
@@ -28,6 +28,10 @@ const post = (reqPath, data) => {
       'Content-type': 'application/json',
     },
   };
+
+  if (token) {
+    options.headers.Authorization = token;
+  }
 
   if (data) {
     options.body = JSON.stringify(data);

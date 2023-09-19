@@ -1,6 +1,7 @@
 import StyledDiv from './StyledDiv';
 import successTrue from '../../../assets/icons/success-true.svg';
 import successFalse from '../../../assets/icons/success-false.svg';
+import { useEffect } from 'react';
 
 const StatusAlert = ({ success, message, setRenderStatus }) => {
   useEffect(() => {

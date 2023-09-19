@@ -9,25 +9,68 @@ import StyledSelectBtn from '../../components/common/select/StyledSelectBtn';
 import openIcon from '../../assets/icons/open.svg';
 
 import FilterModal from './FilterModal';
-import { getFeedsByMember } from '../../api/feed';
+import { getFeedsByMember, getFeedsByMonth } from '../../api/feed';
 const My = () => {
   const { nickname, level } = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filterOpt, setFilterOpt] = useState('전체보기');
   const [feedList, setFeedList] = useState([]);
 
+  const getFeedData = async () => {
+    if (filterOpt === '전체보기') {
+      const res = await getFeedsByMember();
+      const json = await res.json();
+      if (json.length < 9) {
+        setStopReq(true);
+      } else {
+        setStopReq(false);
+      }
+      return json;
+    } else {
+      const opt = filterOpt.split('년 ');
+      opt[1] = parseInt(opt[1]).toString().padStart(2, '0');
+      const res = await getFeedsByMonth(opt.join('-'));
+      setStopReq(true);
+      return await res.json();
+    }
+  };
+
   useEffect(() => {
-    const setData = async () => {
-      try {
-        const feedRes = await getFeedsByMember();
-        const feedData = await feedRes.json();
-        setFeedList(feedData);
-      } catch (error) {
-        console.error(error);
+    try {
+      const data = getFeedData();
+      setFeedList(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [filterOpt]);
+
+  // 무한 스크롤
+  const [page, setPage] = useState(0);
+  const [stopReq, setStopReq] = useState(false);
+
+  useEffect(() => {
+    const addFeedList = () => {
+      if (stopReq || filterOpt !== '전체보기') {
+        return;
+      }
+
+      const scrollHeight = document.documentElement.scrollHeight;
+      const scrollTop = document.documentElement.scrollTop;
+      const clientHeight = document.documentElement.clientHeight;
+
+      // 바닦에 닿기 20px 전 추가 렌더링
+      if (scrollHeight - scrollTop <= clientHeight + 20) {
+        console.log(page);
+        // const data = getData()
+        // setFeedList([...feedList, data]);
+        setPage(page + 1);
       }
     };
-    setData();
-  }, []);
+
+    window.addEventListener('scroll', addFeedList);
+
+    return () => window.removeEventListener('scroll', addFeedList);
+  }, [page, filterOpt]);
 
   return (
     <>

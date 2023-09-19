@@ -79,6 +79,7 @@ const FilterModal = ({ setIsModalOpen, setFilterOpt, filterOpt }) => {
               <li key={i}>
                 <button
                   onClick={() => handleBtn(v)}
+                  disabled={'전체보기' === selectedYear}
                   // className={
                   //   selectedOpt.includes(`${selectedYear}${v}`)
                   //     ? 'selected'

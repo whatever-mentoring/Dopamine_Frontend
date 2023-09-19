@@ -2,6 +2,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
+import { ChallengeContext } from '../../context/ChallengeContext';
 
 import { getTodayChallenge } from '../../api/challenge';
 import { getMember } from '../../api/member';
@@ -24,6 +25,8 @@ const Home = () => {
   // renderProofStatus 추가 '챌린지 인증에 실패했어요'
   const { nickname, level, renderJoinStatus, setRenderJoinStatus } =
     useContext(UserContext);
+  const { setChallengeToProve } = useContext(ChallengeContext);
+
   const [challengeList, setChallengeList] = useState([]);
   const [feedList, setFeedList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,9 +35,9 @@ const Home = () => {
     const setData = async () => {
       // 오늘의 챌린지
       const challengeRes = await getTodayChallenge();
-      console.log(challengeRes);
-      const challengeData = await challengeRes.text();
-      console.log(challengeData);
+      const challengeData = await challengeRes.json();
+      setChallengeList(challengeData);
+
       // 피드(좋아요순)
       const feedRes = await getFeedsByLikeCount();
       const feedData = await feedRes.text();
@@ -42,32 +45,6 @@ const Home = () => {
     };
 
     setData();
-    // 임시
-    const mission1 = new URL(
-      '../../assets/images/mission1.png',
-      import.meta.url
-    ).href;
-    const mission2 = new URL(
-      '../../assets/images/mission2.png',
-      import.meta.url
-    ).href;
-
-    setChallengeList([
-      {
-        tit: '텀블러 갖고 다니기',
-        text: '일회용 사용을 줄여봐요',
-        status: '미션 인증할래요',
-        active: true,
-        img: mission1,
-      },
-      {
-        tit: '텀블러 갖고 다니기',
-        text: '장바구니 사용하기',
-        status: '내일 인증할 수 있어요',
-        active: false,
-        img: mission2,
-      },
-    ]);
 
     // 임시
     const homeFeed1 = new URL(
@@ -84,16 +61,22 @@ const Home = () => {
     ).href;
     setFeedList([
       {
-        tit: '플라스틱 제품 대신에 다른',
-        img: homeFeed1,
+        content: '플라스틱 제품 대신에 다른',
+        image1Url: homeFeed1,
+        memberId: 1,
+        feedId: 1,
       },
       {
-        tit: '분리수거 이렇게 열심히 해본',
-        img: homeFeed2,
+        content: '분리수거 이렇게 열심히 해본',
+        image1Url: homeFeed2,
+        memberId: 1,
+        feedId: 1,
       },
       {
-        tit: '컵 재활용해서 화분으로 썼어요',
-        img: homeFeed3,
+        content: '컵 재활용해서 화분으로 썼어요',
+        image1Url: homeFeed3,
+        memberId: 1,
+        feedId: 1,
       },
     ]);
   }, []);
@@ -112,42 +95,53 @@ const Home = () => {
         <ChallengeSection>
           <img className="earth" src={logoIcon} alt="지구 아이콘" />
           <h2 className="a11y-hidden">오늘의 챌린지</h2>
-          {level && (
+          {level.length ? (
             <div className="level-name">
               {level.name} {nickname}님
             </div>
-          )}
+          ) : null}
           <span className="tit">
             <h2>오늘의 챌린지</h2>에요:)
           </span>
 
           <ul>
-            {!!challengeList.length &&
-              challengeList.map((challenge, i) => {
-                return (
-                  <li key={i}>
-                    <div>
-                      <span>난이도 하</span>
-                      <strong>{challenge.tit}</strong>
-                    </div>
-                    <SButton
-                      disabled={!challenge.active}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setIsModalOpen(true);
-                      }}
-                    >
-                      인증하기
-                    </SButton>
-                  </li>
-                );
-              })}
+            {challengeList.length
+              ? challengeList.map((challenge, i) => {
+                  console.log(challengeList);
+                  return (
+                    <li key={i}>
+                      <div>
+                        <span className={challenge.challengeLevel}>
+                          난이도{' '}
+                          {challenge.challengeLevel === 'HIGH'
+                            ? '상'
+                            : challenge.challengeLevel === 'MID'
+                            ? '중'
+                            : '하'}
+                        </span>
+                        <strong>{challenge.title}</strong>
+                      </div>
+                      <SButton
+                        id={challenge.challengeId}
+                        disabled={!!challenge.certificationYn}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setIsModalOpen(true);
+                          setChallengeToProve(e.currentTarget.dataset.id);
+                        }}
+                      >
+                        인증하기
+                      </SButton>
+                    </li>
+                  );
+                })
+              : null}
           </ul>
           <img className="tooltip" src={tooltipIcon} alt="툴팁" />
           {isModalOpen && <ProofModal setIsModalOpen={setIsModalOpen} />}
         </ChallengeSection>
 
-        {level && (
+        {level.length ? (
           <ReportSection $fillPercent={100 - level.expPercent}>
             <h2>나의 기록</h2>
             <article>
@@ -171,7 +165,7 @@ const Home = () => {
               </div>
             </article>
           </ReportSection>
-        )}
+        ) : null}
 
         <FeedSection>
           <h2 className="a11y-hidden">챌린지 피드</h2>
@@ -184,12 +178,12 @@ const Home = () => {
             observer={true}
             observeParents={true}
           >
-            {!!feedList.length &&
+            {feedList.length &&
               feedList.map((feed, i) => {
                 return (
                   <SwiperSlide key={i} className="swiper-item">
-                    <img src={feed.img} alt="" />
-                    <p className="ellipsis">{feed.tit}</p>
+                    <img src={feed.image1Url} alt="" />
+                    <p className="ellipsis">{feed.content}</p>
                   </SwiperSlide>
                 );
               })}

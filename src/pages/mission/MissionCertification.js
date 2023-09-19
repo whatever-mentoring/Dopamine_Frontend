@@ -67,7 +67,7 @@ const StyledMission = styled.div`
     font-weight: var(--font-medium); /* 폰트 굵기 일반으로 설정 */
   }
 
-  .optional-text2 {
+  .mission-feedback-title2 > button {
     color: var(--gray-400);
     font-weight: var(--font-medium); /* 폰트 굵기 일반으로 설정 */
     margin-left: auto;
@@ -82,7 +82,7 @@ const StyledMission = styled.div`
     padding: 0 16px;
   }
 
-  .ms-txtarea {
+  textarea {
     display: block;
     width: 100%; /* 가로 폭을 100%로 설정하여 부모 요소에 맞춤 */
     height: 80px; /* 텍스트 영역의 높이 설정 */
@@ -95,13 +95,14 @@ const StyledMission = styled.div`
     border-radius: 10px;
   }
 
-  .ms-txtarea::placeholder {
+  textarea::placeholder {
     color: var(--gray-400);
   }
 
-  .ms-txtarea:focus {
+  textarea:focus {
     outline: none;
     border: 1px solid var(--primary-500);
+    padding: 11px;
   }
 
   /* 글자수 제한 색깔표시 */
@@ -126,8 +127,8 @@ const StyledMission = styled.div`
   }
   .swiper-item {
     position: relative;
-    aspect-ratio: 1/1;
     img {
+      aspect-ratio: 1/1;
       object-fit: cover;
     }
 
