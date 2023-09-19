@@ -1,5 +1,4 @@
 import { useState, useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { ChallengeContext } from '../../context/ChallengeContext';
 import StyledMission, { StyledFooter } from './MissionCertification';

@@ -10,33 +10,21 @@ import openIcon from '../../assets/icons/open.svg';
 
 import FilterModal from './FilterModal';
 import { getFeedsByMember } from '../../api/feed';
-
-// UI를 위한 임시
-import testImg1 from '../../assets/images/my-test1.png';
-import testImg2 from '../../assets/images/my-test2.png';
-import testImg3 from '../../assets/images/my-test3.png';
-
 const My = () => {
   const { nickname, level } = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filterOpt, setFilterOpt] = useState('전체보기');
-  const [feedList, setFeedList] = useState([
-    { src: testImg1 },
-    { src: testImg2 },
-    { src: testImg3 },
-    { src: testImg1 },
-    { src: testImg2 },
-    { src: testImg3 },
-    { src: testImg1 },
-    { src: testImg2 },
-    { src: testImg3 },
-  ]);
+  const [feedList, setFeedList] = useState([]);
 
   useEffect(() => {
     const setData = async () => {
-      // const feedRes = await getFeedsByMember();
-      // const feedData = await feedRes.json();
-      // setFeedList(feedData);
+      try {
+        const feedRes = await getFeedsByMember();
+        const feedData = await feedRes.json();
+        setFeedList(feedData);
+      } catch (error) {
+        console.error(error);
+      }
     };
     setData();
   }, []);
@@ -89,7 +77,13 @@ const My = () => {
                 className={isModalOpen ? 'open' : null}
               />
             </StyledSelectBtn>
-            {isModalOpen && <FilterModal setIsModalOpen={setIsModalOpen} />}
+            {isModalOpen && (
+              <FilterModal
+                filterOpt={filterOpt}
+                setFilterOpt={setFilterOpt}
+                setIsModalOpen={setIsModalOpen}
+              />
+            )}
           </div>
 
           <ul>

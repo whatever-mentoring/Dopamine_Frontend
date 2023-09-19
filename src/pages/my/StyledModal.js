@@ -24,7 +24,7 @@ const StyledModal = styled(BasicBottomModal)`
   }
 
   .select {
-    width: 70px;
+    width: fit-content;
   }
 `;
 

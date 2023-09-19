@@ -1,75 +1,62 @@
 import { useState, useContext, useEffect } from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 import { editMember } from '../../api/member';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
-
-const GlobalStyle = createGlobalStyle`
-  body {
-    font-family: 'SUITE Variable', sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-`;
+import { LButton } from '../../components/common/Buttons';
+import successTrueIcon from '../../assets/icons/success-true.svg';
+import successFalseIcon from '../../assets/icons/success-false.svg';
 
 const CenteredContainer = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
   min-height: 100vh;
-`;
-const Text = styled.p`
-  font-family: SUITE;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 21px;
-  letter-spacing: -0.02em;
-  text-align: left;
+  width: min(100%, 430px);
+  padding: 60px 16px 16px;
+
+  strong {
+    margin-top: 2px;
+    font-size: var(--title-m);
+    font-weight: 700;
+  }
+
+  button {
+    margin-top: auto;
+  }
 `;
 
-// 사용 예시
-/* <Text>This is a medium text</Text> */
+const Text = styled.p`
+  font-size: var(--text-m);
+  text-align: left;
+  color: var(--gray-700);
+`;
 
 const InputBox = styled.input`
-  font-size: 1.2em;
-  height: 51px;
-  border: none;
-  background-color: #eff0f0;
-  border-radius: 10px;
-  padding: 5px;
-  width: 328px;
-  max-width: 400px;
-`;
-
-const NextButton = styled.button`
-  background-color: #02b550;
-  color: white;
-  border: none;
-  border-radius: 100px;
-  padding: 10px;
-  font-size: 2em;
-  cursor: pointer;
-  width: 328px;
-  height: 56px;
-  max-width: 400px;
-`;
-
-const BoldText = styled.p`
-  font-family: SUITE;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 36px;
-  letter-spacing: -0.02em;
-  text-align: left;
-  color: black;
-`;
-
-const SpaceBetween = styled.div`
-  margin-top: 250px;
+  margin-top: 20px;
+  font-size: var(--text-m);
+  background-color: var(--gray-100);
+  border-radius: 12px;
+  padding: 15px 12px;
+  width: 100%;
 `;
 
 const Message = styled.div`
-  color: ${(props) => (props.$error ? 'red' : 'green')};
+  display: flex;
+  align-items: center;
+  margin: 4px 0 0 4px;
+  font-size: var(--text-s);
+  color: ${(props) => (props.$error ? 'var(--error)' : 'var(--primary-500)')};
+
+  &::before {
+    content: '';
+    margin-right: 4px;
+    width: 18px;
+    aspect-ratio: 1/1;
+    background: ${(props) =>
+      props.$error
+        ? `url(${props.$successFalseIcon}) no-repeat`
+        : `url(${props.$successTrueIcon}) no-repeat`};
+  }
 `;
 
 function Nickname() {
@@ -94,6 +81,7 @@ function Nickname() {
 
       if (json.message) {
         setStatus(json.message);
+        setIsNicknameAvailable(false);
       } else {
         localStorage.setItem('nickname', nicknameVal);
         setNickname(nicknameVal);
@@ -107,32 +95,36 @@ function Nickname() {
 
   return (
     <CenteredContainer>
-      <GlobalStyle />
-      <div>
-        <Text>이것만 입력하면 끝이에요.</Text>
-        <BoldText>이름을 어떻게 설정할까요?</BoldText>
-        <InputBox
-          type="text"
-          placeholder="이름을 입력하세요"
-          value={nicknameVal}
-          onChange={async (e) => {
-            const name = e.target.value;
-            setNicknameVal(name);
+      <Text>이것만 입력하면 끝이에요.</Text>
+      <strong>이름을 어떻게 설정할까요?</strong>
+      <InputBox
+        type="text"
+        placeholder="이름을 입력하세요"
+        value={nicknameVal}
+        onChange={async (e) => {
+          const name = e.target.value;
+          setNicknameVal(name);
 
-            // 이름 유효성 검사
-            if (name.length < 2) {
-              setStatus('2~10자 이내로 입력해주세요.'); // 입력값이 2글자 미만인 경우 로그를 출력
-              setIsNicknameAvailable(false);
-            } else {
-              setStatus('사용 가능한 이름이에요.');
-              setIsNicknameAvailable(true);
-            }
-          }}
-        />
-        {status && <Message $error={!isNicknameAvailable}>{status}</Message>}
-        <SpaceBetween />
-        <NextButton onClick={handleSubmit}>다음으로</NextButton>
-      </div>
+          // 이름 유효성 검사
+          if (name.length < 2) {
+            setStatus('2~10자 이내로 입력해주세요.'); // 입력값이 2글자 미만인 경우 로그를 출력
+            setIsNicknameAvailable(false);
+          } else {
+            setStatus('사용 가능한 이름이에요.');
+            setIsNicknameAvailable(true);
+          }
+        }}
+      />
+      {status && (
+        <Message
+          $error={!isNicknameAvailable}
+          $successTrueIcon={successTrueIcon}
+          $successFalseIcon={successFalseIcon}
+        >
+          {status}
+        </Message>
+      )}
+      <LButton onClick={handleSubmit}>다음으로</LButton>
     </CenteredContainer>
   );
 }

@@ -24,9 +24,9 @@ const StyledHome = styled(StyledMain)`
 
 const ChallengeSection = styled.section`
   overflow-x: hidden;
-  padding: 27px 16px 48px;
+  padding: 27px 16px 20px;
 
-  img {
+  .earth {
     margin: auto;
     width: 71px;
     aspect-ratio: 71/67;
@@ -67,9 +67,19 @@ const ChallengeSection = styled.section`
     display: flex;
     align-items: center;
 
-    p {
+    span {
+      display: flex;
+      align-items: center;
       font-size: var(--text-s);
       color: var(--gray-400);
+    }
+    span::after {
+      content: '';
+      margin-left: 4px;
+      width: 6px;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      background: var(--primary-500);
     }
 
     strong {
@@ -84,6 +94,12 @@ const ChallengeSection = styled.section`
       padding: 8px 24px;
       width: auto;
     }
+  }
+
+  .tooltip {
+    width: 20px;
+    aspect-ratio: 1/1;
+    margin: 8px 9px 0 auto;
   }
 `;
 
@@ -150,12 +166,12 @@ const FeedSection = styled.section`
   padding: 30px 0; // bottom 임의
 
   & > span {
-    margin-left: 20px;
+    margin-left: 16px;
   }
 
   a {
     float: right;
-    margin-right: 20px;
+    margin-right: 16px;
     line-height: 3rem;
     font-size: var(--text-m);
     color: var(--gray-500);
@@ -163,7 +179,7 @@ const FeedSection = styled.section`
 
   .swiper-frame {
     margin-top: 19px;
-    padding: 0 20px;
+    padding: 0 16px;
 
     & > div {
       padding-right: 50px;
