@@ -45,6 +45,7 @@ const InputBox = styled.input`
     border: 1px solid var(--primary-500);
     outline: none;
   }
+
   &.error {
     padding: 14px 11px;
     border: 1px solid var(--error);
@@ -111,7 +112,7 @@ function Nickname() {
       <strong>이름을 어떻게 설정할까요?</strong>
       <InputBox
         type="text"
-        placeholder="이름을 입력하세요"
+        placeholder="10글자 이내로 작성할 수 있어요."
         className={isNicknameAvailable ? '' : 'error'}
         value={nicknameVal}
         onChange={async (e) => {

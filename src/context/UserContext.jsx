@@ -29,15 +29,15 @@ const UserProvider = ({ children }) => {
     (async () => {
       try {
         const res = await getMember();
-        const data = await res.json();
+        const json = await res.json();
 
         setLevel({
-          exp: data.exp,
-          successCnt: data.successCnt,
-          num: data.level.levelNum,
-          name: data.level.name,
-          badge: data.level.badge,
-          expPercent: data.level.expPercent,
+          exp: json.exp,
+          successCnt: json.successCnt,
+          num: json.level.levelNum,
+          name: json.level.name,
+          badge: json.level.badge,
+          expPercent: json.level.expPercent,
         });
       } catch (error) {
         console.error(error);
