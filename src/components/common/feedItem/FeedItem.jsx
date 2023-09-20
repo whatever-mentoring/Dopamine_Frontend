@@ -13,18 +13,18 @@ import { unLikeFeed, likeFeed } from '../../../api/feedLike';
 const FeedItem = ({ feed }) => {
   const { nickname } = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [like, setLike] = useState(false);
+  const [like, setLike] = useState(feed.likePresent);
   const [activeIndex, setActiveIndex] = useState(0);
 
   const handleLikeBtn = async () => {
     try {
       if (like) {
-        const res = await unLikeFeed(feed.feedId);
+        await unLikeFeed(feed.feedId);
         setLike(false);
       } else {
         setLike(true);
-        const res = await likeFeed(feed.feedId);
-        console.log(res);
+        await likeFeed(feed.feedId);
+        setLike(true);
       }
     } catch (error) {
       console.error(error);
@@ -41,11 +41,6 @@ const FeedItem = ({ feed }) => {
       }
     }
   };
-
-  useEffect(() => {
-    // console.log(feed.feedLikeResponseDTOList);
-    setLike(false);
-  }, []);
 
   return (
     <>
