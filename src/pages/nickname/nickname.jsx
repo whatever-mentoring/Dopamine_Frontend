@@ -113,6 +113,8 @@ function Nickname() {
       <InputBox
         type="text"
         placeholder="10글자 이내로 작성할 수 있어요."
+        minLength="2"
+        maxLength="10"
         className={isNicknameAvailable ? '' : 'error'}
         value={nicknameVal}
         onChange={async (e) => {
@@ -120,8 +122,9 @@ function Nickname() {
           setNicknameVal(name);
 
           // 이름 유효성 검사
-          if (name.length < 2) {
-            setStatus('2~10자 이내로 입력해주세요.'); // 입력값이 2글자 미만인 경우 로그를 출력
+          console.log(e.target.validity);
+          if (e.target.validity.tooLong || e.target.validity.tooShort) {
+            setStatus('2~10자 이내로 입력해주세요.');
             setIsNicknameAvailable(false);
           } else {
             setStatus('사용 가능한 이름이에요.');
