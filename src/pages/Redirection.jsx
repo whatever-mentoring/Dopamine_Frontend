@@ -3,12 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { login } from '../api/jwt';
 import { UserContext } from '../context/UserContext';
 import { getMember } from '../api/member';
+import { ChallengeContext } from '../context/ChallengeContext';
+import { getTodayChallenge } from '../api/challenge';
 
 const Redirection = () => {
   const navigate = useNavigate();
   const code = new URL(window.location.href).searchParams.get('code');
   const { setToken, setRefreshToken, setNickname, setLevel } =
     useContext(UserContext);
+  const { setChallengeList, setChallengeDate } = useContext(ChallengeContext);
 
   const setLevelData = async () => {
     try {
@@ -18,11 +21,21 @@ const Redirection = () => {
       setLevel({
         exp: data.exp,
         successCnt: data.successCnt,
-        level: data.level.levelNum,
+        num: data.level.levelNum,
         name: data.level.name,
         badge: data.level.badge,
         expPercent: data.level.expPercent,
       });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const setChallengeData = async () => {
+    try {
+      const res = await getTodayChallenge();
+      const json = await res.json();
+      setChallengeList(json);
+      setChallengeDate(new Date().getDate());
     } catch (error) {
       console.error(error);
     }
@@ -44,7 +57,8 @@ const Redirection = () => {
       setToken(json.token.accessToken);
       setRefreshToken(json.token.refreshToken);
       setNickname(json.member.nickname);
-      setLevelData();
+      await setLevelData();
+      await setChallengeData();
 
       if (json.member.nickname === null) {
         navigate('/join');
