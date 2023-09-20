@@ -2,14 +2,12 @@ import splashImg from '../../assets/images/splash.png';
 import logo from '../../assets/images/logo.png';
 import kakaoText from '../../assets/images/kakao-text.png';
 import kakaoLogo from '../../assets/icons/kakao-logo.svg';
-
 import StyledMain from './StyledMain';
 
 const Splash = () => {
-  const REST_API_KEY = 'b4a4174bcbedb68d9c7adb60c5ee2477';
-  const REDIRECT_URI = 'https://dopamine-frontend.vercel.app/kakao/callback';
+  const REST_API_KEY = import.meta.env.VITE_APP_REST_API_KEY;
+  const REDIRECT_URI = import.meta.env.VITE_APP_REDIRECT_URI;
   const link = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-
   const loginHandler = () => {
     window.location.href = link;
   };
