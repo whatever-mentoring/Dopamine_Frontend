@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { editMember } from '../../api/member';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
+import { StatusContext } from '../../context/StatusContext';
 import { LButton } from '../../components/common/Buttons';
 import successTrueIcon from '../../assets/icons/success-true.svg';
 import successFalseIcon from '../../assets/icons/success-false.svg';
@@ -60,7 +61,8 @@ const Message = styled.div`
 `;
 
 function Nickname() {
-  const { setRenderJoinStatus, setNickname } = useContext(UserContext);
+  const { setNickname } = useContext(UserContext);
+  const { setRenderJoinStatus } = useContext(StatusContext);
 
   const [status, setStatus] = useState(null);
   const [nicknameVal, setNicknameVal] = useState('');

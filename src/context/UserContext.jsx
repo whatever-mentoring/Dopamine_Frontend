@@ -6,12 +6,10 @@ export const UserContext = createContext({
   refreshToken: localStorage.getItem('refreshToken') || null,
   nickname: localStorage.getItem('nickname') || null,
   level: [],
-  renderJoinStatus: false,
   setToken: () => {},
   setRefreshToken: () => {},
   setNickname: () => {},
   setLevel: () => {},
-  setRenderJoinStatus: () => {},
 });
 
 const UserProvider = ({ children }) => {
@@ -25,7 +23,6 @@ const UserProvider = ({ children }) => {
     localStorage.getItem('nickname') || null
   );
   const [level, setLevel] = useState([]);
-  const [renderJoinStatus, setRenderJoinStatus] = useState(false);
 
   useEffect(() => {
     if (!token) return;
@@ -59,8 +56,6 @@ const UserProvider = ({ children }) => {
         setNickname,
         level,
         setLevel,
-        renderJoinStatus,
-        setRenderJoinStatus,
       }}
     >
       {children}
