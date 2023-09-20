@@ -28,13 +28,11 @@ const Home = () => {
     renderChallengeStatus,
     setRenderChallengeStatus,
   } = useContext(StatusContext);
-
   const {
     setSelectedChallengeIndex,
     challengeList,
-    setchallengeList,
     challengeDate,
-    setChallengeDate,
+    setChallengeData,
   } = useContext(ChallengeContext);
   const [feedList, setFeedList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -48,10 +46,7 @@ const Home = () => {
 
         const today = new Date().getDate();
         if (challengeDate !== today) {
-          const res = await getTodayChallenge();
-          const data = await res.json();
-          setchallengeList(data);
-          setChallengeDate(today);
+          await setChallengeData();
         }
       } catch (error) {
         console.error(error);

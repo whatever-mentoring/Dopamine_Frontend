@@ -1,13 +1,8 @@
 import { createContext, useEffect, useState } from 'react';
 import { getTodayChallenge } from '../api/challenge';
 
-// 임시
 export const ChallengeContext = createContext({
-  challengeList: [
-    { title: '텀블러 갖고 다니기', status: true },
-    { title: '장바구니 사용하기', status: false },
-    { title: '텀블러 갖고 다니기', status: false },
-  ],
+  challengeList: [],
   selectedChallengeIndex: null,
   imgList: [],
   challengeDate: new Date().getDate(),
@@ -15,6 +10,7 @@ export const ChallengeContext = createContext({
   setSelectedChallengeIndex: () => {},
   setImgList: () => {},
   setChallengeDate: () => {},
+  setChallengeData: async () => {},
 });
 
 const ChallengeProvider = ({ children }) => {
@@ -23,12 +19,21 @@ const ChallengeProvider = ({ children }) => {
   const [imgList, setImgList] = useState([]);
   const [challengeDate, setChallengeDate] = useState(new Date().getDate());
 
+  const setChallengeData = async () => {
+    try {
+      const res = await getTodayChallenge();
+      const json = await res.json();
+      setChallengeList(json);
+      setChallengeDate(new Date().getDate());
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     if (localStorage.getItem('accessToken')) {
       (async () => {
-        const challengeRes = await getTodayChallenge();
-        const challengeData = await challengeRes.json();
-        setChallengeList(challengeData);
+        await setChallengeData();
       })();
     }
   }, []);
@@ -44,6 +49,7 @@ const ChallengeProvider = ({ children }) => {
         setImgList,
         challengeDate,
         setChallengeDate,
+        setChallengeData,
       }}
     >
       {children}

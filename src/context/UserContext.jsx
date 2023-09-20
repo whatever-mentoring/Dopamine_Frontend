@@ -10,6 +10,7 @@ export const UserContext = createContext({
   setRefreshToken: () => {},
   setNickname: () => {},
   setLevel: () => {},
+  setLevelData: async () => {},
 });
 
 const UserProvider = ({ children }) => {
@@ -24,24 +25,29 @@ const UserProvider = ({ children }) => {
   );
   const [level, setLevel] = useState([]);
 
+  const setLevelData = async () => {
+    try {
+      const res = await getMember();
+      const data = await res.json();
+
+      setLevel({
+        exp: data.exp,
+        successCnt: data.successCnt,
+        num: data.level.levelNum,
+        name: data.level.name,
+        badge: data.level.badge,
+        expPercent: data.level.expPercent,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     if (!token) return;
-    (async () => {
-      try {
-        const res = await getMember();
-        const json = await res.json();
 
-        setLevel({
-          exp: json.exp,
-          successCnt: json.successCnt,
-          num: json.level.levelNum,
-          name: json.level.name,
-          badge: json.level.badge,
-          expPercent: json.level.expPercent,
-        });
-      } catch (error) {
-        console.error(error);
-      }
+    (async () => {
+      await setLevelData();
     })();
   }, []);
 
@@ -56,6 +62,7 @@ const UserProvider = ({ children }) => {
         setNickname,
         level,
         setLevel,
+        setLevelData,
       }}
     >
       {children}

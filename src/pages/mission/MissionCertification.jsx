@@ -9,20 +9,14 @@ import CloseTopBar from '../../components/common/TopBar/CloseTopBar';
 import ProofModal from '../../components/common/modal/ProofModal';
 import xCircleIcon from '../../assets/icons/x-circle.svg';
 import { postFeed } from '../../api/feed';
-import { getTodayChallenge } from '../../api/challenge';
 import { UserContext } from '../../context/UserContext';
 import { StatusContext } from '../../context/StatusContext';
 
 function MissionCertification() {
-  const {
-    imgList,
-    challengeList,
-    selectedChallengeIndex,
-    setChallengeList,
-    setChallengeDate,
-  } = useContext(ChallengeContext);
+  const { imgList, challengeList, selectedChallengeIndex, setChallengeData } =
+    useContext(ChallengeContext);
   const { setRenderChallengeStatus } = useContext(StatusContext);
-  const { setLevel } = useContext(UserContext);
+  const { setLevelData } = useContext(UserContext);
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(false);
   const [selectedImages, setSelectedImages] = useState([]);
@@ -97,25 +91,8 @@ function MissionCertification() {
 
       await postFeed(formData);
       (async () => {
-        try {
-          const challengeRes = await getTodayChallenge();
-          const challengeJson = await challengeRes.json();
-          setChallengeList(challengeJson);
-          setChallengeDate(new Date().getDate());
-
-          const res = await getMember();
-          const data = await res.json();
-          setLevel({
-            exp: data.exp,
-            successCnt: data.successCnt,
-            num: data.level.levelNum,
-            name: data.level.name,
-            badge: data.level.badge,
-            expPercent: data.level.expPercent,
-          });
-        } catch (error) {
-          console.error(error);
-        }
+        await setChallengeData();
+        await setLevelData();
       })();
 
       navigate('/mission/success');
