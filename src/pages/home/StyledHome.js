@@ -100,8 +100,25 @@ const ChallengeSection = styled.section`
     button {
       flex-shrink: 0;
       margin-left: auto;
-      padding: 8px 24px;
-      width: auto;
+      padding: 8px;
+      width: 96px;
+
+      &:disabled {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 7px;
+        border: 1px solid var(--gray-100);
+        color: var(--primary-500);
+        background: var(--white);
+      }
+      &:disabled::after {
+        content: '';
+        margin-left: 2px;
+        width: 18px;
+        aspect-ratio: 1/1;
+        background: ${({ $successIcon }) => `url(${$successIcon}) no-repeat`};
+      }
     }
   }
 

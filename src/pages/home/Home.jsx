@@ -18,6 +18,7 @@ import {
 import logoIcon from '../../assets/images/logo-icon-line.png';
 import tooltipIcon from '../../assets/icons/tooltip.svg';
 import { StatusContext } from '../../context/StatusContext';
+import successIcon from '../../assets/icons/success-true.svg';
 
 const Home = () => {
   const { nickname, level } = useContext(UserContext);
@@ -76,7 +77,7 @@ const Home = () => {
             setRenderStatus={setRenderChallengeStatus}
           ></StatusAlert>
         ) : null}
-        <ChallengeSection>
+        <ChallengeSection $successIcon={successIcon}>
           <img className="earth" src={logoIcon} alt="지구 아이콘" />
           <h2 className="a11y-hidden">오늘의 챌린지</h2>
           {level.num ? (
