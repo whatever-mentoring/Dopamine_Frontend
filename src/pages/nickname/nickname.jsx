@@ -122,7 +122,6 @@ function Nickname() {
           setNicknameVal(name);
 
           // 이름 유효성 검사
-          console.log(e.target.validity);
           if (e.target.validity.tooLong || e.target.validity.tooShort) {
             setStatus('2~10자 이내로 입력해주세요.');
             setIsNicknameAvailable(false);
