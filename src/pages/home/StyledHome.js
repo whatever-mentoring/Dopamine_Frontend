@@ -3,7 +3,10 @@ import StyledMain from '../../components/StyledMain';
 
 const StyledHome = styled(StyledMain)`
   position: relative;
+  display: flex;
+  flex-direction: column;
   padding-bottom: 0;
+  min-height: 100vh;
 
   &::before {
     content: '';
@@ -16,8 +19,8 @@ const StyledHome = styled(StyledMain)`
 
   &::after {
     content: '';
-    display: block;
-    height: 98px;
+    flex-basis: 98px;
+    flex-grow: 1;
     background: #ededed;
   }
 
