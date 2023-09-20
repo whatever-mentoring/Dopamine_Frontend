@@ -51,7 +51,7 @@ const FeedItem = ({ feed }) => {
     <>
       <StyledFeed $moreIcon={moreIcon}>
         <div className="top">
-          <img src={''} alt="프로필 사진" />
+          <img src={feed.badgeimage} alt="프로필 사진" />
           <span>{feed.memberResponseDto.nickname}</span>
           <button
             aria-label="더보기"
