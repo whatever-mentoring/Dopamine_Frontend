@@ -35,10 +35,20 @@ const Text = styled.p`
 const InputBox = styled.input`
   margin-top: 20px;
   font-size: var(--text-m);
-  background-color: var(--gray-100);
+  background: var(--gray-100);
   border-radius: 12px;
   padding: 15px 12px;
   width: 100%;
+
+  &:focus {
+    padding: 14px 11px;
+    border: 1px solid var(--primary-500);
+    outline: none;
+  }
+  &.error {
+    padding: 14px 11px;
+    border: 1px solid var(--error);
+  }
 `;
 
 const Message = styled.div`
@@ -102,6 +112,7 @@ function Nickname() {
       <InputBox
         type="text"
         placeholder="이름을 입력하세요"
+        className={isNicknameAvailable ? '' : 'error'}
         value={nicknameVal}
         onChange={async (e) => {
           const name = e.target.value;
