@@ -66,7 +66,6 @@ const Feed = () => {
 
       // 바닥에 닿기 20px 전 추가 렌더링
       if (scrollHeight - scrollTop <= clientHeight + 20) {
-        console.log(page);
         (async () => {
           window.removeEventListener('scroll', addFeedList);
           const data = await getData();
