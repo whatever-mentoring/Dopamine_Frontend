@@ -178,7 +178,7 @@ const FeedSection = styled.section`
     margin-left: 16px;
   }
 
-  a {
+  & > a {
     float: right;
     margin-right: 16px;
     line-height: 3rem;
@@ -199,6 +199,7 @@ const FeedSection = styled.section`
 
   .swiper-item {
     flex-shrink: 0;
+    flex-grow: 0;
     box-sizing: border-box;
     border-radius: 10px;
 

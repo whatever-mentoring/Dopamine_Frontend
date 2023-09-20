@@ -173,8 +173,10 @@ const Home = () => {
               ? feedList.map((feed, i) => {
                   return (
                     <SwiperSlide key={i} className="swiper-item">
-                      <img src={feed.image1Url} alt="" />
-                      <p className="ellipsis">{feed.content}</p>
+                      <Link to={'/feed'}>
+                        <img src={feed.image1Url} alt="" />
+                        <p className="ellipsis">{feed.content}</p>
+                      </Link>
                     </SwiperSlide>
                   );
                 })
