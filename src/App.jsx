@@ -47,28 +47,31 @@ function App() {
           <ChallengeProvider>
             <BrowserRouter>
               <Routes>
-                {/* <Route element={<NonAuthRoute />}> */}
-                <Route path="/" element={<Splash />}></Route>
-                <Route path="/kakao/callback" element={<Redirection />}></Route>
-                {/* </Route> */}
+                <Route element={<NonAuthRoute />}>
+                  <Route path="/" element={<Splash />}></Route>
+                  <Route
+                    path="/kakao/callback"
+                    element={<Redirection />}
+                  ></Route>
+                </Route>
 
-                {/* <Route element={<AuthRoute />}> */}
-                <Route path="/home" element={<Home />}></Route>
-                <Route path="/feed" element={<Feed />}></Route>
-                <Route path="/my" element={<My />}></Route>
-                <Route path="/my/setting" element={<Setting />}></Route>
-                <Route
-                  path="/mission"
-                  element={<MissionCertification />}
-                ></Route>
-                <Route
-                  path="/mission/success"
-                  element={<MissionComplete />}
-                ></Route>
-                <Route path="/join" element={<Nickname />}></Route>
-                <Route path="/nickname" element={<Nickname />}></Route>
-                <Route path="/policy" element={<Policy />}></Route>
-                {/* </Route> */}
+                <Route element={<AuthRoute />}>
+                  <Route path="/home" element={<Home />}></Route>
+                  <Route path="/feed" element={<Feed />}></Route>
+                  <Route path="/my" element={<My />}></Route>
+                  <Route path="/my/setting" element={<Setting />}></Route>
+                  <Route
+                    path="/mission"
+                    element={<MissionCertification />}
+                  ></Route>
+                  <Route
+                    path="/mission/success"
+                    element={<MissionComplete />}
+                  ></Route>
+                  <Route path="/join" element={<Nickname />}></Route>
+                  <Route path="/nickname" element={<Nickname />}></Route>
+                  <Route path="/policy" element={<Policy />}></Route>
+                </Route>
               </Routes>
             </BrowserRouter>
           </ChallengeProvider>
