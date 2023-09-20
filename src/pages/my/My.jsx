@@ -7,50 +7,76 @@ import settingIcon from '../../assets/icons/setting.svg';
 import { ProfileSection, ProofSection, StyledMy } from './StyledMy';
 import StyledSelectBtn from '../../components/common/select/StyledSelectBtn';
 import openIcon from '../../assets/icons/open.svg';
-
 import FilterModal from './FilterModal';
 import { getFeedsByMember, getFeedsByMonth } from '../../api/feed';
+
 const My = () => {
   const { nickname, level } = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filterOpt, setFilterOpt] = useState('전체보기');
   const [feedList, setFeedList] = useState([]);
+  const [page, setPage] = useState(1);
 
   const getFeedData = async () => {
     if (filterOpt === '전체보기') {
-      const res = await getFeedsByMember();
+      const res = await getFeedsByMember(page);
       const json = await res.json();
-      if (json.length < 9) {
-        setStopReq(true);
+
+      if (json.length === 9) {
+        setPage(page + 1);
       } else {
-        setStopReq(false);
+        setPage(0);
       }
-      return json;
+
+      if (page === 1) {
+        setFeedList(json);
+      } else {
+        setFeedList([...feedList, ...json]);
+      }
     } else {
       const opt = filterOpt.split('년 ');
       opt[1] = parseInt(opt[1]).toString().padStart(2, '0');
       const res = await getFeedsByMonth(opt.join('-'));
-      setStopReq(true);
-      return await res.json();
+      const json = await res.json();
+      setFeedList(json);
     }
   };
 
   useEffect(() => {
-    try {
-      const data = getFeedData();
-      setFeedList(data);
-    } catch (error) {
-      console.error(error);
+    if (filterOpt === '전체보기') {
+      setPage(1);
+    } else {
+      setPage(0);
     }
   }, [filterOpt]);
 
-  // 무한 스크롤
-  const [page, setPage] = useState(0);
-  const [stopReq, setStopReq] = useState(false);
-
   useEffect(() => {
-    const addFeedList = () => {
-      if (stopReq || filterOpt !== '전체보기') {
+    if (page === 0) {
+      return;
+    }
+    if (page === 1) {
+      (async () => {
+        try {
+          await getFeedData();
+        } catch (error) {
+          console.error(error);
+        }
+      })();
+      return;
+    }
+    if (page === 2) {
+      (async () => {
+        try {
+          await getFeedData();
+        } catch (error) {
+          console.error(error);
+        }
+      })();
+    }
+
+    // 무한 스크롤
+    const addFeedList = async () => {
+      if (filterOpt !== '전체보기') {
         return;
       }
 
@@ -58,19 +84,16 @@ const My = () => {
       const scrollTop = document.documentElement.scrollTop;
       const clientHeight = document.documentElement.clientHeight;
 
-      // 바닦에 닿기 20px 전 추가 렌더링
+      // 바닥에 닿기 20px 전 추가 렌더링
       if (scrollHeight - scrollTop <= clientHeight + 20) {
-        console.log(page);
-        // const data = getData()
-        // setFeedList([...feedList, data]);
-        setPage(page + 1);
+        window.removeEventListener('scroll', addFeedList);
+        await getFeedData();
       }
     };
 
     window.addEventListener('scroll', addFeedList);
-
     return () => window.removeEventListener('scroll', addFeedList);
-  }, [page, filterOpt]);
+  }, [page]);
 
   return (
     <>
@@ -134,7 +157,7 @@ const My = () => {
               ? feedList.map((v, i) => {
                   return (
                     <li key={i}>
-                      <img src={v.src} alt="" />
+                      <img src={v.image1Url} alt="" />
                     </li>
                   );
                 })

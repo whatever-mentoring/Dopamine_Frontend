@@ -6,7 +6,7 @@ import { getMember } from '../api/member';
 
 const Redirection = () => {
   const navigate = useNavigate();
-  const code = new URL(window.location.href).searchParams.get('code'); // 이상한코드가한가득
+  const code = new URL(window.location.href).searchParams.get('code');
   const { setToken, setRefreshToken, setNickname, setLevel } =
     useContext(UserContext);
 

@@ -3,11 +3,8 @@ import { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import { ChallengeContext } from '../../context/ChallengeContext';
-
 import { getTodayChallenge } from '../../api/challenge';
-import { getMember } from '../../api/member';
 import { getFeedsByLikeCount } from '../../api/feed';
-
 import TabBar from '../../components/common/TabBar/TabBar';
 import { SButton } from '../../components/common/Buttons';
 import StatusAlert from '../../components/common/statusAlert/StatusAlert';
@@ -20,65 +17,46 @@ import {
 } from './StyledHome';
 import logoIcon from '../../assets/images/logo-icon-line.png';
 import tooltipIcon from '../../assets/icons/tooltip.svg';
+import { StatusContext } from '../../context/StatusContext';
 
 const Home = () => {
   // renderProofStatus 추가 '챌린지 인증에 실패했어요'
-  const { nickname, level, renderJoinStatus, setRenderJoinStatus } =
-    useContext(UserContext);
-  const { setChallengeToProve } = useContext(ChallengeContext);
+  const { nickname, level } = useContext(UserContext);
+  const {
+    renderJoinStatus,
+    setRenderJoinStatus,
+    renderChallengeStatus,
+    setRenderChallengeStatus,
+  } = useContext(StatusContext);
 
-  const [challengeList, setChallengeList] = useState([]);
+  const {
+    setSelectedChallengeIndex,
+    challengeList,
+    setchallengeList,
+    challengeDate,
+    setChallengeDate,
+  } = useContext(ChallengeContext);
   const [feedList, setFeedList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    const setData = async () => {
-      // 오늘의 챌린지
-      const challengeRes = await getTodayChallenge();
-      const challengeData = await challengeRes.json();
-      setChallengeList(challengeData);
+    (async () => {
+      try {
+        const feedRes = await getFeedsByLikeCount();
+        const feedData = await feedRes.json();
+        setFeedList(feedData.slice(0, 6));
 
-      // 피드(좋아요순)
-      const feedRes = await getFeedsByLikeCount();
-      const feedData = await feedRes.text();
-      console.log(feedData);
-    };
-
-    setData();
-
-    // 임시
-    const homeFeed1 = new URL(
-      '../../assets/images/home-feed1.png',
-      import.meta.url
-    ).href;
-    const homeFeed2 = new URL(
-      '../../assets/images/home-feed2.png',
-      import.meta.url
-    ).href;
-    const homeFeed3 = new URL(
-      '../../assets/images/home-feed3.png',
-      import.meta.url
-    ).href;
-    setFeedList([
-      {
-        content: '플라스틱 제품 대신에 다른',
-        image1Url: homeFeed1,
-        memberId: 1,
-        feedId: 1,
-      },
-      {
-        content: '분리수거 이렇게 열심히 해본',
-        image1Url: homeFeed2,
-        memberId: 1,
-        feedId: 1,
-      },
-      {
-        content: '컵 재활용해서 화분으로 썼어요',
-        image1Url: homeFeed3,
-        memberId: 1,
-        feedId: 1,
-      },
-    ]);
+        const today = new Date().getDate();
+        if (challengeDate !== today) {
+          const res = await getTodayChallenge();
+          const data = await res.json();
+          setchallengeList(data);
+          setChallengeDate(today);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    })();
   }, []);
 
   return (
@@ -92,10 +70,17 @@ const Home = () => {
             setRenderStatus={setRenderJoinStatus}
           ></StatusAlert>
         ) : null}
+        {renderChallengeStatus ? (
+          <StatusAlert
+            success="false"
+            message="챌린지 인증에 실패했어요."
+            setRenderStatus={setRenderChallengeStatus}
+          ></StatusAlert>
+        ) : null}
         <ChallengeSection>
           <img className="earth" src={logoIcon} alt="지구 아이콘" />
           <h2 className="a11y-hidden">오늘의 챌린지</h2>
-          {level.length ? (
+          {level.num ? (
             <div className="level-name">
               {level.name} {nickname}님
             </div>
@@ -107,7 +92,6 @@ const Home = () => {
           <ul>
             {challengeList.length
               ? challengeList.map((challenge, i) => {
-                  console.log(challengeList);
                   return (
                     <li key={i}>
                       <div>
@@ -122,12 +106,11 @@ const Home = () => {
                         <strong>{challenge.title}</strong>
                       </div>
                       <SButton
-                        id={challenge.challengeId}
                         disabled={!!challenge.certificationYn}
                         onClick={(e) => {
                           e.preventDefault();
                           setIsModalOpen(true);
-                          setChallengeToProve(e.currentTarget.dataset.id);
+                          setSelectedChallengeIndex(i);
                         }}
                       >
                         인증하기
@@ -141,7 +124,7 @@ const Home = () => {
           {isModalOpen && <ProofModal setIsModalOpen={setIsModalOpen} />}
         </ChallengeSection>
 
-        {level.length ? (
+        {level.num ? (
           <ReportSection $fillPercent={100 - level.expPercent}>
             <h2>나의 기록</h2>
             <article>
@@ -170,7 +153,15 @@ const Home = () => {
         <FeedSection>
           <h2 className="a11y-hidden">챌린지 피드</h2>
           <span>함께하는 챌린이들</span>
-          <Link to="/">더보기</Link>
+          <Link
+            to="/"
+            onClick={(e) => {
+              e.preventDefault();
+              alert('준비중인 서비스입니다.');
+            }}
+          >
+            더보기
+          </Link>
           <Swiper
             className="swiper-frame"
             spaceBetween={10}
@@ -178,15 +169,16 @@ const Home = () => {
             observer={true}
             observeParents={true}
           >
-            {feedList.length &&
-              feedList.map((feed, i) => {
-                return (
-                  <SwiperSlide key={i} className="swiper-item">
-                    <img src={feed.image1Url} alt="" />
-                    <p className="ellipsis">{feed.content}</p>
-                  </SwiperSlide>
-                );
-              })}
+            {feedList.length
+              ? feedList.map((feed, i) => {
+                  return (
+                    <SwiperSlide key={i} className="swiper-item">
+                      <img src={feed.image1Url} alt="" />
+                      <p className="ellipsis">{feed.content}</p>
+                    </SwiperSlide>
+                  );
+                })
+              : null}
           </Swiper>
         </FeedSection>
       </StyledHome>

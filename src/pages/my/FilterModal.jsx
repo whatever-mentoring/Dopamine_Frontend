@@ -1,17 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Overlay from '../../components/common/modal/Overlay';
 import StyledModal from './StyledModal';
-
 import Select from '../../components/common/select/Select';
+import { getFeedsFilter } from '../../api/feed';
 
 const FilterModal = ({ setIsModalOpen, setFilterOpt, filterOpt }) => {
-  const [selectedOpt, setSelectedOpt] = useState([]);
-  const [isSelectOn, setIsSelectOn] = useState(false);
-
   const thisYear = new Date().getFullYear();
   const [selectedYear, setSelectedYear] = useState(
     filterOpt === '전체보기' ? '전체보기' : filterOpt.split(' ')[0]
   );
+  const [filter, setFilter] = useState({});
 
   /* 모달 기본 기능 */
   const modal = useRef(null);
@@ -52,6 +50,28 @@ const FilterModal = ({ setIsModalOpen, setFilterOpt, filterOpt }) => {
     setIsModalOpen(false);
   };
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = [];
+        for (let i = 0; i < 3; i++) {
+          const res = await getFeedsFilter(thisYear - i);
+          const json = await res.json();
+          data[`${thisYear - i}년`] = json;
+        }
+        setFilter(data);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (selectedYear === '전체보기') {
+      setFilterOpt('전체보기');
+    }
+  }, [selectedYear]);
+
   return (
     <Overlay>
       <StyledModal
@@ -71,7 +91,6 @@ const FilterModal = ({ setIsModalOpen, setFilterOpt, filterOpt }) => {
             `${thisYear - 1}년`,
             `${thisYear - 2}년`,
           ]}
-          onClick={() => setIsSelectOn(true)}
         ></Select>
         <ul>
           {monthList.map((v, i) => {
@@ -79,12 +98,18 @@ const FilterModal = ({ setIsModalOpen, setFilterOpt, filterOpt }) => {
               <li key={i}>
                 <button
                   onClick={() => handleBtn(v)}
-                  disabled={'전체보기' === selectedYear}
-                  // className={
-                  //   selectedOpt.includes(`${selectedYear}${v}`)
-                  //     ? 'selected'
-                  //     : ''
-                  // }
+                  disabled={
+                    '전체보기' === selectedYear
+                      ? true
+                      : !filter[selectedYear][i].feedYn
+                  }
+                  className={
+                    selectedYear === '전체보기'
+                      ? ''
+                      : filter[selectedYear][i].feedYn
+                      ? 'selected'
+                      : ''
+                  }
                 >
                   {v}월
                 </button>

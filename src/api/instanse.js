@@ -19,7 +19,7 @@ const get = async (reqPath, token) => {
 };
 
 // json post
-const post = (reqPath, data, token) => {
+const post = (reqPath, data) => {
   const reqUrl = url + reqPath;
 
   const options = {
@@ -29,6 +29,7 @@ const post = (reqPath, data, token) => {
     },
   };
 
+  const token = localStorage.getItem('accessToken');
   if (token) {
     options.headers.Authorization = token;
   }
@@ -43,8 +44,13 @@ const post = (reqPath, data, token) => {
 // form post
 const postForm = async (reqPath, formData) => {
   const reqUrl = url + reqPath;
+  const token = localStorage.getItem('accessToken');
+
   return await fetch(reqUrl, {
     method: 'POST',
+    headers: {
+      Authorization: token,
+    },
     body: formData,
   });
 };
@@ -79,18 +85,16 @@ const putForm = async (reqPath, formData) => {
 };
 
 // delete
-const deleteData = async (reqPath, token) => {
+const deleteData = async (reqPath) => {
   const reqUrl = url + reqPath;
-
-  const options = {
+  const token = localStorage.getItem('accessToken');
+  console.log(token);
+  return await fetch(reqUrl, {
     method: 'DELETE',
-  };
-
-  if (token) {
-    options.headers = { Authorization: token };
-  }
-
-  return await fetch(reqUrl, options);
+    headers: {
+      Authorization: token,
+    },
+  });
 };
 
 export { get, post, postForm, put, putForm, deleteData };

@@ -10,7 +10,6 @@ const CloseTopBar = ({ tit, handleBack, handleClose }) => {
     navigate(-1);
   };
 
-  console.log(handleBack);
   return (
     <StyledCloseTopBar>
       <h1>{tit}</h1>
