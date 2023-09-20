@@ -162,26 +162,28 @@ const Home = () => {
           >
             더보기
           </Link>
-          <Swiper
-            className="swiper-frame"
-            spaceBetween={10}
-            slidesPerView={2.46}
-            observer={true}
-            observeParents={true}
-          >
-            {feedList.length
-              ? feedList.map((feed, i) => {
-                  return (
-                    <SwiperSlide key={i} className="swiper-item">
-                      <Link to={'/feed'}>
-                        <img src={feed.image1Url} alt="" />
-                        <p className="ellipsis">{feed.content}</p>
-                      </Link>
-                    </SwiperSlide>
-                  );
-                })
-              : null}
-          </Swiper>
+          {feedList.length ? (
+            <Swiper
+              className="swiper-frame"
+              spaceBetween={10}
+              slidesPerView={2.46}
+              observer={true}
+              observeParents={true}
+            >
+              {feedList.map((feed, i) => {
+                return (
+                  <SwiperSlide key={i} className="swiper-item">
+                    <Link to={'/feed'}>
+                      <img src={feed.image1Url} alt="" />
+                      <p className="ellipsis">{feed.content}</p>
+                    </Link>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          ) : (
+            <p>업로드된 인증글이 없어요.</p>
+          )}
         </FeedSection>
       </StyledHome>
       <TabBar></TabBar>

@@ -3,6 +3,7 @@ import StyledMain from '../../components/StyledMain';
 
 const StyledHome = styled(StyledMain)`
   position: relative;
+  padding-bottom: 0;
 
   &::before {
     content: '';
@@ -11,6 +12,13 @@ const StyledHome = styled(StyledMain)`
     width: 100%;
     height: 218px;
     background: var(--primary-500);
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    height: 98px;
+    background: #ededed;
   }
 
   section > span,
@@ -189,7 +197,7 @@ const ReportSection = styled.section`
 
 const FeedSection = styled.section`
   overflow-x: hidden;
-  padding: 30px 0; // bottom 임의
+  padding: 30px 0 31px; // bottom 임의
 
   & > span {
     margin-left: 16px;
@@ -228,6 +236,15 @@ const FeedSection = styled.section`
       margin-top: 10px;
       font-size: var(--text-m);
     }
+  }
+  & > p {
+    margin: 20px 16px 0;
+    padding: 69px 0;
+    text-align: center;
+    font-size: var(--text-m);
+    color: var(--gray-400);
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
   }
 `;
 
