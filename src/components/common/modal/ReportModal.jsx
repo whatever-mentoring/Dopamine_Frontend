@@ -2,7 +2,7 @@ import BottomModal from './BottomModal';
 
 const ReportModal = ({ setIsModalOpen }) => {
   const handleBtn = (e) => {
-    alert('challeng9@gmail.com으로 신고 메일을 보내주세요.');
+    alert('gimkin5318@gmail.com으로 신고 메일을 보내주세요.');
     setIsModalOpen(false);
   };
 
