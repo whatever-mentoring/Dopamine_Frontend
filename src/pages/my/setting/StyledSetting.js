@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 const StyledSetting = styled.main`
+  padding-top: 48px;
+
   li {
     padding: 16px;
     font-size: var(--text-l);

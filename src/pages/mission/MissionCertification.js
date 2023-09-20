@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const StyledMission = styled.div`
+  padding-top: 48px;
   .level {
     margin: 24px 0 6px 16px;
     width: fit-content;

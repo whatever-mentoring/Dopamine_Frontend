@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
 const StyledBasic = styled.header`
-  position: relative;
+  position: fixed;
   padding: 12px 16px;
+  width: min(430px, 100%);
+  background: var(--white);
 
   h1 {
     font-size: var(--text-l);
