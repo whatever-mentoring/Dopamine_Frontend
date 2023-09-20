@@ -66,6 +66,7 @@ const ChallengeSection = styled.section`
     padding: 20px 17px 20px 16px;
     display: flex;
     align-items: center;
+    gap: 8px; // 임의
 
     span {
       display: flex;
@@ -97,6 +98,7 @@ const ChallengeSection = styled.section`
     }
 
     button {
+      flex-shrink: 0;
       margin-left: auto;
       padding: 8px 24px;
       width: auto;
