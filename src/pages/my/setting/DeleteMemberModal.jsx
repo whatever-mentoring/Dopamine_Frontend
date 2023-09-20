@@ -12,6 +12,7 @@ const DeleteMemberModal = ({ setIsModalOpen }) => {
       const res = await deleteMember();
 
       if (res.status === 200) {
+        localStorage.clear();
         navigate('/');
       } else {
         alert('회원 탈퇴에 실패했어요.');
