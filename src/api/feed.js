@@ -55,7 +55,6 @@ const getFeedsByMonth = (month) => {
 const getFeedsByLikeCount = (page = 1) => {
   const token = localStorage.getItem('accessToken');
   const reqPath = path + `/order-by-likecount?page=${page}`;
-  console.log(reqPath);
   return get(reqPath, token);
 };
 
