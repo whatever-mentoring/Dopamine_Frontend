@@ -20,7 +20,6 @@ import tooltipIcon from '../../assets/icons/tooltip.svg';
 import { StatusContext } from '../../context/StatusContext';
 
 const Home = () => {
-  // renderProofStatus 추가 '챌린지 인증에 실패했어요'
   const { nickname, level } = useContext(UserContext);
   const {
     renderJoinStatus,

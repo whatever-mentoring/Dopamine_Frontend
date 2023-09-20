@@ -107,7 +107,7 @@ const My = () => {
             </Link>
           </div>
           <div className="profile">
-            <img src={level.badge} alt={`${nickname} 뱃지`} />
+            <img src={level.badge} alt={`${level.name} 뱃지`} />
             <p>
               <span>
                 {level.name} {nickname}님

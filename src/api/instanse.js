@@ -88,7 +88,6 @@ const putForm = async (reqPath, formData) => {
 const deleteData = async (reqPath) => {
   const reqUrl = url + reqPath;
   const token = localStorage.getItem('accessToken');
-  console.log(token);
   return await fetch(reqUrl, {
     method: 'DELETE',
     headers: {
