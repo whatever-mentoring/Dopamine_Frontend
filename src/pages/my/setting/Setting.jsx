@@ -1,42 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import StyledSetting from './StyledSetting';
 import BasicTopBar from '../../../components/common/TopBar/BasicTopBar';
-import { logout } from '../../../api/jwt';
-import { deleteMember } from '../../../api/member';
+import LogoutModal from './Logout';
+import DeleteMemberModal from './DeleteMemberModal';
+import { useState } from 'react';
 
 const Setting = () => {
   const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    try {
-      const res = await logout();
-
-      if (res.status === 200) {
-        localStorage.clear();
-        navigate('/');
-      } else {
-        alert('로그아웃에 실패했어요.');
-      }
-    } catch (error) {
-      alert('로그아웃에 실패했어요.');
-      console.error(error);
-    }
-  };
-
-  const handleDeleteMember = async () => {
-    try {
-      const res = await deleteMember();
-
-      if (res.status === 200) {
-        navigate('/');
-      } else {
-        alert('회원 탈퇴에 실패했어요.');
-      }
-    } catch (error) {
-      alert('회원 탈퇴에 실패했어요.');
-      console.error(error);
-    }
-  };
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const [isDeleteMemberModalOpen, setIsDeleteMemberModalOpen] = useState(false);
 
   return (
     <>
@@ -52,10 +24,18 @@ const Setting = () => {
             </button>
           </li>
           <li>
-            <button onClick={handleLogout}>로그아웃</button>
+            <button onClick={() => setIsLogoutModalOpen(true)}>로그아웃</button>
+            {isLogoutModalOpen && (
+              <LogoutModal setIsModalOpen={setIsLogoutModalOpen} />
+            )}
           </li>
           <li>
-            <button onClick={handleDeleteMember}>서비스 탈퇴</button>
+            <button onClick={() => setIsDeleteMemberModalOpen(true)}>
+              서비스 탈퇴
+            </button>
+            {isDeleteMemberModalOpen && (
+              <DeleteMemberModal setIsModalOpen={setIsDeleteMemberModalOpen} />
+            )}
           </li>
         </ul>
       </StyledSetting>

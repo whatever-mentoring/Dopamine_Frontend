@@ -14,15 +14,8 @@ const MissionModal = ({ setIsModalOpen }) => {
         이전 화면으로 돌아가요.
       </p>
       <div className="btn-wrap">
-        <SWhiteButton className="cancel-button" onClick={() => navigate(-1)}>
-          중단하기
-        </SWhiteButton>
-        <SButton
-          className="continue-button"
-          onClick={() => setIsModalOpen(false)}
-        >
-          계속 작성하기
-        </SButton>
+        <SWhiteButton onClick={() => navigate(-1)}>중단하기</SWhiteButton>
+        <SButton onClick={() => setIsModalOpen(false)}>계속 작성하기</SButton>
       </div>
       <button className="close-btn" onClick={() => setIsModalOpen(false)}>
         <img src={xIcon} alt="닫기" />
