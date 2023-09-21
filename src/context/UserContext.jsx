@@ -6,12 +6,11 @@ export const UserContext = createContext({
   refreshToken: localStorage.getItem('refreshToken') || null,
   nickname: localStorage.getItem('nickname') || null,
   level: [],
-  renderJoinStatus: false,
   setToken: () => {},
   setRefreshToken: () => {},
   setNickname: () => {},
   setLevel: () => {},
-  setRenderJoinStatus: () => {},
+  setLevelData: async () => {},
 });
 
 const UserProvider = ({ children }) => {
@@ -25,26 +24,30 @@ const UserProvider = ({ children }) => {
     localStorage.getItem('nickname') || null
   );
   const [level, setLevel] = useState([]);
-  const [renderJoinStatus, setRenderJoinStatus] = useState(false);
+
+  const setLevelData = async () => {
+    try {
+      const res = await getMember();
+      const data = await res.json();
+
+      setLevel({
+        exp: data.exp,
+        successCnt: data.successCnt,
+        num: data.level.levelNum,
+        name: data.level.name,
+        badge: data.level.badge,
+        expPercent: data.level.expPercent,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     if (!token) return;
-    (async () => {
-      try {
-        const res = await getMember();
-        const data = await res.json();
 
-        setLevel({
-          exp: data.exp,
-          successCnt: data.successCnt,
-          num: data.level.levelNum,
-          name: data.level.name,
-          badge: data.level.badge,
-          expPercent: data.level.expPercent,
-        });
-      } catch (error) {
-        console.error(error);
-      }
+    (async () => {
+      await setLevelData();
     })();
   }, []);
 
@@ -59,8 +62,7 @@ const UserProvider = ({ children }) => {
         setNickname,
         level,
         setLevel,
-        renderJoinStatus,
-        setRenderJoinStatus,
+        setLevelData,
       }}
     >
       {children}

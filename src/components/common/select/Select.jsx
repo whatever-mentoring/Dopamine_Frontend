@@ -103,7 +103,6 @@ const Select = ({ optionTextList, selectedOpt, setSelectedOpt }) => {
 
   return (
     <StyledSelect
-      selectedOpt={selectedOpt}
       className="select"
       onKeyDown={(e) => {
         // Esc

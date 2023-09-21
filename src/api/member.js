@@ -23,8 +23,7 @@ const getMember = () => {
 };
 
 const deleteMember = () => {
-  const token = localStorage.getItem('accessToken');
-  return deleteData(reqPath, token);
+  return deleteData(reqPath);
 };
 
 export { editMember, getMember, deleteMember };

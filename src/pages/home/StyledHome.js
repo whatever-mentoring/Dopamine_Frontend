@@ -3,6 +3,10 @@ import StyledMain from '../../components/StyledMain';
 
 const StyledHome = styled(StyledMain)`
   position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 0;
+  min-height: 100vh;
 
   &::before {
     content: '';
@@ -11,6 +15,13 @@ const StyledHome = styled(StyledMain)`
     width: 100%;
     height: 218px;
     background: var(--primary-500);
+  }
+
+  &::after {
+    content: '';
+    flex-basis: 98px;
+    flex-grow: 1;
+    background: #ededed;
   }
 
   section > span,
@@ -66,6 +77,7 @@ const ChallengeSection = styled.section`
     padding: 20px 17px 20px 16px;
     display: flex;
     align-items: center;
+    gap: 8px; // 임의
 
     span {
       display: flex;
@@ -97,9 +109,27 @@ const ChallengeSection = styled.section`
     }
 
     button {
+      flex-shrink: 0;
       margin-left: auto;
-      padding: 8px 24px;
-      width: auto;
+      padding: 8px;
+      width: 96px;
+
+      &:disabled {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 7px;
+        border: 1px solid var(--gray-100);
+        color: var(--primary-500);
+        background: var(--white);
+      }
+      &:disabled::after {
+        content: '';
+        margin-left: 2px;
+        width: 18px;
+        aspect-ratio: 1/1;
+        background: ${({ $successIcon }) => `url(${$successIcon}) no-repeat`};
+      }
     }
   }
 
@@ -170,13 +200,13 @@ const ReportSection = styled.section`
 
 const FeedSection = styled.section`
   overflow-x: hidden;
-  padding: 30px 0; // bottom 임의
+  padding: 30px 0 31px; // bottom 임의
 
   & > span {
     margin-left: 16px;
   }
 
-  a {
+  & > a {
     float: right;
     margin-right: 16px;
     line-height: 3rem;
@@ -197,6 +227,7 @@ const FeedSection = styled.section`
 
   .swiper-item {
     flex-shrink: 0;
+    flex-grow: 0;
     box-sizing: border-box;
     border-radius: 10px;
 
@@ -208,6 +239,15 @@ const FeedSection = styled.section`
       margin-top: 10px;
       font-size: var(--text-m);
     }
+  }
+  & > p {
+    margin: 20px 16px 0;
+    padding: 69px 0;
+    text-align: center;
+    font-size: var(--text-m);
+    color: var(--gray-400);
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
   }
 `;
 

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { editMember } from '../../api/member';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
+import { StatusContext } from '../../context/StatusContext';
 import { LButton } from '../../components/common/Buttons';
 import successTrueIcon from '../../assets/icons/success-true.svg';
 import successFalseIcon from '../../assets/icons/success-false.svg';
@@ -34,10 +35,21 @@ const Text = styled.p`
 const InputBox = styled.input`
   margin-top: 20px;
   font-size: var(--text-m);
-  background-color: var(--gray-100);
+  background: var(--gray-100);
   border-radius: 12px;
   padding: 15px 12px;
   width: 100%;
+
+  &:focus {
+    padding: 14px 11px;
+    border: 1px solid var(--primary-500);
+    outline: none;
+  }
+
+  &.error {
+    padding: 14px 11px;
+    border: 1px solid var(--error);
+  }
 `;
 
 const Message = styled.div`
@@ -60,7 +72,8 @@ const Message = styled.div`
 `;
 
 function Nickname() {
-  const { setRenderJoinStatus, setNickname } = useContext(UserContext);
+  const { setNickname } = useContext(UserContext);
+  const { setRenderJoinStatus } = useContext(StatusContext);
 
   const [status, setStatus] = useState(null);
   const [nicknameVal, setNicknameVal] = useState('');
@@ -99,15 +112,18 @@ function Nickname() {
       <strong>이름을 어떻게 설정할까요?</strong>
       <InputBox
         type="text"
-        placeholder="이름을 입력하세요"
+        placeholder="10글자 이내로 작성할 수 있어요."
+        minLength="2"
+        maxLength="10"
+        className={isNicknameAvailable ? '' : 'error'}
         value={nicknameVal}
         onChange={async (e) => {
           const name = e.target.value;
           setNicknameVal(name);
 
           // 이름 유효성 검사
-          if (name.length < 2) {
-            setStatus('2~10자 이내로 입력해주세요.'); // 입력값이 2글자 미만인 경우 로그를 출력
+          if (e.target.validity.tooLong || e.target.validity.tooShort) {
+            setStatus('2~10자 이내로 입력해주세요.');
             setIsNicknameAvailable(false);
           } else {
             setStatus('사용 가능한 이름이에요.');

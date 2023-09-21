@@ -23,7 +23,7 @@ const ProofModal = ({ setIsModalOpen }) => {
       }
     }
 
-    setImgList(files);
+    setImgList(e.target.files);
 
     navigate('/mission');
     setIsModalOpen(false);

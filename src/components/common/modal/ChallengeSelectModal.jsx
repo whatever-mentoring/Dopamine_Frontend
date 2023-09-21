@@ -1,17 +1,30 @@
 import BottomModal from './BottomModal';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ChallengeContext } from '../../../context/ChallengeContext';
 import ProofModal from './ProofModal';
+import { getTodayChallenge } from '../../../api/challenge';
 
 const ChallengeSelectModal = ({ setIsModalOpen }) => {
-  const { challengeList, setChallengeToProve, challengeToProve } =
-    useContext(ChallengeContext);
+  const {
+    challengeList,
+    challengeDate,
+    setChallengeDate,
+    setchallengeList,
+    setSelectedChallengeIndex,
+  } = useContext(ChallengeContext);
   const [selectedChallenge, setSelectedChallenge] = useState('');
 
-  const handleSelectBtn = (e) => {
-    e.preventDefault();
-    setSelectedChallenge(e.currentTarget.textContent);
-  };
+  useEffect(() => {
+    (async () => {
+      const today = new Date().getDate();
+      if (challengeDate !== today) {
+        const res = await getTodayChallenge();
+        const data = await res.json();
+        setchallengeList(data);
+        setChallengeDate(today);
+      }
+    })();
+  }, []);
 
   return (
     <>
@@ -20,7 +33,15 @@ const ChallengeSelectModal = ({ setIsModalOpen }) => {
           <p>어떤 챌린지를 인증하시나요?</p>
           {challengeList.map((v, i) => {
             return (
-              <button key={i} onClick={handleSelectBtn}>
+              <button
+                key={i}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setSelectedChallenge(v.title);
+                  setSelectedChallengeIndex(i);
+                }}
+                disabled={!!v.certificationYn}
+              >
                 {v.title}
               </button>
             );

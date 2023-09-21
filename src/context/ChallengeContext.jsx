@@ -1,37 +1,55 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
+import { getTodayChallenge } from '../api/challenge';
 
-// 임시
 export const ChallengeContext = createContext({
-  challengeList: [
-    { title: '텀블러 갖고 다니기', status: true },
-    { title: '장바구니 사용하기', status: false },
-    { title: '텀블러 갖고 다니기', status: false },
-  ],
-  challengeToProve: null,
+  challengeList: [],
+  selectedChallengeIndex: null,
   imgList: [],
+  challengeDate: new Date().getDate(),
   setChallengeList: () => {},
-  setChallengeToProve: () => {},
+  setSelectedChallengeIndex: () => {},
   setImgList: () => {},
+  setChallengeDate: () => {},
+  setChallengeData: async () => {},
 });
 
 const ChallengeProvider = ({ children }) => {
-  const [challengeList, setChallengeList] = useState([
-    { title: '텀블러 갖고 다니기', status: true },
-    { title: '장바구니 사용하기', status: false },
-    { title: '텀블러 갖고 다니기', status: false },
-  ]);
-  const [challengeToProve, setChallengeToProve] = useState(null);
+  const [challengeList, setChallengeList] = useState([]);
+  const [selectedChallengeIndex, setSelectedChallengeIndex] = useState(null);
   const [imgList, setImgList] = useState([]);
+  const [challengeDate, setChallengeDate] = useState(new Date().getDate());
+
+  const setChallengeData = async () => {
+    try {
+      const res = await getTodayChallenge();
+      const json = await res.json();
+      setChallengeList(json);
+      setChallengeDate(new Date().getDate());
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem('accessToken')) {
+      (async () => {
+        await setChallengeData();
+      })();
+    }
+  }, []);
 
   return (
     <ChallengeContext.Provider
       value={{
         challengeList,
-        challengeToProve,
         setChallengeList,
-        setChallengeToProve,
+        selectedChallengeIndex,
+        setSelectedChallengeIndex,
         imgList,
         setImgList,
+        challengeDate,
+        setChallengeDate,
+        setChallengeData,
       }}
     >
       {children}

@@ -8,30 +8,35 @@ import { LButton } from '../../components/common/Buttons';
 import CloseTopBar from '../../components/common/TopBar/CloseTopBar';
 import ProofModal from '../../components/common/modal/ProofModal';
 import xCircleIcon from '../../assets/icons/x-circle.svg';
-
 import { postFeed } from '../../api/feed';
+import { UserContext } from '../../context/UserContext';
+import { StatusContext } from '../../context/StatusContext';
 
 function MissionCertification() {
-  const { setImgList, imgList } = useContext(ChallengeContext);
+  const { imgList, challengeList, selectedChallengeIndex, setChallengeData } =
+    useContext(ChallengeContext);
+  const { setRenderChallengeStatus } = useContext(StatusContext);
+  const { setLevelData } = useContext(UserContext);
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(false);
   const [selectedImages, setSelectedImages] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [impression, setImpression] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const challenge = challengeList[selectedChallengeIndex];
 
   useEffect(() => {
     if (isModalOpen) return;
-    const srcList = [];
-    imgList.forEach((file) => {
+    const imageList = [];
+    [...imgList].forEach((file) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
 
       reader.addEventListener('load', ({ target }) => {
         const image = new Image();
         image.src = target.result;
-        srcList.push(target.result);
-        setSelectedImages(srcList);
+        imageList.push(target.result);
+        setSelectedImages(imageList);
       });
     });
   }, [isModalOpen]);
@@ -65,23 +70,36 @@ function MissionCertification() {
       alert('이미지를 선택해주세요.');
       return;
     }
-    // try {
-    //   const res = await postFeed({
-    //     challengeId: 0,
-    //     content: impression,
-    //     image1Url: 'string',
-    //     image2Url: 'string',
-    //     image3Url: 'string',
-    //     openYn: true,
-    //   });
-    //   console.log(res);
-    //   const json = await res.json();
-    //   console.log(json);
-    //   navigate('/mission/success');
-    // } catch (error) {
-    //   navigate('/home');
-    // }
-    navigate('/mission/success');
+    try {
+      const formData = new FormData();
+      formData.append(
+        'request',
+        new Blob(
+          [
+            JSON.stringify({
+              challengeId: challenge.challengeId,
+              content: impression,
+            }),
+          ],
+          { type: 'application/json' }
+        )
+      );
+
+      for (let i = 0; i < imgList.length; i++) {
+        formData.append('images', imgList[i]);
+      }
+
+      await postFeed(formData);
+      (async () => {
+        await setChallengeData();
+        await setLevelData();
+      })();
+
+      navigate('/mission/success');
+    } catch (error) {
+      setRenderChallengeStatus(true);
+      navigate('/home');
+    }
   };
 
   return (
@@ -93,8 +111,15 @@ function MissionCertification() {
       />
 
       <StyledMission>
-        <div className="level">난이도 하</div>
-        <strong className="challenge-title">텀블러 갖고 다니기 챌린지</strong>
+        <div className="level">
+          난이도{' '}
+          {challenge.challengeLevel === 'HIGH'
+            ? '상'
+            : challenge.challengeLevel === 'MID'
+            ? '중'
+            : '하'}
+        </div>
+        <strong className="challenge-title">{challenge.title}</strong>
         <div className="img-wrap">
           <div className="mission-feedback-title2">
             인증사진

@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../../../context/UserContext';
 import ReportModal from '../modal/ReportModal';
 import DeleteFeedModal from '../modal/DeleteFeedModal';
@@ -13,23 +13,32 @@ import { unLikeFeed, likeFeed } from '../../../api/feedLike';
 const FeedItem = ({ feed }) => {
   const { nickname } = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [like, setLike] = useState(false);
+  const [like, setLike] = useState(feed.likePresent);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const handleLikeBtn = () => {
-    if (like) {
-      setLike(false);
-      // api 좋아요 취소
-    } else {
-      setLike(true);
-      // api 좋아요
+  const handleLikeBtn = async () => {
+    try {
+      if (like) {
+        await unLikeFeed(feed.feedId);
+        setLike(false);
+      } else {
+        setLike(true);
+        await likeFeed(feed.feedId);
+        setLike(true);
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
-  const doubleClickLike = () => {
+  const doubleClickLike = async () => {
     if (!like) {
-      setLike(true);
-      // api 좋아요
+      try {
+        await likeFeed(feed.feedId);
+        setLike(true);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -37,8 +46,8 @@ const FeedItem = ({ feed }) => {
     <>
       <StyledFeed $moreIcon={moreIcon}>
         <div className="top">
-          <img src={feed.profileImg} alt="프로필 사진" />
-          <span>{feed.nickname}</span>
+          <img src={feed.badgeimage} alt="프로필 사진" />
+          <span>{feed.memberResponseDto.nickname}</span>
           <button
             aria-label="더보기"
             onClick={() => setIsModalOpen(true)}
@@ -51,21 +60,26 @@ const FeedItem = ({ feed }) => {
             onDoubleClick={doubleClickLike}
             onSlideChange={(e) => setActiveIndex(e.activeIndex)}
           >
-            {!!feed.images.length &&
-              feed.images.map((img, i) => {
-                return (
-                  <SwiperSlide key={i} className="swiper-item">
-                    <img src={img} alt="" />
-                  </SwiperSlide>
-                );
-              })}
+            {feed.image1Url && (
+              <SwiperSlide className="swiper-item">
+                <img src={feed.image1Url} alt="" />
+              </SwiperSlide>
+            )}
+            {feed.image2Url && (
+              <SwiperSlide className="swiper-item">
+                <img src={feed.image2Url} alt="" />
+              </SwiperSlide>
+            )}
+            {feed.image3Url && (
+              <SwiperSlide className="swiper-item">
+                <img src={feed.image2Url} alt="" />
+              </SwiperSlide>
+            )}
           </Swiper>
-          {feed.images.length > 1 && (
-            <div className="pagination">
-              <span>{activeIndex + 1}</span>
-              {` / ${feed.images.length}`}
-            </div>
-          )}
+          <div className="pagination">
+            <span>{activeIndex + 1}</span>
+            {feed.image3Url ? ' / 3' : feed.image2Url ? ' / 2' : ' / 1'}
+          </div>
           <button onClick={handleLikeBtn}>
             <img
               src={like ? likeIcon : unlikeIcon}
@@ -73,14 +87,16 @@ const FeedItem = ({ feed }) => {
             />
           </button>
         </div>
-        <strong>{feed.title}</strong>
+        <strong>{feed.challengeResponseDTO.title}</strong>
         <p>{feed.text}</p>
-        <time>{feed.time}</time>
+        <time>{feed.content}</time>
       </StyledFeed>
-      {isModalOpen && nickname === feed.nickname ? (
-        <DeleteFeedModal setIsModalOpen={setIsModalOpen} feedId="" />
+      {isModalOpen && nickname === feed.memberResponseDto.nickname ? (
+        <DeleteFeedModal setIsModalOpen={setIsModalOpen} feedId={feed.feedId} />
       ) : (
-        isModalOpen && <ReportModal setIsModalOpen={setIsModalOpen} feedId="" />
+        isModalOpen && (
+          <ReportModal setIsModalOpen={setIsModalOpen} feedId={feed.feedId} />
+        )
       )}
     </>
   );

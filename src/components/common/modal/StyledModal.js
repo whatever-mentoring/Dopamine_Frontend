@@ -3,8 +3,8 @@ import styled from 'styled-components';
 /* 팝업 스타일 */
 const StyledModal = styled.dialog`
   position: relative;
-  width: min(calc(100% - 32px), calc(430px - 32px));
-  max-width: 100%;
+  max-width: 328px;
+  width: calc(100% - 32px);
   border: none;
   padding: 30px 14px 20px;
   background-color: #fff; /* 흰 배경색 */

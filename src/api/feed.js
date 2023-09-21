@@ -1,53 +1,41 @@
-import { get, post, put, deleteData } from './instanse';
+import { get, postForm, put, deleteData } from './instanse';
 
 const path = `/feeds`;
 
-// 테스트 전
 const postFeed = (data) => {
   const memberId = localStorage.getItem('memberId');
-  // {
-  //   "challengeId": 0,
-  //   "content": "string",
-  //   "image1Url": "string",
-  //   "image2Url": "string",
-  //   "image3Url": "string",
-  //   "openYn" = true;
-  // }
   const body = data;
   body.memberId = memberId;
   const token = localStorage.getItem('accessToken');
-  return post(path, body, token);
+  return postForm(path, body, token);
 };
 
-// 테스트 전
+// 현재 미사용
 const getFeed = (feedId) => {
   const reqPath = path + `/${feedId}}`;
   return get(reqPath);
 };
 
-// 테스트 전
+// 현재 미사용
 const editFeed = (feedId, data) => {
   const reqPath = path + `/${feedId}}`;
   return put(reqPath, data);
 };
 
-// 테스트 전
 const deleteFeed = (feedId) => {
-  // /hard path 사용 여부 확인
-  const reqPath = path + `/${feedId}}`;
+  const reqPath = path + `/${feedId}`;
   return deleteData(reqPath);
 };
 
 const getFeedsByMember = (page = 1) => {
   const token = localStorage.getItem('accessToken');
-  const memberId = localStorage.getItem('memberId');
-  const reqPath = path + `/by-member/${memberId}/?page=${page}`;
+  const reqPath = path + `/by-member?page=${page}`;
   return get(reqPath, token);
 };
 
-// 테스트 전
+// 현재 미사용
 const getFeedsByChallenge = (page = 1, challengeId) => {
-  const reqPath = path + `/main-page/${challengeId}/?page=${page}`;
+  const reqPath = path + `/main-page/${challengeId}?page=${page}`;
   return get(reqPath);
 };
 
@@ -57,7 +45,6 @@ const getFeedsByDate = (page = 1) => {
   return get(reqPath, token);
 };
 
-// 가명
 const getFeedsByMonth = (month) => {
   const token = localStorage.getItem('accessToken');
   // 2023-09
@@ -71,6 +58,12 @@ const getFeedsByLikeCount = (page = 1) => {
   return get(reqPath, token);
 };
 
+const getFeedsFilter = (year) => {
+  const token = localStorage.getItem('accessToken');
+  const reqPath = path + `/year/by-member?years=${year}`;
+  return get(reqPath, token);
+};
+
 export {
   getFeedsByLikeCount,
   getFeedsByMember,
@@ -78,4 +71,5 @@ export {
   getFeedsByMonth,
   postFeed,
   deleteFeed,
+  getFeedsFilter,
 };
