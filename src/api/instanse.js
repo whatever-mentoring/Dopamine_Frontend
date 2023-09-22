@@ -1,4 +1,4 @@
-const url = 'https://54.180.66.83:9000';
+const url = 'https://www.challeng9.kro.kr:9001';
 
 // get
 const get = async (reqPath, token) => {
