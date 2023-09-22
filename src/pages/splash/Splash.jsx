@@ -7,7 +7,7 @@ import StyledMain from './StyledMain';
 const Splash = () => {
   const REST_API_KEY = import.meta.env.VITE_APP_REST_API_KEY;
   const REDIRECT_URI = import.meta.env.VITE_APP_REDIRECT_URI;
-  const link = `https://54.180.66.83:9001/swagger-ui/`;
+  const link = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   const loginHandler = (e) => {
     e.preventDefault();
     window.location.href = link;
