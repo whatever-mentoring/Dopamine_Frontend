@@ -7,13 +7,18 @@ import { StatusContext } from '../../context/StatusContext';
 import { LButton } from '../../components/common/Buttons';
 import successTrueIcon from '../../assets/icons/success-true.svg';
 import successFalseIcon from '../../assets/icons/success-false.svg';
+import CloseTopBar from '../../components/common/TopBar/CloseTopBar';
 
 const CenteredContainer = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   width: min(100%, 430px);
-  padding: 60px 16px 16px;
+  padding: 71px 16px 16px;
+
+  &.join {
+    padding-top: 60px;
+  }
 
   strong {
     margin-top: 2px;
@@ -77,7 +82,7 @@ function Nickname() {
 
   const [status, setStatus] = useState(null);
   const [nicknameVal, setNicknameVal] = useState('');
-  const [isNicknameAvailable, setIsNicknameAvailable] = useState(false);
+  const [isNicknameAvailable, setIsNicknameAvailable] = useState(true);
   const navigate = useNavigate();
   const path = useLocation().pathname;
 
@@ -107,41 +112,44 @@ function Nickname() {
   };
 
   return (
-    <CenteredContainer>
-      <Text>이것만 입력하면 끝이에요.</Text>
-      <strong>이름을 어떻게 설정할까요?</strong>
-      <InputBox
-        type="text"
-        placeholder="10글자 이내로 작성할 수 있어요."
-        minLength="2"
-        maxLength="10"
-        className={isNicknameAvailable ? '' : 'error'}
-        value={nicknameVal}
-        onChange={async (e) => {
-          const name = e.target.value;
-          setNicknameVal(name);
+    <>
+      <CloseTopBar tit="닉네임 변경" />
+      <CenteredContainer className={path === '/join' ? 'join' : ''}>
+        <Text>이것만 입력하면 끝이에요.</Text>
+        <strong>이름을 어떻게 설정할까요?</strong>
+        <InputBox
+          type="text"
+          placeholder="10글자 이내로 작성할 수 있어요."
+          minLength="2"
+          maxLength="10"
+          className={isNicknameAvailable ? '' : 'error'}
+          value={nicknameVal}
+          onChange={async (e) => {
+            const name = e.target.value;
+            setNicknameVal(name);
 
-          // 이름 유효성 검사
-          if (e.target.validity.tooLong || e.target.validity.tooShort) {
-            setStatus('2~10자 이내로 입력해주세요.');
-            setIsNicknameAvailable(false);
-          } else {
-            setStatus('사용 가능한 이름이에요.');
-            setIsNicknameAvailable(true);
-          }
-        }}
-      />
-      {status && (
-        <Message
-          $error={!isNicknameAvailable}
-          $successTrueIcon={successTrueIcon}
-          $successFalseIcon={successFalseIcon}
-        >
-          {status}
-        </Message>
-      )}
-      <LButton onClick={handleSubmit}>다음으로</LButton>
-    </CenteredContainer>
+            // 이름 유효성 검사
+            if (e.target.validity.tooLong || e.target.validity.tooShort) {
+              setStatus('2~10자 이내로 입력해주세요.');
+              setIsNicknameAvailable(false);
+            } else {
+              setStatus('사용 가능한 이름이에요.');
+              setIsNicknameAvailable(true);
+            }
+          }}
+        />
+        {status && (
+          <Message
+            $error={!isNicknameAvailable}
+            $successTrueIcon={successTrueIcon}
+            $successFalseIcon={successFalseIcon}
+          >
+            {status}
+          </Message>
+        )}
+        <LButton onClick={handleSubmit}>다음으로</LButton>
+      </CenteredContainer>
+    </>
   );
 }
 

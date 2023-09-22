@@ -1,9 +1,8 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useEffect, useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import { ChallengeContext } from '../../context/ChallengeContext';
-import { getTodayChallenge } from '../../api/challenge';
 import { getFeedsByLikeCount } from '../../api/feed';
 import TabBar from '../../components/common/TabBar/TabBar';
 import { SButton } from '../../components/common/Buttons';
@@ -21,6 +20,7 @@ import { StatusContext } from '../../context/StatusContext';
 import successIcon from '../../assets/icons/success-true.svg';
 
 const Home = () => {
+  const navigate = useNavigate();
   const { nickname, level } = useContext(UserContext);
   const {
     renderJoinStatus,
@@ -108,7 +108,7 @@ const Home = () => {
                           setSelectedChallengeIndex(i);
                         }}
                       >
-                        인증하기
+                        {challenge.certificationYn ? '인증완료' : '인증하기'}
                       </SButton>
                     </li>
                   );
@@ -152,7 +152,7 @@ const Home = () => {
             to="/"
             onClick={(e) => {
               e.preventDefault();
-              alert('준비중인 서비스입니다.');
+              navigate('/feed');
             }}
           >
             더보기
@@ -166,11 +166,14 @@ const Home = () => {
               observeParents={true}
             >
               {feedList.map((feed, i) => {
+                console.log(feed);
                 return (
                   <SwiperSlide key={i} className="swiper-item">
                     <Link to={'/feed'}>
                       <img src={feed.image1Url} alt="" />
-                      <p className="ellipsis">{feed.content}</p>
+                      <p className="ellipsis">
+                        {feed.challengeResponseDTO.title}
+                      </p>
                     </Link>
                   </SwiperSlide>
                 );
