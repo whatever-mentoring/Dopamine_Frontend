@@ -6,6 +6,7 @@ import {
   Route,
   Navigate,
   Outlet,
+  useNavigate,
 } from 'react-router-dom';
 import GlobalStyle from './GlobalStyle';
 import StatusProvider from './context/StatusContext';
@@ -24,19 +25,50 @@ import Setting from './pages/my/setting/Setting';
 import Nickname from './pages/nickname/nickname';
 import Policy from './pages/policy/Policy';
 import MyFeed from './pages/my/myFeed/MyFeed';
+import { getMember } from './api/member';
 
 const AuthRoute = () => {
   const token = localStorage.getItem('accessToken');
+  const navigate = useNavigate();
   if (!token) {
     return <Navigate to="/" replace />;
+  } else {
+    (async () => {
+      try {
+        // 토큰 유효성
+        const res = await getMember();
+        if (res.status !== 200) {
+          localStorage.clear();
+          navigate('/');
+        }
+      } catch (error) {
+        console.error(error);
+        localStorage.clear();
+        navigate('/');
+      }
+    })();
   }
+
   return <Outlet />;
 };
 
 const NonAuthRoute = () => {
   const token = localStorage.getItem('accessToken');
+  const navigate = useNavigate();
   if (token) {
-    return <Navigate to="/home" replace />;
+    (async () => {
+      try {
+        // 토큰 유효성
+        const res = await getMember();
+        navigate('/home');
+        if (res.status !== 200) {
+          localStorage.clear();
+        }
+      } catch (error) {
+        console.error(error);
+        localStorage.clear();
+      }
+    })();
   }
   return <Outlet />;
 };

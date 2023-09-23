@@ -90,10 +90,8 @@ function MissionCertification() {
       }
 
       await postFeed(formData);
-      (async () => {
-        await setChallengeData();
-        await setLevelData();
-      })();
+      await setChallengeData();
+      await setLevelData();
 
       navigate('/mission/success');
     } catch (error) {
