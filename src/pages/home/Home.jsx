@@ -24,7 +24,6 @@ const Home = () => {
   const navigate = useNavigate();
   const { nickname, level } = useContext(UserContext);
   const { setFeedSortOpt } = useContext(FeedContext);
-
   const {
     renderJoinStatus,
     setRenderJoinStatus,
@@ -39,6 +38,7 @@ const Home = () => {
   } = useContext(ChallengeContext);
   const [feedList, setFeedList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -56,6 +56,26 @@ const Home = () => {
       }
     })();
   }, []);
+
+  useEffect(() => {
+    let status = false;
+    const closeTooltip = (e) => {
+      if (!status) {
+        status = true;
+        return;
+      }
+
+      if (!e.target.closest('.tootip + p')) {
+        setShowTooltip(false);
+      }
+    };
+
+    if (showTooltip) {
+      window.addEventListener('click', closeTooltip);
+    }
+
+    return () => window.removeEventListener('click', closeTooltip);
+  }, [showTooltip]);
 
   return (
     <>
@@ -118,7 +138,25 @@ const Home = () => {
                 })
               : null}
           </ul>
-          <img className="tooltip" src={tooltipIcon} alt="툴팁" />
+          <img
+            className="tooltip"
+            src={tooltipIcon}
+            alt="툴팁"
+            // onFocus={() => setShowTooltip(true)}
+            // onMouseOver={() => setShowTooltip(true)}
+            // onBlur={() => setShowTooltip(false)}
+            onTouchStart={() => setShowTooltip(true)}
+          />
+          {showTooltip ? (
+            <p>
+              Tip! 난이도가 높을수록 경험치가 더 빨리 쌓여요.
+              <strong>
+                <span>상 +20 exp</span>
+                <span>중 +10 exp</span>
+                <span>하 +5 exp</span>
+              </strong>
+            </p>
+          ) : null}
           {isModalOpen && <ProofModal setIsModalOpen={setIsModalOpen} />}
         </ChallengeSection>
 

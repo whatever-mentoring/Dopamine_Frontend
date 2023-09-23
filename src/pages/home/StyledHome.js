@@ -34,6 +34,7 @@ const StyledHome = styled(StyledMain)`
 `;
 
 const ChallengeSection = styled.section`
+  position: relative;
   overflow-x: hidden;
   padding: 27px 16px 20px;
 
@@ -138,6 +139,24 @@ const ChallengeSection = styled.section`
     aspect-ratio: 1/1;
     margin: 8px 9px 0 auto;
   }
+
+  p {
+    position: absolute;
+    width: fit-content;
+    right: 49px;
+    bottom: 6px;
+    padding: 8px 10px;
+    border-radius: 12px;
+    font-size: var(--text-s);
+    color: var(--primary-500);
+    background: #d7fede99;
+    box-shadow: 0px 4px 10px #0000001f;
+
+    strong {
+      display: block;
+      font-weight: var(--font-bold);
+    }
+  }
 `;
 
 const ReportSection = styled.section`
@@ -224,9 +243,8 @@ const FeedSection = styled.section`
   }
 
   .swiper-item {
-    border-radius: 10px;
-
     img {
+      border-radius: 10px;
       aspect-ratio: 1/1;
     }
 
