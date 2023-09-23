@@ -7,7 +7,6 @@ import { StyledFeed } from './StyledFeed';
 import moreIcon from '../../../assets/icons/more.svg';
 import likeIcon from '../../../assets/icons/like.svg';
 import unlikeIcon from '../../../assets/icons/unlike.svg';
-
 import { unLikeFeed, likeFeed } from '../../../api/feedLike';
 
 const FeedItem = ({ feed }) => {
@@ -56,7 +55,6 @@ const FeedItem = ({ feed }) => {
         <div className="img-wrap">
           <Swiper
             className="swiper-frame"
-            slidesPerView={1}
             onDoubleClick={doubleClickLike}
             onSlideChange={(e) => setActiveIndex(e.activeIndex)}
           >

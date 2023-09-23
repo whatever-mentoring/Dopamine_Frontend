@@ -29,19 +29,11 @@ const StyledFeed = styled.article`
   }
 
   .swiper-frame {
-    overflow: hidden;
     border-radius: 10px;
-
-    & > div {
-      display: flex;
-    }
   }
 
   .swiper-item {
-    flex-shrink: 0;
-
     img {
-      border-radius: 10px;
       aspect-ratio: 1/1;
     }
   }
@@ -51,6 +43,7 @@ const StyledFeed = styled.article`
 
     .pagination {
       position: absolute;
+      z-index: 100;
       padding: 2px 8px;
       bottom: 4px;
       left: 50%;

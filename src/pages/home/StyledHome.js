@@ -220,15 +220,10 @@ const FeedSection = styled.section`
 
     & > div {
       padding-right: 50px;
-      display: flex;
-      align-items: flex-start;
     }
   }
 
   .swiper-item {
-    flex-shrink: 0;
-    flex-grow: 0;
-    box-sizing: border-box;
     border-radius: 10px;
 
     img {
@@ -240,6 +235,7 @@ const FeedSection = styled.section`
       font-size: var(--text-m);
     }
   }
+
   & > p {
     margin: 20px 16px 0;
     padding: 69px 0;
