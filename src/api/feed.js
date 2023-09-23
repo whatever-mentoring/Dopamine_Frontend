@@ -10,10 +10,10 @@ const postFeed = (data) => {
   return postForm(path, body, token);
 };
 
-// 현재 미사용
 const getFeed = (feedId) => {
-  const reqPath = path + `/${feedId}}`;
-  return get(reqPath);
+  const token = localStorage.getItem('accessToken');
+  const reqPath = path + `/${feedId}`;
+  return get(reqPath, token);
 };
 
 // 현재 미사용
@@ -47,7 +47,6 @@ const getFeedsByDate = (page = 1) => {
 
 const getFeedsByMonth = (month) => {
   const token = localStorage.getItem('accessToken');
-  // 2023-09
   const reqPath = path + `/month/by-member?month=${month}`;
   return get(reqPath, token);
 };
@@ -65,6 +64,7 @@ const getFeedsFilter = (year) => {
 };
 
 export {
+  getFeed,
   getFeedsByLikeCount,
   getFeedsByMember,
   getFeedsByDate,

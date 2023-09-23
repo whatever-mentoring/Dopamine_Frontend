@@ -23,6 +23,7 @@ import Splash from './pages/splash/Splash';
 import Setting from './pages/my/setting/Setting';
 import Nickname from './pages/nickname/nickname';
 import Policy from './pages/policy/Policy';
+import MyFeed from './pages/my/myFeed/MyFeed';
 
 const AuthRoute = () => {
   const token = localStorage.getItem('accessToken');
@@ -62,6 +63,7 @@ function App() {
                     <Route path="/home" element={<Home />}></Route>
                     <Route path="/feed" element={<Feed />}></Route>
                     <Route path="/my" element={<My />}></Route>
+                    <Route path="/my/feed/:id" element={<MyFeed />}></Route>
                     <Route path="/my/setting" element={<Setting />}></Route>
                     <Route
                       path="/mission"
