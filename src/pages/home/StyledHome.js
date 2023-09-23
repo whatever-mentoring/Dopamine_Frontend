@@ -134,13 +134,13 @@ const ChallengeSection = styled.section`
     }
   }
 
-  .tooltip {
+  .tooltip-icon {
     width: 20px;
     aspect-ratio: 1/1;
     margin: 8px 9px 0 auto;
   }
 
-  p {
+  .tooltip {
     position: absolute;
     width: fit-content;
     right: 49px;

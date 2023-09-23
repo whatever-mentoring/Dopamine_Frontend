@@ -65,7 +65,7 @@ const Home = () => {
         return;
       }
 
-      if (!e.target.closest('.tootip + p')) {
+      if (!e.target.closest('.tootip')) {
         setShowTooltip(false);
       }
     };
@@ -139,16 +139,14 @@ const Home = () => {
               : null}
           </ul>
           <img
-            className="tooltip"
+            className="tooltip-icon"
             src={tooltipIcon}
             alt="툴팁"
-            // onFocus={() => setShowTooltip(true)}
-            // onMouseOver={() => setShowTooltip(true)}
-            // onBlur={() => setShowTooltip(false)}
+            onClick={() => setShowTooltip(true)}
             onTouchStart={() => setShowTooltip(true)}
           />
           {showTooltip ? (
-            <p>
+            <p className="tooltip">
               Tip! 난이도가 높을수록 경험치가 더 빨리 쌓여요.
               <strong>
                 <span>상 +20 exp</span>
