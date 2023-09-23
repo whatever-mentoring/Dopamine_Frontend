@@ -23,6 +23,7 @@ function MissionCertification() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [impression, setImpression] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [deletedImgIndexList, setDeletedImgIndexList] = useState([]);
   const challenge = challengeList[selectedChallengeIndex];
 
   useEffect(() => {
@@ -59,6 +60,9 @@ function MissionCertification() {
 
     // 이미지 배열을 업데이트.
     setSelectedImages(updatedImages);
+    const newList = [...deletedImgIndexList];
+    newList.push(indexToDelete);
+    setDeletedImgIndexList(newList);
   };
 
   const handleClose = () => {
@@ -86,11 +90,13 @@ function MissionCertification() {
       );
 
       for (let i = 0; i < imgList.length; i++) {
-        formData.append('images', imgList[i]);
+        if (!deletedImgIndexList.includes(i)) {
+          formData.append('images', imgList[i]);
+        }
       }
 
       const res = await postFeed(formData);
-      if (res !== 200 && res !== 201) {
+      if (res.status !== 200 && res.status !== 201) {
         setRenderChallengeStatus(true);
         navigate('/home');
         return;

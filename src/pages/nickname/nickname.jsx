@@ -132,6 +132,9 @@ function Nickname() {
             if (e.target.validity.tooLong || e.target.validity.tooShort) {
               setStatus('2~10자 이내로 입력해주세요.');
               setIsNicknameAvailable(false);
+            } else if (name[0] === ' ' || name[1] === ' ') {
+              setStatus('공백으로 시작하거나 끝날 수 없어요.');
+              setIsNicknameAvailable(false);
             } else {
               setStatus('사용 가능한 이름이에요.');
               setIsNicknameAvailable(true);
