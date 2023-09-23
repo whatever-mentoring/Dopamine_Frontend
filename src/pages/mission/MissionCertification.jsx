@@ -89,7 +89,12 @@ function MissionCertification() {
         formData.append('images', imgList[i]);
       }
 
-      await postFeed(formData);
+      const res = await postFeed(formData);
+      if (res !== 200 && res !== 201) {
+        setRenderChallengeStatus(true);
+        navigate('/home');
+        return;
+      }
       await setChallengeData();
       await setLevelData();
 
