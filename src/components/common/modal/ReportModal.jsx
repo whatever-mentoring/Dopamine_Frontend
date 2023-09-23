@@ -1,9 +1,8 @@
 import BottomModal from './BottomModal';
 
-const ReportModal = ({ setIsModalOpen, FeedId }) => {
+const ReportModal = ({ setIsModalOpen }) => {
   const handleBtn = (e) => {
-    // 신고 API
-
+    alert('gimkin5318@gmail.com으로 신고 메일을 보내주세요.');
     setIsModalOpen(false);
   };
 

@@ -1,33 +1,51 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import { UserContext } from '../../../context/UserContext';
 import ReportModal from '../modal/ReportModal';
 import DeleteFeedModal from '../modal/DeleteFeedModal';
 import { StyledFeed } from './StyledFeed';
 import moreIcon from '../../../assets/icons/more.svg';
 import likeIcon from '../../../assets/icons/like.svg';
 import unlikeIcon from '../../../assets/icons/unlike.svg';
+import { unLikeFeed, likeFeed } from '../../../api/feedLike';
 
 const FeedItem = ({ feed }) => {
+  const { nickname } = useContext(UserContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [like, setLike] = useState(false);
+  const [like, setLike] = useState(feed.likePresent);
+  const [likeCnt, setLikeCnt] = useState(feed.likePresent);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const nickname = '닉네임'; // context로 관리
+  useEffect(() => {
+    setLikeCnt(feed.feedLikeResponseDTOList.length);
+  }, []);
 
-  const handleLikeBtn = () => {
-    if (like) {
-      setLike(false);
-      // api 좋아요 취소
-    } else {
-      setLike(true);
-      // api 좋아요
+  const handleLikeBtn = async () => {
+    try {
+      if (like) {
+        await unLikeFeed(feed.feedId);
+        setLike(false);
+        setLikeCnt(likeCnt - 1);
+      } else {
+        setLike(true);
+        await likeFeed(feed.feedId);
+        setLike(true);
+        setLikeCnt(likeCnt + 1);
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
-  const doubleClickLike = () => {
+  const doubleClickLike = async () => {
     if (!like) {
-      setLike(true);
-      // api 좋아요
+      try {
+        await likeFeed(feed.feedId);
+        setLike(true);
+        setLikeCnt(likeCnt + 1);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -35,10 +53,10 @@ const FeedItem = ({ feed }) => {
     <>
       <StyledFeed $moreIcon={moreIcon}>
         <div className="top">
-          <img src={feed.profileImg} alt="프로필 사진" />
-          <span>{feed.nickname}</span>
-          {/* 더보기? */}
+          <img src={feed.badgeimage} alt="프로필 사진" />
+          <span>{feed.memberResponseDto.nickname}</span>
           <button
+            className="more"
             aria-label="더보기"
             onClick={() => setIsModalOpen(true)}
           ></button>
@@ -46,40 +64,48 @@ const FeedItem = ({ feed }) => {
         <div className="img-wrap">
           <Swiper
             className="swiper-frame"
-            slidesPerView={1}
             onDoubleClick={doubleClickLike}
             onSlideChange={(e) => setActiveIndex(e.activeIndex)}
           >
-            {!!feed.images.length &&
-              feed.images.map((img, i) => {
-                return (
-                  <SwiperSlide key={i} className="swiper-item">
-                    <img src={img} alt="" />
-                  </SwiperSlide>
-                );
-              })}
+            {feed.image1Url && (
+              <SwiperSlide className="swiper-item">
+                <img src={feed.image1Url} alt="" />
+              </SwiperSlide>
+            )}
+            {feed.image2Url && (
+              <SwiperSlide className="swiper-item">
+                <img src={feed.image2Url} alt="" />
+              </SwiperSlide>
+            )}
+            {feed.image3Url && (
+              <SwiperSlide className="swiper-item">
+                <img src={feed.image2Url} alt="" />
+              </SwiperSlide>
+            )}
           </Swiper>
-          {feed.images.length > 1 && (
-            <div className="pagination">
-              <span>{activeIndex + 1}</span>
-              {` / ${feed.images.length}`}
-            </div>
-          )}
-          <button onClick={handleLikeBtn}>
-            <img
-              src={like ? likeIcon : unlikeIcon}
-              alt={like ? '좋아요' : '좋아요 취소'}
-            />
-          </button>
+          <div className="pagination">
+            <span>{activeIndex + 1}</span>
+            {feed.image3Url ? ' / 3' : feed.image2Url ? ' / 2' : ' / 1'}
+          </div>
         </div>
-        <strong>{feed.title}</strong>
+
+        <button onClick={handleLikeBtn} className={like ? 'like' : 'unlike'}>
+          <img
+            src={like ? likeIcon : unlikeIcon}
+            alt={like ? '좋아요' : '좋아요 취소'}
+          />
+          {likeCnt} likes
+        </button>
+        <strong>{feed.challengeResponseDTO.title}</strong>
         <p>{feed.text}</p>
-        <time>{feed.time}</time>
+        <time>{feed.createdDate[1] + '월 ' + feed.createdDate[2] + '일'}</time>
       </StyledFeed>
-      {isModalOpen && nickname === feed.nickname ? (
-        <DeleteFeedModal setIsModalOpen={setIsModalOpen} feedId="" />
+      {isModalOpen && nickname === feed.memberResponseDto.nickname ? (
+        <DeleteFeedModal setIsModalOpen={setIsModalOpen} feedId={feed.feedId} />
       ) : (
-        isModalOpen && <ReportModal setIsModalOpen={setIsModalOpen} feedId="" />
+        isModalOpen && (
+          <ReportModal setIsModalOpen={setIsModalOpen} feedId={feed.feedId} />
+        )
       )}
     </>
   );

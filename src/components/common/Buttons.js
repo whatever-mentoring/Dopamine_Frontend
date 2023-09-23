@@ -20,12 +20,12 @@ const MButton = styled(LButton)`
 `;
 
 const SButton = styled(LButton)`
-  padding: 10px 48px;
+  padding: 10px;
   font-size: var(--text-m);
 `;
 
 const SWhiteButton = styled(SButton)`
-  padding: 9px 47px;
+  padding: 9px;
   border: 1px solid var(--primary-500);
   color: var(--primary-500);
   background: var(--white);

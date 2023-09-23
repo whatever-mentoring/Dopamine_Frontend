@@ -1,56 +1,28 @@
 import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import './MissionComplete.css';
-
-
+import { useNavigate } from 'react-router-dom';
+import { LButton } from '../../components/common/Buttons';
+import StyledMissionComplete, { StyledFooter } from './StyledMissionComplete';
+import waterIcon from '../../assets/images/water.png';
+import successIcon from '../../assets/icons/success-true.svg';
 
 function MissionComplete() {
   const navigate = useNavigate();
 
   return (
-    <div className="container">
-      <div className="center-content">
-    
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="70"
-          height="70"
-          viewBox="0 0 50 50"
-          fill="none"
-          style={{
-            display: 'block',
-            margin: 'auto',
-          }}
-        >
-          <circle cx="25" cy="25" r="24" fill="#02B550" />
-          <path
-            d="M15 25L22 32L36 18"
-            stroke="#FFFFFF"
-            strokeWidth="4"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-
-        <div className="comp-title">
-          인증완료!
-        </div>
-
-        <div className="comp-sub">
-          챌린지피드에 정상적으로 업로드 됐어요!
-        </div>
-        <div className="comp-sub2">
-          내일도 함께 도전해요!
-        </div>
-      </div>
-
-      {/* 홈으로 돌아가기 버튼 */}
-      <footer className="gohome-bottom-bar">
-        <button className="gohome-button" onClick={() => navigate('/')}>
-          홈으로 돌아가기
-        </button>
-      </footer>
-    </div>
+    <>
+      <StyledMissionComplete $waterIcon={waterIcon} $successIcon={successIcon}>
+        <strong>인증완료!</strong>
+        <p>
+          챌린지 피드에 정상적으로 업로드 됐어요.
+          <br />
+          다음 챌린지도 함께 도전해요!
+        </p>
+        <span>최고 최고~</span>
+      </StyledMissionComplete>
+      <StyledFooter>
+        <LButton onClick={() => navigate('/home')}>홈으로 돌아가기</LButton>
+      </StyledFooter>
+    </>
   );
 }
 

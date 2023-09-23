@@ -1,18 +1,44 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { login } from '../api/jwt';
+import { UserContext } from '../context/UserContext';
+import { getMember } from '../api/member';
+import { ChallengeContext } from '../context/ChallengeContext';
+import { getTodayChallenge } from '../api/challenge';
 
 const Redirection = () => {
-  const code = new URL(window.location.href).searchParams.get('code'); // 이상한코드가한가득
+  const navigate = useNavigate();
+  const code = new URL(window.location.href).searchParams.get('code');
+  const { setToken, setRefreshToken, setNickname, setLevelData } =
+    useContext(UserContext);
+  const { setChallengeData } = useContext(ChallengeContext);
 
   useEffect(() => {
-    fetch(
-      `http://54.180.66.83:9000/api/auth/login?code=${code}&redirect-url=http://localhost:5173/kakao/callback`
-    ).then((res) => {
+    (async () => {
+      const res = await login(code);
       console.log(res);
-    });
-  }, []);
+      if (res.status !== 201) return;
 
-  return <div></div>;
+      const json = await res.json();
+      localStorage.setItem('kakaoId', json.member.kakaoId);
+      localStorage.setItem('memberId', json.member.memberId);
+      localStorage.setItem('accessToken', json.token.accessToken);
+      localStorage.setItem('refreshToken', json.token.refreshToken);
+
+      setToken(json.token.accessToken);
+      setRefreshToken(json.token.refreshToken);
+      await setLevelData();
+      await setChallengeData();
+
+      if (json.member.nickname === null) {
+        navigate('/join');
+      } else {
+        localStorage.setItem('nickname', json.member.nickname);
+        setNickname(json.member.nickname);
+        navigate('/home');
+      }
+    })();
+  }, []);
 };
 
 export default Redirection;
