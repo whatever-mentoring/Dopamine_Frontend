@@ -90,7 +90,7 @@ function MissionCertification() {
       }
 
       const res = await postFeed(formData);
-      if (res !== 200 && res !== 201) {
+      if (res.status !== 200 && res.status !== 201) {
         setRenderChallengeStatus(true);
         navigate('/home');
         return;
