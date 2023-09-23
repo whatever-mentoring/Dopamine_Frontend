@@ -34,6 +34,7 @@ const StyledHome = styled(StyledMain)`
 `;
 
 const ChallengeSection = styled.section`
+  position: relative;
   overflow-x: hidden;
   padding: 27px 16px 20px;
 
@@ -133,10 +134,28 @@ const ChallengeSection = styled.section`
     }
   }
 
-  .tooltip {
+  .tooltip-icon {
     width: 20px;
     aspect-ratio: 1/1;
     margin: 8px 9px 0 auto;
+  }
+
+  .tooltip {
+    position: absolute;
+    width: fit-content;
+    right: 49px;
+    bottom: 6px;
+    padding: 8px 10px;
+    border-radius: 12px;
+    font-size: var(--text-s);
+    color: var(--primary-500);
+    background: #d7fede99;
+    box-shadow: 0px 4px 10px #0000001f;
+
+    strong {
+      display: block;
+      font-weight: var(--font-bold);
+    }
   }
 `;
 
@@ -220,18 +239,12 @@ const FeedSection = styled.section`
 
     & > div {
       padding-right: 50px;
-      display: flex;
-      align-items: flex-start;
     }
   }
 
   .swiper-item {
-    flex-shrink: 0;
-    flex-grow: 0;
-    box-sizing: border-box;
-    border-radius: 10px;
-
     img {
+      border-radius: 10px;
       aspect-ratio: 1/1;
     }
 
@@ -240,6 +253,7 @@ const FeedSection = styled.section`
       font-size: var(--text-m);
     }
   }
+
   & > p {
     margin: 20px 16px 0;
     padding: 69px 0;

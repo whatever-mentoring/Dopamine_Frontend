@@ -1,4 +1,5 @@
 import './App.css';
+import 'swiper/css';
 import {
   BrowserRouter,
   Routes,
@@ -10,6 +11,7 @@ import GlobalStyle from './GlobalStyle';
 import StatusProvider from './context/StatusContext';
 import ChallengeProvider from './context/ChallengeContext';
 import UserProvider from './context/UserContext';
+import FeedProvider from './context/FeedContext';
 
 import Home from './pages/home/Home';
 import Feed from './pages/feed/Feed';
@@ -21,6 +23,7 @@ import Splash from './pages/splash/Splash';
 import Setting from './pages/my/setting/Setting';
 import Nickname from './pages/nickname/nickname';
 import Policy from './pages/policy/Policy';
+import MyFeed from './pages/my/myFeed/MyFeed';
 
 const AuthRoute = () => {
   const token = localStorage.getItem('accessToken');
@@ -45,35 +48,38 @@ function App() {
       <UserProvider>
         <StatusProvider>
           <ChallengeProvider>
-            <BrowserRouter>
-              <Routes>
-                <Route element={<NonAuthRoute />}>
-                  <Route path="/" element={<Splash />}></Route>
-                  <Route
-                    path="/kakao/callback"
-                    element={<Redirection />}
-                  ></Route>
-                </Route>
+            <FeedProvider>
+              <BrowserRouter>
+                <Routes>
+                  <Route element={<NonAuthRoute />}>
+                    <Route path="/" element={<Splash />}></Route>
+                    <Route
+                      path="/kakao/callback"
+                      element={<Redirection />}
+                    ></Route>
+                  </Route>
 
-                <Route element={<AuthRoute />}>
-                  <Route path="/home" element={<Home />}></Route>
-                  <Route path="/feed" element={<Feed />}></Route>
-                  <Route path="/my" element={<My />}></Route>
-                  <Route path="/my/setting" element={<Setting />}></Route>
-                  <Route
-                    path="/mission"
-                    element={<MissionCertification />}
-                  ></Route>
-                  <Route
-                    path="/mission/success"
-                    element={<MissionComplete />}
-                  ></Route>
-                  <Route path="/join" element={<Nickname />}></Route>
-                  <Route path="/nickname" element={<Nickname />}></Route>
-                  <Route path="/policy" element={<Policy />}></Route>
-                </Route>
-              </Routes>
-            </BrowserRouter>
+                  <Route element={<AuthRoute />}>
+                    <Route path="/home" element={<Home />}></Route>
+                    <Route path="/feed" element={<Feed />}></Route>
+                    <Route path="/my" element={<My />}></Route>
+                    <Route path="/my/feed/:id" element={<MyFeed />}></Route>
+                    <Route path="/my/setting" element={<Setting />}></Route>
+                    <Route
+                      path="/mission"
+                      element={<MissionCertification />}
+                    ></Route>
+                    <Route
+                      path="/mission/success"
+                      element={<MissionComplete />}
+                    ></Route>
+                    <Route path="/join" element={<Nickname />}></Route>
+                    <Route path="/nickname" element={<Nickname />}></Route>
+                    <Route path="/policy" element={<Policy />}></Route>
+                  </Route>
+                </Routes>
+              </BrowserRouter>
+            </FeedProvider>
           </ChallengeProvider>
         </StatusProvider>
       </UserProvider>

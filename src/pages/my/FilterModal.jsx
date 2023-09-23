@@ -72,6 +72,7 @@ const FilterModal = ({ setIsModalOpen, setFilterOpt, filterOpt }) => {
     }
   }, [selectedYear]);
 
+  console.log(filter);
   return (
     <Overlay>
       <StyledModal
@@ -93,29 +94,30 @@ const FilterModal = ({ setIsModalOpen, setFilterOpt, filterOpt }) => {
           ]}
         ></Select>
         <ul>
-          {monthList.map((v, i) => {
-            return (
-              <li key={i}>
-                <button
-                  onClick={() => handleBtn(v)}
-                  disabled={
-                    '전체보기' === selectedYear
-                      ? true
-                      : !filter[selectedYear][i].feedYn
-                  }
-                  className={
-                    selectedYear === '전체보기'
-                      ? ''
-                      : filter[selectedYear][i].feedYn
-                      ? 'selected'
-                      : ''
-                  }
-                >
-                  {v}월
-                </button>
-              </li>
-            );
-          })}
+          {Object.keys(filter).length > 0 &&
+            monthList.map((v, i) => {
+              return (
+                <li key={i}>
+                  <button
+                    onClick={() => handleBtn(v)}
+                    disabled={
+                      '전체보기' === selectedYear
+                        ? true
+                        : !filter[selectedYear][i].feedYn
+                    }
+                    className={
+                      selectedYear === '전체보기'
+                        ? ''
+                        : filter[selectedYear][i].feedYn
+                        ? 'selected'
+                        : ''
+                    }
+                  >
+                    {v}월
+                  </button>
+                </li>
+              );
+            })}
         </ul>
       </StyledModal>
     </Overlay>

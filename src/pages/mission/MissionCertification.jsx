@@ -5,12 +5,12 @@ import { ChallengeContext } from '../../context/ChallengeContext';
 import StyledMission, { StyledFooter } from './MissionCertification';
 import MissionModal from './MissionModal';
 import { LButton } from '../../components/common/Buttons';
-import CloseTopBar from '../../components/common/TopBar/CloseTopBar';
 import ProofModal from '../../components/common/modal/ProofModal';
 import xCircleIcon from '../../assets/icons/x-circle.svg';
 import { postFeed } from '../../api/feed';
 import { UserContext } from '../../context/UserContext';
 import { StatusContext } from '../../context/StatusContext';
+import BasicTopBar from '../../components/common/TopBar/BasicTopBar';
 
 function MissionCertification() {
   const { imgList, challengeList, selectedChallengeIndex, setChallengeData } =
@@ -104,8 +104,8 @@ function MissionCertification() {
 
   return (
     <>
-      <CloseTopBar
-        tit="인증하기"
+      <BasicTopBar
+        tit="챌린지 인증"
         handleBack={handleClose}
         handleClose={handleClose}
       />

@@ -20,28 +20,37 @@ const StyledFeed = styled.article`
       font-size: var(--text-m);
     }
 
-    button {
+    .more {
       margin-left: auto;
       width: 24px;
       aspect-ratio: 1/1;
       background: ${({ $moreIcon }) => `url(${$moreIcon})`};
     }
   }
+  .like,
+  .unlike {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    font-size: var(--text-s);
+    color: var(--gray-500);
+
+    img {
+      width: 24px;
+      aspect-ratio: 1/1;
+      margin-right: 2px;
+    }
+  }
+  .unlike img {
+    width: 21px;
+  }
 
   .swiper-frame {
-    overflow: hidden;
     border-radius: 10px;
-
-    & > div {
-      display: flex;
-    }
   }
 
   .swiper-item {
-    flex-shrink: 0;
-
     img {
-      border-radius: 10px;
       aspect-ratio: 1/1;
     }
   }
@@ -51,6 +60,7 @@ const StyledFeed = styled.article`
 
     .pagination {
       position: absolute;
+      z-index: 100;
       padding: 2px 8px;
       bottom: 4px;
       left: 50%;
@@ -76,7 +86,7 @@ const StyledFeed = styled.article`
 
   strong {
     display: block;
-    margin: 12px 0 6px;
+    margin: 4px 0 6px;
     font-size: var(--text-l);
     font-weight: var(--font-bold);
   }

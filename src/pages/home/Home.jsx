@@ -1,9 +1,9 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useEffect, useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import { ChallengeContext } from '../../context/ChallengeContext';
-import { getTodayChallenge } from '../../api/challenge';
+import { FeedContext } from '../../context/FeedContext';
 import { getFeedsByLikeCount } from '../../api/feed';
 import TabBar from '../../components/common/TabBar/TabBar';
 import { SButton } from '../../components/common/Buttons';
@@ -21,7 +21,9 @@ import { StatusContext } from '../../context/StatusContext';
 import successIcon from '../../assets/icons/success-true.svg';
 
 const Home = () => {
+  const navigate = useNavigate();
   const { nickname, level } = useContext(UserContext);
+  const { setFeedSortOpt } = useContext(FeedContext);
   const {
     renderJoinStatus,
     setRenderJoinStatus,
@@ -36,6 +38,7 @@ const Home = () => {
   } = useContext(ChallengeContext);
   const [feedList, setFeedList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -53,6 +56,26 @@ const Home = () => {
       }
     })();
   }, []);
+
+  useEffect(() => {
+    let status = false;
+    const closeTooltip = (e) => {
+      if (!status) {
+        status = true;
+        return;
+      }
+
+      if (!e.target.closest('.tootip')) {
+        setShowTooltip(false);
+      }
+    };
+
+    if (showTooltip) {
+      window.addEventListener('click', closeTooltip);
+    }
+
+    return () => window.removeEventListener('click', closeTooltip);
+  }, [showTooltip]);
 
   return (
     <>
@@ -108,14 +131,30 @@ const Home = () => {
                           setSelectedChallengeIndex(i);
                         }}
                       >
-                        인증하기
+                        {challenge.certificationYn ? '인증완료' : '인증하기'}
                       </SButton>
                     </li>
                   );
                 })
               : null}
           </ul>
-          <img className="tooltip" src={tooltipIcon} alt="툴팁" />
+          <img
+            className="tooltip-icon"
+            src={tooltipIcon}
+            alt="툴팁"
+            onClick={() => setShowTooltip(true)}
+            onTouchStart={() => setShowTooltip(true)}
+          />
+          {showTooltip ? (
+            <p className="tooltip">
+              Tip! 난이도가 높을수록 경험치가 더 빨리 쌓여요.
+              <strong>
+                <span>상 +20 exp</span>
+                <span>중 +10 exp</span>
+                <span>하 +5 exp</span>
+              </strong>
+            </p>
+          ) : null}
           {isModalOpen && <ProofModal setIsModalOpen={setIsModalOpen} />}
         </ChallengeSection>
 
@@ -152,7 +191,8 @@ const Home = () => {
             to="/"
             onClick={(e) => {
               e.preventDefault();
-              alert('준비중인 서비스입니다.');
+              setFeedSortOpt('좋아요순');
+              navigate('/feed');
             }}
           >
             더보기
@@ -170,7 +210,9 @@ const Home = () => {
                   <SwiperSlide key={i} className="swiper-item">
                     <Link to={'/feed'}>
                       <img src={feed.image1Url} alt="" />
-                      <p className="ellipsis">{feed.content}</p>
+                      <p className="ellipsis">
+                        {feed.challengeResponseDTO.title}
+                      </p>
                     </Link>
                   </SwiperSlide>
                 );

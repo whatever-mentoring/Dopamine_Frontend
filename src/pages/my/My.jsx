@@ -157,7 +157,9 @@ const My = () => {
               ? feedList.map((v, i) => {
                   return (
                     <li key={i}>
-                      <img src={v.image1Url} alt="" />
+                      <Link to={`/my/feed/${v.feedId}`}>
+                        <img src={v.image1Url} alt="" />
+                      </Link>
                     </li>
                   );
                 })

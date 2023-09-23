@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { ChallengeContext } from '../../context/ChallengeContext';
+import { FeedContext } from '../../context/FeedContext';
 import TabBar from '../../components/common/TabBar/TabBar';
 import FeedItem from '../../components/common/feedItem/FeedItem';
 import ChallengeSelectModal from '../../components/common/modal/ChallengeSelectModal';
@@ -13,15 +13,18 @@ import openIcon from '../../assets/icons/open.svg';
 import { getFeedsByDate, getFeedsByLikeCount } from '../../api/feed';
 
 const Feed = () => {
+  const { feedSortOpt, setFeedSortOpt } = useContext(FeedContext);
   const [feedList, setFeedList] = useState([]);
-  const [sortOpt, setSortOpt] = useState('최신순');
+  const [sortOpt, setSortOpt] = useState(feedSortOpt);
   const [isSortSelectOn, setIsSortSelectOn] = useState(false);
   const [page, setPage] = useState(1);
   const [stopReq, setStopReq] = useState(false);
   const [isChallengeSelectModalOpen, setIsChallengeSelectModalOpen] =
     useState(false);
 
-  const {} = useContext(ChallengeContext);
+  useEffect(() => {
+    setFeedSortOpt('최신순');
+  }, []);
 
   const getData = async () => {
     let res;

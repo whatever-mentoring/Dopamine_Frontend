@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import StyledSetting from './StyledSetting';
-import BasicTopBar from '../../../components/common/TopBar/BasicTopBar';
+import BackTopBar from '../../../components/common/TopBar/BackTopBar';
 import LogoutModal from './Logout';
 import DeleteMemberModal from './DeleteMemberModal';
 import { useState } from 'react';
@@ -12,16 +12,14 @@ const Setting = () => {
 
   return (
     <>
-      <BasicTopBar tit="설정" />
+      <BackTopBar tit="설정" />
       <StyledSetting>
         <ul>
           <li>
             <button onClick={() => navigate('/nickname')}>닉네임 변경</button>
           </li>
           <li>
-            <button onClick={() => alert('준비중인 서비스입니다:)')}>
-              서비스 이용약관
-            </button>
+            <button onClick={() => navigate('/policy')}>서비스 이용약관</button>
           </li>
           <li>
             <button onClick={() => setIsLogoutModalOpen(true)}>로그아웃</button>
