@@ -3,6 +3,7 @@ import { useEffect, useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import { ChallengeContext } from '../../context/ChallengeContext';
+import { FeedContext } from '../../context/FeedContext';
 import { getFeedsByLikeCount } from '../../api/feed';
 import TabBar from '../../components/common/TabBar/TabBar';
 import { SButton } from '../../components/common/Buttons';
@@ -22,6 +23,8 @@ import successIcon from '../../assets/icons/success-true.svg';
 const Home = () => {
   const navigate = useNavigate();
   const { nickname, level } = useContext(UserContext);
+  const { setFeedSortOpt } = useContext(FeedContext);
+
   const {
     renderJoinStatus,
     setRenderJoinStatus,
@@ -152,6 +155,7 @@ const Home = () => {
             to="/"
             onClick={(e) => {
               e.preventDefault();
+              setFeedSortOpt('좋아요순');
               navigate('/feed');
             }}
           >
@@ -166,7 +170,6 @@ const Home = () => {
               observeParents={true}
             >
               {feedList.map((feed, i) => {
-                console.log(feed);
                 return (
                   <SwiperSlide key={i} className="swiper-item">
                     <Link to={'/feed'}>
