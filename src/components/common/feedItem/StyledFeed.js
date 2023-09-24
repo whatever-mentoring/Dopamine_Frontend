@@ -27,8 +27,8 @@ const StyledFeed = styled.article`
       background: ${({ $moreIcon }) => `url(${$moreIcon})`};
     }
   }
-  .like,
-  .unlike {
+
+  .like {
     margin-top: 8px;
     display: flex;
     align-items: center;
@@ -40,9 +40,6 @@ const StyledFeed = styled.article`
       aspect-ratio: 1/1;
       margin-right: 2px;
     }
-  }
-  .unlike img {
-    width: 21px;
   }
 
   .swiper-frame {

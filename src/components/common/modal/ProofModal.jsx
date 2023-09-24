@@ -1,11 +1,10 @@
 import BottomModal from './BottomModal';
-import { useNavigate } from 'react-router-dom';
-import { useContext, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useContext } from 'react';
 import { ChallengeContext } from '../../../context/ChallengeContext';
 
 const ProofModal = ({ setIsModalOpen }) => {
   const navigate = useNavigate();
-
   const { setImgList } = useContext(ChallengeContext);
 
   const setImg = (e) => {
@@ -34,44 +33,15 @@ const ProofModal = ({ setIsModalOpen }) => {
     setIsModalOpen(false);
   };
 
-  const checkPermission = (message) => {
-    if (!window.ReactNativeWebView) {
-      return;
-    }
-    window.ReactNativeWebView.postMessage(message);
-  };
-  useEffect(() => {
-    const handleMessage = (e) => {
-      if (e.data !== '') {
-        alert(e.data);
-      }
-    };
-    // ios
-    // window.addEventListener('message', handleMessage);
-    // android
-    document.addEventListener('message', handleMessage);
-    return () => {
-      // window.removeEventListener('message', handleMessage);
-      document.removeEventListener('message', handleMessage);
-    };
-  }, []);
-
-  const handleCameraBtn = (e) => {
-    checkPermission('camera permission');
+  const handleBtn = (e) => {
     e.currentTarget.children[0].click();
-    // setIsModalOpen(false);
-  };
-
-  const handleImgBtn = (e) => {
-    checkPermission('images permission');
-    e.currentTarget.children[0].click();
-    // setIsModalOpen(false);
   };
 
   return (
     <BottomModal setIsModalOpen={setIsModalOpen}>
       <p>어떤 방법으로 인증해볼까요?</p>
-      <button onClick={handleCameraBtn}>
+      <Link to="/permission">인증이 안돼요</Link>
+      <button onClick={handleBtn}>
         촬영하기
         <input
           type="file"
@@ -82,7 +52,7 @@ const ProofModal = ({ setIsModalOpen }) => {
           onClick={(e) => e.stopPropagation()}
         />
       </button>
-      <button onClick={handleImgBtn}>
+      <button onClick={handleBtn}>
         갤러리에서 선택하기
         <input
           type="file"

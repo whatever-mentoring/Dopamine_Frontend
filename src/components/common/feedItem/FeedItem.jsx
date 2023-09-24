@@ -89,7 +89,7 @@ const FeedItem = ({ feed }) => {
           </div>
         </div>
 
-        <button onClick={handleLikeBtn} className={like ? 'like' : 'unlike'}>
+        <button onClick={handleLikeBtn} className="like">
           <img
             src={like ? likeIcon : unlikeIcon}
             alt={like ? '좋아요' : '좋아요 취소'}
