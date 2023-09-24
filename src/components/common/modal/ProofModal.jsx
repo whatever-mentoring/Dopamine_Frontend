@@ -9,7 +9,7 @@ const ProofModal = ({ setIsModalOpen }) => {
   const { setImgList } = useContext(ChallengeContext);
 
   const setImg = (e) => {
-    const files = [...e.target.files];
+    const files = e.target.files;
 
     if (files.length > 3) {
       alert('이미지는 최대 3장까지 선택할 수 있습니다.');
@@ -29,16 +29,16 @@ const ProofModal = ({ setIsModalOpen }) => {
     setIsModalOpen(false);
   };
 
-  const setPermission = () => {
+  const checkPermission = (message) => {
     if (!window.ReactNativeWebView) {
       return;
     }
-    window.ReactNativeWebView.postMessage('check permission');
+    window.ReactNativeWebView.postMessage(message);
   };
   useEffect(() => {
     const handleMessage = (e) => {
-      if (e.data === 'false') {
-        alert('카메라/갤러리 권한을 허용해주세요.');
+      if (e.data !== '') {
+        alert(e.data);
       }
     };
     // ios
@@ -51,8 +51,14 @@ const ProofModal = ({ setIsModalOpen }) => {
     };
   }, []);
 
-  const handleBtn = (e) => {
-    setPermission();
+  const handleCameraBtn = (e) => {
+    checkPermission('camera permission');
+    e.currentTarget.children[0].click();
+    // setIsModalOpen(false);
+  };
+
+  const handleImgBtn = (e) => {
+    checkPermission('images permission');
     e.currentTarget.children[0].click();
     // setIsModalOpen(false);
   };
@@ -60,7 +66,7 @@ const ProofModal = ({ setIsModalOpen }) => {
   return (
     <BottomModal setIsModalOpen={setIsModalOpen}>
       <p>어떤 방법으로 인증해볼까요?</p>
-      <button onClick={handleBtn}>
+      <button onClick={handleCameraBtn}>
         촬영하기
         <input
           type="file"
@@ -71,7 +77,7 @@ const ProofModal = ({ setIsModalOpen }) => {
           onClick={(e) => e.stopPropagation()}
         />
       </button>
-      <button onClick={handleBtn}>
+      <button onClick={handleImgBtn}>
         갤러리에서 선택하기
         <input
           type="file"
