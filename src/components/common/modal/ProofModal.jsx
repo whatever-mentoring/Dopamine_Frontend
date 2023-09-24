@@ -1,5 +1,5 @@
 import BottomModal from './BottomModal';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { ChallengeContext } from '../../../context/ChallengeContext';
 
@@ -40,6 +40,7 @@ const ProofModal = ({ setIsModalOpen }) => {
   return (
     <BottomModal setIsModalOpen={setIsModalOpen}>
       <p>어떤 방법으로 인증해볼까요?</p>
+      <Link to="/permission">인증이 안돼요</Link>
       <button onClick={handleBtn}>
         촬영하기
         <input

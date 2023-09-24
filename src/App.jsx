@@ -25,6 +25,7 @@ import Setting from './pages/my/setting/Setting';
 import Nickname from './pages/nickname/nickname';
 import Policy from './pages/policy/Policy';
 import MyFeed from './pages/my/myFeed/MyFeed';
+import Permission from './pages/permission/Permission';
 import { getMember } from './api/member';
 
 const AuthRoute = () => {
@@ -108,6 +109,7 @@ function App() {
                     <Route path="/join" element={<Nickname />}></Route>
                     <Route path="/nickname" element={<Nickname />}></Route>
                     <Route path="/policy" element={<Policy />}></Route>
+                    <Route path="/permission" element={<Permission />}></Route>
                   </Route>
                 </Routes>
               </BrowserRouter>
