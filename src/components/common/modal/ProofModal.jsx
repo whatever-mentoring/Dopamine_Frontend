@@ -9,7 +9,7 @@ const ProofModal = ({ setIsModalOpen }) => {
   const { setImgList } = useContext(ChallengeContext);
 
   const setImg = (e) => {
-    const files = [...e.target.files];
+    const files = e.target.files;
 
     if (files.length > 3) {
       alert('이미지는 최대 3장까지 선택할 수 있습니다.');

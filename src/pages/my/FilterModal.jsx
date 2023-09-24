@@ -72,7 +72,6 @@ const FilterModal = ({ setIsModalOpen, setFilterOpt, filterOpt }) => {
     }
   }, [selectedYear]);
 
-  console.log(filter);
   return (
     <Overlay>
       <StyledModal

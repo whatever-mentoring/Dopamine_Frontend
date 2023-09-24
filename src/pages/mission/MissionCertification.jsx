@@ -29,7 +29,7 @@ function MissionCertification() {
   useEffect(() => {
     if (isModalOpen) return;
     const imageList = [];
-    [...imgList].forEach((file) => {
+    [...imgList].forEach((file, i) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
 
@@ -37,7 +37,9 @@ function MissionCertification() {
         const image = new Image();
         image.src = target.result;
         imageList.push(target.result);
-        setSelectedImages(imageList);
+        if (i === imgList.length - 1) {
+          setSelectedImages(imageList);
+        }
       });
     });
   }, [isModalOpen]);
@@ -142,7 +144,7 @@ function MissionCertification() {
             spaceBetween={6}
             slidesPerView={2.63}
           >
-            {!!selectedImages.length
+            {selectedImages.length > 0
               ? selectedImages.map((image, index) => {
                   return (
                     <SwiperSlide key={index} className="swiper-item">
