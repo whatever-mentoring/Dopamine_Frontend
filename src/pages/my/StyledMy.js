@@ -109,6 +109,9 @@ const ProofSection = styled.section`
 
     li {
       aspect-ratio: 1/1;
+      img {
+        object-fit: cover;
+      }
     }
   }
 `;

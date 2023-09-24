@@ -52,6 +52,7 @@ const StyledFeed = styled.article`
   .swiper-item {
     img {
       aspect-ratio: 1/1;
+      object-fit: cover;
     }
   }
 

@@ -97,7 +97,7 @@ const FeedItem = ({ feed }) => {
           {likeCnt} likes
         </button>
         <strong>{feed.challengeResponseDTO.title}</strong>
-        <p>{feed.text}</p>
+        <p>{feed.content}</p>
         <time>{feed.createdDate[1] + '월 ' + feed.createdDate[2] + '일'}</time>
       </StyledFeed>
       {isModalOpen && nickname === feed.memberResponseDto.nickname ? (

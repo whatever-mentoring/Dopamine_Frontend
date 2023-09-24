@@ -21,6 +21,11 @@ const ProofModal = ({ setIsModalOpen }) => {
         alert('이미지 파일 확장자는 jpg, png, jpeg, heic만 가능합니다.');
         return;
       }
+
+      if (file.size > 20 * 1024 * 1024) {
+        alert('이미지 용량은 20MB 이내로 등록 가능합니다.');
+        return;
+      }
     }
 
     setImgList(e.target.files);
