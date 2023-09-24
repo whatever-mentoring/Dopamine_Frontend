@@ -2,9 +2,7 @@ import { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../api/jwt';
 import { UserContext } from '../context/UserContext';
-import { getMember } from '../api/member';
 import { ChallengeContext } from '../context/ChallengeContext';
-import { getTodayChallenge } from '../api/challenge';
 
 const Redirection = () => {
   const navigate = useNavigate();

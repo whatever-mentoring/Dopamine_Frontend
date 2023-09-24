@@ -69,7 +69,9 @@ function MissionCertification() {
     setShowPopup(true); // x 버튼 클릭 시 팝업을 열기(true)
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     if (selectedImages.length === 0) {
       alert('이미지를 선택해주세요.');
       return;
