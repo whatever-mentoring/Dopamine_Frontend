@@ -254,6 +254,7 @@ const FeedSection = styled.section`
     img {
       border-radius: 10px;
       aspect-ratio: 1/1;
+      object-fit: cover;
     }
 
     p {
