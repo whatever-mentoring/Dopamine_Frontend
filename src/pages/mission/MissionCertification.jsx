@@ -73,7 +73,7 @@ function MissionCertification() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    e.target.disabled = true;
     if (selectedImages.length === 0) {
       alert('이미지를 선택해주세요.');
       return;
