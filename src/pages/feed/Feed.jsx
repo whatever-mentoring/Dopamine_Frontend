@@ -115,6 +115,7 @@ const Feed = () => {
           <SortModal
             setIsModalOpen={setIsSortSelectOn}
             setSortOpt={setSortOpt}
+            sortOpt={sortOpt}
           />
         )}
 

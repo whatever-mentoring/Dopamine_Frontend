@@ -43,10 +43,13 @@ const BasicBottomModal = styled.dialog`
     border-radius: 12px;
   }
 
-  button:focus {
-    outline: none;
+  button.selected {
     border-color: var(--primary-500);
     color: var(--primary-500);
+  }
+
+  button.default {
+    color: var(--gray-900);
   }
 
   button + button {

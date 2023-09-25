@@ -15,7 +15,9 @@ const DeleteFeedModal = ({ setIsModalOpen, feedId }) => {
 
   return (
     <BottomModal setIsModalOpen={setIsModalOpen}>
-      <button onClick={handleBtn}>삭제하기</button>
+      <button onClick={handleBtn} className="default">
+        삭제하기
+      </button>
     </BottomModal>
   );
 };
