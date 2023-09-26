@@ -41,7 +41,7 @@ const ProofModal = ({ setIsModalOpen }) => {
     <BottomModal setIsModalOpen={setIsModalOpen}>
       <p>어떤 방법으로 인증해볼까요?</p>
       <Link to="/permission">인증이 안돼요</Link>
-      <button onClick={handleBtn}>
+      <button onClick={handleBtn} className="default">
         촬영하기
         <input
           type="file"
@@ -52,7 +52,7 @@ const ProofModal = ({ setIsModalOpen }) => {
           onClick={(e) => e.stopPropagation()}
         />
       </button>
-      <button onClick={handleBtn}>
+      <button onClick={handleBtn} className="default">
         갤러리에서 선택하기
         <input
           type="file"

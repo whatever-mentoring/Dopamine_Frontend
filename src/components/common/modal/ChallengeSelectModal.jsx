@@ -40,6 +40,7 @@ const ChallengeSelectModal = ({ setIsModalOpen }) => {
                   setSelectedChallenge(v.title);
                   setSelectedChallengeIndex(i);
                 }}
+                className={!!v.certificationYn ? '' : 'default'}
                 disabled={!!v.certificationYn}
               >
                 {v.title}
