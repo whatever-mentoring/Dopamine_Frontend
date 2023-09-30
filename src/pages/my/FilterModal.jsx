@@ -22,9 +22,17 @@ const FilterModal = ({ setIsModalOpen, setFilterOpt, filterOpt }) => {
     };
     window.addEventListener('click', closeModal);
     window.addEventListener('touchstart', closeModal);
+
+    return () => {
+      window.removeEventListener('click', closeModal);
+      window.removeEventListener('touchstart', closeModal);
+    };
   }, []);
 
   const setModal = useCallback((node) => {
+    if (modal.current || !node) {
+      return;
+    }
     modal.current = node;
     node.showModal();
   }, []);
@@ -73,53 +81,56 @@ const FilterModal = ({ setIsModalOpen, setFilterOpt, filterOpt }) => {
   }, [selectedYear]);
 
   return (
-    <Overlay>
-      <StyledModal
-        ref={(node) => {
-          if (node) {
-            setModal(node);
-          }
-        }}
-      >
-        <p>어떤 날의 기록이 궁금하세요?</p>
-        <Select
-          selectedOpt={selectedYear}
-          setSelectedOpt={setSelectedYear}
-          optionTextList={[
-            '전체보기',
-            `${thisYear}년`,
-            `${thisYear - 1}년`,
-            `${thisYear - 2}년`,
-          ]}
-        ></Select>
-        <ul>
-          {Object.keys(filter).length > 0 &&
-            monthList.map((v, i) => {
-              return (
-                <li key={i}>
-                  <button
-                    onClick={() => handleBtn(v)}
-                    disabled={
-                      '전체보기' === selectedYear
-                        ? true
-                        : !filter[selectedYear][i].feedYn
-                    }
-                    className={
-                      selectedYear === '전체보기'
-                        ? ''
-                        : filter[selectedYear][i].feedYn
-                        ? 'selected'
-                        : ''
-                    }
-                  >
-                    {v}월
-                  </button>
-                </li>
-              );
-            })}
-        </ul>
-      </StyledModal>
-    </Overlay>
+    <>
+      {Object.keys(filter).length > 0 && (
+        <Overlay>
+          <StyledModal
+            ref={(node) => {
+              if (node) {
+                setModal(node);
+              }
+            }}
+          >
+            <p>어떤 날의 기록이 궁금하세요?</p>
+            <Select
+              selectedOpt={selectedYear}
+              setSelectedOpt={setSelectedYear}
+              optionTextList={[
+                '전체보기',
+                `${thisYear}년`,
+                `${thisYear - 1}년`,
+                `${thisYear - 2}년`,
+              ]}
+            ></Select>
+            <ul>
+              {monthList.map((v, i) => {
+                return (
+                  <li key={i}>
+                    <button
+                      onClick={() => handleBtn(v)}
+                      disabled={
+                        '전체보기' === selectedYear
+                          ? true
+                          : !filter[selectedYear][i].feedYn
+                      }
+                      className={
+                        selectedYear === '전체보기'
+                          ? ''
+                          : filter[selectedYear][i].feedYn
+                          ? 'selected'
+                          : ''
+                      }
+                    >
+                      {v}월
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </StyledModal>
+        </Overlay>
+      )}
+    </>
   );
 };
 
