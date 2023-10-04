@@ -89,7 +89,7 @@ const FeedItem = ({ feed }) => {
           </div>
         </div>
 
-        <button onClick={handleLikeBtn} className={like ? 'like' : 'unlike'}>
+        <button onClick={handleLikeBtn} className="like">
           <img
             src={like ? likeIcon : unlikeIcon}
             alt={like ? '좋아요' : '좋아요 취소'}
@@ -97,7 +97,7 @@ const FeedItem = ({ feed }) => {
           {likeCnt} likes
         </button>
         <strong>{feed.challengeResponseDTO.title}</strong>
-        <p>{feed.text}</p>
+        <p>{feed.content}</p>
         <time>{feed.createdDate[1] + '월 ' + feed.createdDate[2] + '일'}</time>
       </StyledFeed>
       {isModalOpen && nickname === feed.memberResponseDto.nickname ? (

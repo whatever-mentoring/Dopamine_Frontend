@@ -112,7 +112,7 @@ const My = () => {
               <span>
                 {level.name} {nickname}님
               </span>
-              <span>잘하고 계시는 군요!</span>
+              <span>잘하고 계시는군요!</span>
             </p>
           </div>
           <div className="exp-bar"></div>

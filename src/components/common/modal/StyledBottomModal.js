@@ -18,9 +18,20 @@ const BasicBottomModal = styled.dialog`
   }
 
   p {
-    margin-bottom: 16px;
     font-size: var(--text-l);
     font-weight: var(--font-bold);
+  }
+
+  a {
+    display: block;
+    margin: 12px 0;
+    font-size: var(--text-s);
+    color: var(--gray-400);
+    text-decoration: underline;
+  }
+
+  p + button {
+    margin-top: 16px;
   }
 
   button {
@@ -32,10 +43,13 @@ const BasicBottomModal = styled.dialog`
     border-radius: 12px;
   }
 
-  button:focus {
-    outline: none;
+  button.selected {
     border-color: var(--primary-500);
     color: var(--primary-500);
+  }
+
+  button.default {
+    color: var(--gray-900);
   }
 
   button + button {

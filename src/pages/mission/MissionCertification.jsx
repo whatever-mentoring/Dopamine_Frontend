@@ -23,12 +23,13 @@ function MissionCertification() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [impression, setImpression] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [deletedImgIndexList, setDeletedImgIndexList] = useState([]);
   const challenge = challengeList[selectedChallengeIndex];
 
   useEffect(() => {
     if (isModalOpen) return;
     const imageList = [];
-    [...imgList].forEach((file) => {
+    [...imgList].forEach((file, i) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
 
@@ -36,7 +37,9 @@ function MissionCertification() {
         const image = new Image();
         image.src = target.result;
         imageList.push(target.result);
-        setSelectedImages(imageList);
+        if (i === imgList.length - 1) {
+          setSelectedImages(imageList);
+        }
       });
     });
   }, [isModalOpen]);
@@ -59,13 +62,18 @@ function MissionCertification() {
 
     // 이미지 배열을 업데이트.
     setSelectedImages(updatedImages);
+    const newList = [...deletedImgIndexList];
+    newList.push(indexToDelete);
+    setDeletedImgIndexList(newList);
   };
 
   const handleClose = () => {
     setShowPopup(true); // x 버튼 클릭 시 팝업을 열기(true)
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    e.target.disabled = true;
     if (selectedImages.length === 0) {
       alert('이미지를 선택해주세요.');
       return;
@@ -86,10 +94,17 @@ function MissionCertification() {
       );
 
       for (let i = 0; i < imgList.length; i++) {
-        formData.append('images', imgList[i]);
+        if (!deletedImgIndexList.includes(i)) {
+          formData.append('images', imgList[i]);
+        }
       }
 
-      await postFeed(formData);
+      const res = await postFeed(formData);
+      if (res.status !== 200 && res.status !== 201) {
+        setRenderChallengeStatus(true);
+        navigate('/home');
+        return;
+      }
       await setChallengeData();
       await setLevelData();
 
@@ -129,7 +144,7 @@ function MissionCertification() {
             spaceBetween={6}
             slidesPerView={2.63}
           >
-            {!!selectedImages.length
+            {selectedImages.length > 0
               ? selectedImages.map((image, index) => {
                   return (
                     <SwiperSlide key={index} className="swiper-item">
